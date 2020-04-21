@@ -5,23 +5,23 @@
 
 int main(){
     
-    FILE * archivo = fopen("hola.txt", "rb");
-    FILE * archivo2 = fopen("chau.txt","wb");
+    FILE * entrada = fopen("entrada.txt", "rb");
+    FILE * salida = fopen("salida.txt","wb");
     
-    if (archivo == NULL){
+    if (entrada == NULL){
         perror("Error en la apertura del archivo");
         return 1;
     }
     char caracter;
-    while(feof(archivo)==0){
-        caracter = fgetc(archivo);
+    while(feof(entrada)==0){
+        caracter = fgetc(entrada);
         printf("%c", caracter);
     }
     
-    fprintf(archivo2, "%s", "Escribo algo");
+    fprintf(salida, "%s", "Escribo algo");
    
-    fclose(archivo);
-    fclose(archivo2);
+    fclose(entrada);
+    fclose(salida);
 
 
     return 0;
