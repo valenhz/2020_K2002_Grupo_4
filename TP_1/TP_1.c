@@ -1,3 +1,5 @@
+//La logica esta bien, pero el programa todavia no funciona.
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,6 +35,18 @@ int j = 0;
  //Ciclo en el que va a correr la implementacion del automata.
  while(feof(archivoEntrada) == 0) {
         caracter = fgetc(archivoEntrada);
+
+//Procedimiento si ingresa una coma para evaluar la palabra.
+if(fgetc(archivoEntrada) == ','){
+            if(ultimoEstado == 0 ){fprintf(archivoSalida, "%s", "No hay palabra ");} else
+            if(ultimoEstado == 1){fprintf(archivoSalida, "%s", "Constante decimal ");} else
+            if(ultimoEstado == 2){fprintf(archivoSalida, "%s", "Constante octal = a 0 ");} else
+            if(ultimoEstado == 3){fprintf(archivoSalida, "%s", "Constante invalida ");} else
+            if(ultimoEstado == 4){fprintf(archivoSalida, "%s", "Constante hexadecimal ");} else
+            if(ultimoEstado == 5){fprintf(archivoSalida, "%s", "Constante octal ");} else
+            if(ultimoEstado == 5){fprintf(archivoSalida, "%s", "Constante hexadecimal");}
+            }
+
 
  //Implementacion de la funcion que aplica el automata.
 aplicoAutomata (automata, caracter, ultimoEstado, i, j);
