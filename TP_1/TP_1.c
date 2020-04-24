@@ -1,10 +1,12 @@
-//La logica esta bien, pero el programa todavia no funciona.
+//El programa anda pero la ultima palabra tiene que terminar con una coma si o si, sino no la lee.
 
 #include <stdio.h>
 #include <stdlib.h>
 
 //Prototipo de funcion que aplica el automata.
+/*
 void aplicoAutomata (int [][7], char , int, int, int);
+*/
 
 
 int main(int argc, const char * argv[]) {
@@ -47,12 +49,23 @@ if(fgetc(archivoEntrada) == ','){
             if(ultimoEstado == 5){fprintf(archivoSalida, "%s", "Constante hexadecimal");}
             }
 
+//construimos la funcion directamente en el main, ahora anda aunque este mas desprolijo.
+if (caracter == '0'){j = 0;} else
+            if (caracter == '1' || caracter == '2' || caracter == '3' || caracter == '4' || caracter == '5' || caracter == '6' || caracter == '7'){ j = 1;} else
+            if (caracter == '8' || caracter == '9'){j = 2;} else
+            if (caracter == 'x' || caracter == 'X'){ j = 3;} else
+            if (caracter == 'a' || caracter == 'b' || caracter == 'c' || caracter == 'd' || caracter == 'e' || caracter == 'f' || caracter == 'A' || caracter == 'B' || caracter == 'C' || caracter == 'D' || caracter == 'E' || caracter == 'F'){ j = 4;} else
+            if (caracter == ','){ j = 5;} else
+                            { j = 6;}
+            i = automata[i][j];
+            ultimoEstado = i;
 
  //Implementacion de la funcion que aplica el automata.
+/*
 aplicoAutomata (automata, caracter, ultimoEstado, i, j);
 
-
- }
+*/
+ } 
 
 
 //Cerramos los archivos.
@@ -61,6 +74,8 @@ fclose(archivoSalida);
 
     return 0;
 }
+
+/*
 
 void aplicoAutomata (int M[][7], char a, int b, int i, int j){
     if (a == '0'){j = 0;} else
@@ -72,5 +87,5 @@ void aplicoAutomata (int M[][7], char a, int b, int i, int j){
         { j = 6;}
     b = i = M[i][j];
     
-    
-}
+
+}*/
