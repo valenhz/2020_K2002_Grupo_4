@@ -8,6 +8,8 @@
 void aplicoAutomata (int [][7], char , int, int, int);
 */
 
+//Funcion en la que entra una coma y evalua la palabra.
+void entraUnaComa(FILE * archivoSalida, char caracter, int ultimoEstado);
 
 int main(int argc, const char * argv[]) {
 
@@ -38,16 +40,8 @@ int j = 0;
  while(feof(archivoEntrada) == 0) {
         caracter = fgetc(archivoEntrada);
 
-//Procedimiento si ingresa una coma para evaluar la palabra.
-if(fgetc(archivoEntrada) == ','){
-            if(ultimoEstado == 0 ){fprintf(archivoSalida, "%s", "No hay palabra ");} else
-            if(ultimoEstado == 1){fprintf(archivoSalida, "%s", "Constante decimal ");} else
-            if(ultimoEstado == 2){fprintf(archivoSalida, "%s", "Constante octal = a 0 ");} else
-            if(ultimoEstado == 3){fprintf(archivoSalida, "%s", "Constante invalida ");} else
-            if(ultimoEstado == 4){fprintf(archivoSalida, "%s", "Constante hexadecimal ");} else
-            if(ultimoEstado == 5){fprintf(archivoSalida, "%s", "Constante octal ");} else
-            if(ultimoEstado == 5){fprintf(archivoSalida, "%s", "Constante hexadecimal");}
-            }
+//Funcion si ingresa una coma para evaluar la palabra.
+entraUnaComa(archivoSalida, caracter, ultimoEstado);
 
 //construimos la funcion directamente en el main, ahora anda aunque este mas desprolijo.
 if (caracter == '0'){j = 0;} else
@@ -74,6 +68,19 @@ fclose(archivoSalida);
 
     return 0;
 }
+
+//Desarrollamos funcion entra una coma.
+void entraUnaComa(FILE * archivoSalida, char caracter, int ultimoEstado){
+     if(caracter == ','  && ultimoEstado == 0 ) {fprintf(archivoSalida, "%s", "No hay palabra ");} else
+     if(caracter == ',' && ultimoEstado == 1) {fprintf(archivoSalida, "%s", "Constante decimal ");} else
+     if(caracter == ',' && ultimoEstado == 2) {fprintf(archivoSalida, "%s", "Constante octal = a 0 ");} else
+     if(caracter == ',' && ultimoEstado == 3) {fprintf(archivoSalida, "%s", "Constante invalida ");} else
+     if(caracter == ',' && ultimoEstado == 4) {fprintf(archivoSalida, "%s", "Constante hexadecimal ");} else
+     if(caracter == ',' && ultimoEstado == 5) {fprintf(archivoSalida, "%s", "Constante octal ");} else
+     if(caracter == ',' && ultimoEstado == 6) {fprintf(archivoSalida, "%s", "Constante invalida ");}
+ }
+
+
 
 /*
 
