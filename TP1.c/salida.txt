@@ -1,4 +1,19 @@
+- No hay palabra 
 - Constante decimal 
+- Constante hexadecimal 
+- Constante invalida 
+- No hay palabra 
+- No hay palabra 
+- Constante octal 
+- Constante octal 
+- Constante invalida 
+- No hay palabra 
+- Constante invalida 
+- Constante octal = a 0 
+- Constante invalida 
 - Constante decimal 
 - Constante invalida 
 - Constante invalida 
+- Constante invalida 
+- Constante hexadecimal 
+- Constante hexadecimal 
