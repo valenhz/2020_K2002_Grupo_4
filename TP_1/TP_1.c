@@ -9,7 +9,7 @@ void aplicoAutomata (int [][7], char , int, int, int);
 */
 
 //Funcion en la que entra una coma y evalua la palabra.
-void entraUnaComa(FILE * archivoSalida, char caracter, int ultimoEstado);
+void evalua_palabra(FILE *, char, int);
 
 int main(int argc, const char * argv[]) {
 
@@ -27,12 +27,11 @@ if(archivoEntrada == NULL){
         return 1;
     }
  
- //Variable que almacena cada caracter leido.
+//Variable que almacena cada caracter leido.
  char caracter;
-
-  //variable que almacena el ultimo estado.
+//variable que almacena el ultimo estado.
  int ultimoEstado;
- //variables que almacenan las posiciones del automata.
+//variables que almacenan las posiciones del automata.
 int i = 0;
 int j = 0;
 
@@ -41,7 +40,7 @@ int j = 0;
         caracter = fgetc(archivoEntrada);
 
 //Funcion si ingresa una coma para evaluar la palabra.
-entraUnaComa(archivoSalida, caracter, ultimoEstado);
+evalua_palabra(archivoSalida, caracter, ultimoEstado);
 
 //construimos la funcion directamente en el main, ahora anda aunque este mas desprolijo.
 if (caracter == '0'){j = 0;} else
@@ -70,16 +69,19 @@ fclose(archivoSalida);
 }
 
 //Desarrollamos funcion entra una coma.
-void entraUnaComa(FILE * archivoSalida, char caracter, int ultimoEstado){
-     if(caracter == ','  && ultimoEstado == 0 ) {fprintf(archivoSalida, "%s", "No hay palabra ");} else
-     if(caracter == ',' && ultimoEstado == 1) {fprintf(archivoSalida, "%s", "Constante decimal ");} else
-     if(caracter == ',' && ultimoEstado == 2) {fprintf(archivoSalida, "%s", "Constante octal = a 0 ");} else
-     if(caracter == ',' && ultimoEstado == 3) {fprintf(archivoSalida, "%s", "Constante invalida ");} else
-     if(caracter == ',' && ultimoEstado == 4) {fprintf(archivoSalida, "%s", "Constante hexadecimal ");} else
-     if(caracter == ',' && ultimoEstado == 5) {fprintf(archivoSalida, "%s", "Constante octal ");} else
-     if(caracter == ',' && ultimoEstado == 6) {fprintf(archivoSalida, "%s", "Constante invalida ");}
- }
+void evalua_palabra(FILE * archivoSalida, char caracter, int ultimoEstado){
 
+if(caracter == ','||caracter==EOF){
+    if(ultimoEstado == 0) {fprintf(archivoSalida, "%s", "- No hay palabra \n");} else
+    if(ultimoEstado == 1) {fprintf(archivoSalida, "%s", "- Constante decimal \n");} else
+    if(ultimoEstado == 2) {fprintf(archivoSalida, "%s", "- Constante octal = a 0 \n");} else
+    if(ultimoEstado == 3) {fprintf(archivoSalida, "%s", "- Constante invalida \n");} else
+    if(ultimoEstado == 4) {fprintf(archivoSalida, "%s", "- Constante hexadecimal \n");} else
+    if(ultimoEstado == 5) {fprintf(archivoSalida, "%s", "- Constante octal \n");} else
+    if(ultimoEstado == 6) {fprintf(archivoSalida, "%s", "- Constante invalida \n");}
+}
+
+}
 
 
 /*
