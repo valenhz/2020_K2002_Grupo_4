@@ -25,9 +25,9 @@ int main (int argc, char * argv[]) {
     
 return 0;
 }
-estado ingresar (int a, char* b) {
+estado ingresar (int a, char *b) {
 estado x;
   x.siguiente = a;
-  x.cadPush = b;
+  strcpy (b, x.cadPush);
   return x;
   }
