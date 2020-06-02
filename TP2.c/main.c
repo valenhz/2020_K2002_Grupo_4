@@ -7,6 +7,8 @@
 int main (int argc, const char * argv[]) {
 
     char expresion [30];        //expresion (cadena de caracteres)
+    
+    printf ("Ingrese la expresion: ");
     scanf ("%s", expresion);    //usuario ingresa la expresion
 
 
