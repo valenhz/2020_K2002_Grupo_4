@@ -16,6 +16,10 @@ int main (int argc, const char * argv[]) {
         char cadPush [3];
     };
     
+    struct estado automata [3][2][5];
 
+    automata [0][0][0] = {3," "};
+    
+    
 return 0;
 }
