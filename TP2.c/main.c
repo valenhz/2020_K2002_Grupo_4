@@ -11,8 +11,11 @@ int main (int argc, const char * argv[]) {
     printf ("Ingrese la expresion: ");
     scanf ("%s", expresion);    //usuario ingresa la expresion
 
-
-
+    struct estado {             //estructura para generar la matriz 
+        int estadoSiguiente;
+        char cadPush [3];
+    };
+    
 
 return 0;
 }
