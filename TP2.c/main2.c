@@ -146,18 +146,18 @@ int main () {
     strcpy (str2,automata[2][0][5].cadPush);
 
     //Septima fila de la tabla
-    automata [2][0][0].estado_siguiente = 3;
-    strcpy (str2,automata[2][0][0].cadPush);
-    automata [2][0][1].estado_siguiente = 3;
-    strcpy (str2,automata[2][0][1].cadPush);
-    automata [2][0][2].estado_siguiente = 3;
-    strcpy (str2,automata[2][0][2].cadPush);
-    automata [2][0][3].estado_siguiente = 3;
-    strcpy (str2,automata[2][0][3].cadPush);
-    automata [2][0][4].estado_siguiente = 3;
-    strcpy (str2,automata[2][0][4].cadPush);
-    automata [2][0][5].estado_siguiente = 3;
-    strcpy (str2,automata[2][0][5].cadPush);
+    automata [3][0][0].estado_siguiente = 3;
+    strcpy (str2,automata[3][0][0].cadPush);
+    automata [3][0][1].estado_siguiente = 3;
+    strcpy (str2,automata[3][0][1].cadPush);
+    automata [3][0][2].estado_siguiente = 3;
+    strcpy (str2,automata[3][0][2].cadPush);
+    automata [3][0][3].estado_siguiente = 3;
+    strcpy (str2,automata[3][0][3].cadPush);
+    automata [3][0][4].estado_siguiente = 3;
+    strcpy (str2,automata[3][0][4].cadPush);
+    automata [3][0][5].estado_siguiente = 3;
+    strcpy (str2,automata[3][0][5].cadPush);
 
     
     
