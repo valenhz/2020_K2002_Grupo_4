@@ -188,10 +188,10 @@ int main () {
     //este while hace recorrer el automata
     while(expresion[m] != '\0'){
         
-        char caracter = expresion[i];
+        char caracter = expresion[m];
 
         //Se mueve segun el caracter que entra
-        if (expresion[i] == '0'){k=0;} else
+        if (caracter == '0'){k=0;} else
         if (caracter == '1' || caracter == '2' || caracter == '3' || caracter == '4' || caracter == '5' || caracter == '6' || caracter == '7' || caracter == '8' || caracter == '9'){k = 1;} else
         if (caracter == '+' || caracter == '-' || caracter == '*' || caracter == '/'){k = 2;} else
         if (caracter == '('){k = 3;} else
@@ -200,7 +200,11 @@ int main () {
         if (cima(&miPila)==0){j = 0;} else {j = 1;}
         
         i = automata[i][j][k].estado_siguiente;
-            
+
+        if (caracter == '('){ push(&miPila,1);}
+        if (caracter == ')' && cima(&miPila)!= 0){ pop(&miPila);}
+
+        /*
         if (automata[i][j][k].cadPush == "RR"||automata[i][j][k].cadPush == "R$") {
             push (&miPila,1);
         }
@@ -208,6 +212,7 @@ int main () {
         if (automata[i][j][k].cadPush == "eps") {
             pop (&miPila);
         }
+        */
 
         ultimoEstado = i;
 
