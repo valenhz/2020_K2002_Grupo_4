@@ -175,4 +175,4 @@ void evaluar_Expresion(int ultimoEstado, struct nodo *ptrPila){
     if (ultimoEstado == 2 && (strcmp(ptrPila->dato, "$"))){printf("%s", "Expresion Valida");} else 
     {printf("%s", "Expresion Invalida"); }}
 
-    
+
