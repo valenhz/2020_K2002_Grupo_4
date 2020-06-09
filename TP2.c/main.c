@@ -7,15 +7,15 @@
  //Estructura para generar la matriz
 struct estado {    
     int estado_siguiente;
-    char cadPush [3];
+    char *cadPush [3];
 };
 
 //Prototipo funcion ingresar
-struct estado ingresar (int a, char b[]);
+struct estado ingresar (int a, char *b[]);
 
 //Estructura para el manejo de la pila
 struct nodo {
-    char dato[3];
+    char *dato[3];
     struct nodo *siguiente;
 };
 
@@ -23,9 +23,9 @@ struct nodo {
 struct nodo *ptrPila = NULL;
 
 //Prototipo push
-void push (char dato[3]);
+void push (char *dato[3]);
 //Prototipo pop
-void pop(void);
+void pop(struct nodo* ptrPila);
 
 //Prototipo evaluar_Expresion
 void evaluar_Expresion (int ultimoEstado, struct nodo *ptrPila);
@@ -125,7 +125,7 @@ if (caracter != ' ') {
         if (strcmp (ptrPila -> dato, "$")){j = 0;} else {j = 1;}
         
         //Hace el pop
-        pop();
+        pop(ptrPila);
         //Hace un push adicional segun el caracter que entra y como esta la pila
         if (i == 0 && caracter == '(' && ptrPila == NULL){ push("$"); }
         if (i == 0 && caracter == '(' && ptrPila != NULL){ push("R"); }
@@ -149,21 +149,21 @@ if (caracter != ' ') {
 
 
 //Permite ingresar elementos al automata accediendo a cada campo del struct
-struct estado ingresar (int a, char b[3]) {
+struct estado ingresar (int a, char *b[3]) {
     struct estado x;
     x.estado_siguiente = a;
-    strcpy (b, x.cadPush);
+    strcpy (x.cadPush, b);
     return x; }
 
 //Algoritmo de push
-void push (char string[]) {
+void push (char *string[]) {
     struct nodo *nuevoNodo = malloc(sizeof(struct nodo));
-    strcpy(string, nuevoNodo -> dato);
+    strcpy(nuevoNodo -> dato, string);
     nuevoNodo -> siguiente = ptrPila;
     ptrPila = nuevoNodo; }
 
 //Algoritmo de pop
-void pop(){
+void pop(struct nodo *ptrPila){
     if (ptrPila != NULL){
         struct nodo* temporal = ptrPila;
         ptrPila = ptrPila -> siguiente;
@@ -174,3 +174,5 @@ void evaluar_Expresion(int ultimoEstado, struct nodo *ptrPila){
     if (ultimoEstado == 1 && (strcmp(ptrPila->dato, "$"))){printf("%s", "Expresion Valida");} else
     if (ultimoEstado == 2 && (strcmp(ptrPila->dato, "$"))){printf("%s", "Expresion Valida");} else 
     {printf("%s", "Expresion Invalida"); }}
+
+    
