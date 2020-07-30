@@ -19,8 +19,15 @@
 
 [+-=/*<>] {printf("Encontre un operador \n");}
 
-[5] {printf("Encontre un signo de puntuacion \n");}
-
 
 %%
+
+int main() {
+   
+    yyin = fopen("entrada.c", "r"); 
+    yyout = fopen("salida.txt", "w");	
+    yylex();
+	
+    return 0;
+}
 
