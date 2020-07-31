@@ -26,7 +26,7 @@ int sumaDecimales = 0;
 
 \".*\" {printf("Se encontro un literal cadena \n");}
 
-[+-=/*<>] {printf("Encontre un operador \n");}
+"*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="|"=="|"||" {printf("Encontre un operador \n");}
 
 
 %%
