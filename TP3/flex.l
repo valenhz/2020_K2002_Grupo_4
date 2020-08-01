@@ -8,9 +8,12 @@
 
 int sumaDecimales = 0;
 
-
 %}
 
+ESTRUCTURAS_DE_CONTROL "if"|"else"|"do"|"for"|"while"|"switch"|"case"|"break"
+TIPOS_DE_DATO "char"|"double"|"float"|"int"|"long"|"struct"|"void"|"unsigned"|"signed"|"const"
+
+OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="|"=="|"||"
 %%
 
 [1-9][0-9]* {
@@ -24,16 +27,17 @@ int sumaDecimales = 0;
 
 "return" | "sizeof" | "typedef" | {printf("Encontre una palabra reservada \n");}
 
-"char" | "double" | "float" | "int" | "long" | "struct" | "void" | "unsigned" | "signed" | "const" {printf("Encontre un identificador \n");}
+{TIPOS_DE_DATO} {printf("Encontre un tipo de dato \n");}
 
-"if" | "else" | "do" | "for" | "while" {printf("Encontre una estructura de control \n");}
+{ESTRUCTURAS_DE_CONTROL} {printf("Encontre una estructura de control \n");}
 
 [a-zA-Z_][a-zA-Z0-9_]* {printf("Encontre un identificador \n");}
 
 \".*\" {printf("Se encontro un literal cadena \n");}
 
-"*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="|"=="|"||" {printf("Encontre un operador \n");}
+{OPERADORES} {printf("Encontre un operador \n");}
 
+\/\/[^\n]* {printf("Encontre un comentario \n");}
 
 %%
 
