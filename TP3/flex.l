@@ -26,7 +26,7 @@ int sumaDecimales = 0;
 
 "char" | "double" | "float" | "int" | "long" | "struct" | "void" | "unsigned" | "signed" | "const" {printf("Encontre un identificador \n");}
 
-"if" | "else" | "do" | "for" | "while" {printf("Encontre una palabra reservada \n");}
+"if" | "else" | "do" | "for" | "while" {printf("Encontre una estructura de control \n");}
 
 [a-zA-Z_][a-zA-Z0-9_]* {printf("Encontre un identificador \n");}
 
