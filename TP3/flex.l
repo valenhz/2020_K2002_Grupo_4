@@ -22,6 +22,12 @@ int sumaDecimales = 0;
 
 [(){}\[\]\;\,] {printf("Encontre el caracter de puntuacion %c \n",yytext[0]);}
 
+"return" | "sizeof" | "typedef" | {printf("Encontre una palabra reservada \n");}
+
+"char" | "double" | "float" | "int" | "long" | "struct" | "void" | "unsigned" | "signed" | "const" {printf("Encontre un identificador \n");}
+
+"if" | "else" | "do" | "for" | "while" {printf("Encontre una palabra reservada \n");}
+
 [a-zA-Z_][a-zA-Z0-9_]* {printf("Encontre un identificador \n");}
 
 \".*\" {printf("Se encontro un literal cadena \n");}
