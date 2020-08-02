@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include "listas.h"
+#include "operadores.h"
 
 int sumaDecimales = 0;
 
@@ -23,9 +24,12 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 0[0-7]* {printf("Encontre una constante entera octal \n");}
 0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal \n");}
 
-[(){}\[\]\;\,] {printf("Encontre el caracter de puntuacion %c \n",yytext[0]);}
+[(){}\[\]\;\,] {
+    printf("Encontre el caracter de puntuacion %c \n",yytext[0]);
+    agregarCaracter(yytext[0], caracteresP);
+}
 
-"return" | "sizeof" | "typedef" | {printf("Encontre una palabra reservada \n");}
+"return"|"sizeof"|"typedef" {printf("Encontre una palabra reservada \n");}
 
 {TIPOS_DE_DATO} {printf("Encontre un tipo de dato \n");}
 
@@ -49,7 +53,9 @@ int main() {
     yyout = fopen("salida.txt", "w");	
     yylex();
 	
+    FILE * archivoSalida = fopen("Informe.txt","w");
     printf("la suma de todos los decimales es %i \n", sumaDecimales);
+    mostrarCdePuntuacion(archivoSalida, caracteresP);
 
     return 0;
 }

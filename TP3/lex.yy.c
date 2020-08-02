@@ -437,10 +437,11 @@ char *yytext;
 
 #include <stdio.h>
 #include "listas.h"
+#include "operadores.h"
 
 int sumaDecimales = 0;
 
-#line 444 "lex.yy.c"
+#line 445 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -591,10 +592,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 17 "flex.l"
+#line 18 "flex.l"
 
 
-#line 598 "lex.yy.c"
+#line 599 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -679,7 +680,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "flex.l"
+#line 20 "flex.l"
 {
     int numero = atoi(yytext);
     sumaDecimales += numero;
@@ -687,57 +688,60 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 23 "flex.l"
+#line 24 "flex.l"
 {printf("Encontre una constante entera octal \n");}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 24 "flex.l"
+#line 25 "flex.l"
 {printf("Encontre una constante entera hexadecimal \n");}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "flex.l"
-{printf("Encontre el caracter de puntuacion %c \n",yytext[0]);}
+#line 27 "flex.l"
+{
+    printf("Encontre el caracter de puntuacion %c \n",yytext[0]);
+    agregarCaracter(yytext[0], caracteresP);
+    }
 	YY_BREAK
 case 5:
-#line 29 "flex.l"
+#line 33 "flex.l"
 case 6:
 YY_RULE_SETUP
-#line 30 "flex.l"
+#line 34 "flex.l"
 {printf("Encontre un tipo de dato \n");}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 32 "flex.l"
+#line 36 "flex.l"
 {printf("Encontre una estructura de control \n");}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 34 "flex.l"
+#line 38 "flex.l"
 {printf("Encontre un identificador \n");}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 36 "flex.l"
+#line 40 "flex.l"
 {printf("Se encontro un literal cadena \n");}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 38 "flex.l"
+#line 42 "flex.l"
 {printf("Encontre un operador \n");}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 40 "flex.l"
+#line 44 "flex.l"
 {printf("Encontre un comentario \n");}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 42 "flex.l"
+#line 46 "flex.l"
 ECHO;
 	YY_BREAK
-#line 741 "lex.yy.c"
+#line 745 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1623,7 +1627,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 42 "flex.l"
+#line 46 "flex.l"
 
 
 int main() {
@@ -1634,7 +1638,9 @@ int main() {
     yyout = fopen("salida.txt", "w");	
     yylex();
 	
+    FILE * archivoSalida = fopen("Informe.txt","w");
     printf("la suma de todos los decimales es %i \n", sumaDecimales);
+    mostrarCdePuntuacion(archivoSalida, caracteresP);
 
     return 0;
 }

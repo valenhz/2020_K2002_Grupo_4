@@ -1,0 +1,8 @@
+El caracter de puntuacion ( aparecio 2 veces 
+El caracter de puntuacion ) aparecio 2 veces 
+El caracter de puntuacion [ aparecio 1 vez 
+El caracter de puntuacion ] aparecio 2 veces 
+El caracter de puntuacion { aparecio 4 veces 
+El caracter de puntuacion } aparecio 4 veces 
+El caracter de puntuacion ; aparecio 3 veces 
+El caracter de puntuacion , aparecio 3 veces 

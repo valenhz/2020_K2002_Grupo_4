@@ -9,6 +9,8 @@ if (a<10)
     a++;
 }
 
+{{{}}}
+[]],,,
 //holisssssss qjwkeljq qlkwjeqklwe kjeqlwkejq qlkejqlke qlkwjqke hola letra int void 
 
 int void casa 55 //hola
