@@ -43,6 +43,8 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 
 \/\/[^\n]* {printf("Encontre un comentario \n");}
 
+[.]* {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
+
 %%
 
 int main() {
