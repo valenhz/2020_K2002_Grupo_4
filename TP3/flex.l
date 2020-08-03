@@ -24,6 +24,10 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 0[0-7]* {printf("Encontre una constante entera octal \n");}
 0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal \n");}
 
+\/\/[^\n]* {printf("Encontre un comentario \n");}
+
+\'.\' {printf("Encontre una constante caracter\n");}
+
 [(){}\[\]\;\,] {
     printf("Encontre el caracter de puntuacion %c \n",yytext[0]);
     agregarCaracter(yytext[0], caracteresP);
@@ -40,8 +44,6 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 \".*\" {printf("Se encontro un literal cadena \n");}
 
 {OPERADORES} {printf("Encontre un operador \n");}
-
-\/\/[^\n]* {printf("Encontre un comentario \n");}
 
 [.]* {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
 

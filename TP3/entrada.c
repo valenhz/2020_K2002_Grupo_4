@@ -21,4 +21,9 @@ if (a<10)
 int void casa 55 //hola
 
 .......
-
+'a'
+'+'
+'
+'
+"sds
+asdad"
