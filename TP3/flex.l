@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "listas.h"
 #include "operadores.h"
+#include "masfunciones.h"
 
 int sumaDecimales = 0;
 
@@ -23,6 +24,7 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 }
 0[0-7]* {printf("Encontre una constante entera octal \n");}
 0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal \n");}
+[0–9]*\.[0–9]+ {printf("Encontre un numero real en punto fijo\n");}
 
 \/\/[^\n]* {printf("Encontre un comentario \n");}
 
@@ -58,8 +60,24 @@ int main() {
     yylex();
 	
     FILE * archivoSalida = fopen("Informe.txt","w");
-    printf("la suma de todos los decimales es %i \n", sumaDecimales);
+    
+    mostrarTitulo(archivoSalida, "IDENTIFICADORES");
+    mostrarTitulo(archivoSalida, "LITERALES CADENA");
+    mostrarTitulo(archivoSalida, "PALABRAS RESERVADAS");
+    mostrarTitulo(archivoSalida, "CONSTANTES");
+    mostrarSubtitulo(archivoSalida, "Constantes Decimales");
+    fprintf(archivoSalida, "        aca va la lista de todos los decimales que aparecieron\n");
+    fprintf(archivoSalida, "\n        La suma de todos los decimales es %i \n", sumaDecimales);
+    mostrarSubtitulo(archivoSalida, "Constantes Octales");
+    mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");
+    mostrarSubtitulo(archivoSalida, "Constantes Reales");
+    mostrarSubtitulo(archivoSalida, "Constantes Caracter");
+    mostrarTitulo(archivoSalida, "OPERADORES");
+    mostrarTitulo(archivoSalida, "CARACTERES DE PUNTUACION");
     mostrarCdePuntuacion(archivoSalida, caracteresP);
+    mostrarTitulo(archivoSalida, "COMENTARIOS");
+    mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
+    
 
     return 0;
 }
