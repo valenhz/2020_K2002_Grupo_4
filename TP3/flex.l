@@ -22,11 +22,12 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
     int numero = atoi(yytext);
     sumaDecimales += numero;
 }
-0[0-7]* {printf("Encontre una constante entera octal \n");}
-0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal \n");}
+0[0-7]* {printf("Encontre una constante entera octal\n");}
+0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal\n");}
 [0–9]*\.[0–9]+ {printf("Encontre un numero real en punto fijo\n");}
 
-\/\/[^\n]* {printf("Encontre un comentario \n");}
+\/\/[^\n]* {printf("Encontre el comentario de una linea: %s\n", yytext);}
+\/\*[^(\*\/)]*\*+\/ {printf("Encontre el comentario largo: %s\n", yytext);}
 
 \'.\' {printf("Encontre una constante caracter\n");}
 
