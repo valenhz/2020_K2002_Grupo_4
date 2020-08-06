@@ -14,6 +14,7 @@ int sumaDecimales = 0;
 
 ESTRUCTURAS_DE_CONTROL "if"|"else"|"do"|"for"|"while"|"switch"|"case"|"break"
 TIPOS_DE_DATO "char"|"double"|"float"|"int"|"long"|"struct"|"void"|"unsigned"|"signed"|"const"
+OTRAS_PALABRASRESERVADAS "return"|"sizeof"|"typedef"
 
 OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="|"=="|"||"
 %%
@@ -36,7 +37,7 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
     agregarCaracter(yytext[0], caracteresP);
 }
 
-"return"|"sizeof"|"typedef" {printf("Encontre una palabra reservada \n");}
+{OTRAS_PALABRASRESERVADAS} {printf("Encontre una palabra reservada \n");}
 
 {TIPOS_DE_DATO} {printf("Encontre un tipo de dato \n");}
 
@@ -46,7 +47,10 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 
 \".*\" {printf("Se encontro un literal cadena \n");}
 
-{OPERADORES} {printf("Encontre un operador \n");}
+{OPERADORES} {
+    printf("Encontre un operador \n");
+    agregarOperador(yytext, operadores);
+    }
 
 [.]* {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
 
@@ -74,6 +78,7 @@ int main() {
     mostrarSubtitulo(archivoSalida, "Constantes Reales");
     mostrarSubtitulo(archivoSalida, "Constantes Caracter");
     mostrarTitulo(archivoSalida, "OPERADORES");
+    mostrarOperadores(archivoSalida, operadores);
     mostrarTitulo(archivoSalida, "CARACTERES DE PUNTUACION");
     mostrarCdePuntuacion(archivoSalida, caracteresP);
     mostrarTitulo(archivoSalida, "COMENTARIOS");
