@@ -11,6 +11,8 @@
 
 int sumaDecimales = 0;
 Nodo *listaDecimales = NULL;
+Nodo *listaOctales = NULL;
+Nodo *listaHexadecimales = NULL;
 
 %}
 
@@ -26,8 +28,14 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
     sumaDecimales += numero;
     insertar(&listaDecimales, numero);
 }
-0[0-7]* {printf("Encontre una constante entera octal\n");}
-0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal\n");}
+0[0-7]* {
+    int numero = strtol(yytext, NULL, 8);
+    insertar(&listaOctales, numero);
+}
+0[xX][0-9a-fA-F]+ {
+    int numero = strtol(yytext, NULL, 16);
+    insertar(&listaHexadecimales, numero);
+}
 [0–9]*\.[0–9]+ {printf("Encontre un numero real en punto fijo\n");}
 
 \/\/[^\n]* {printf("Encontre el comentario de una linea: %s\n", yytext);}
@@ -60,8 +68,6 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 %%
 
 int main() {
-   
-    int a = 0;
 
     yyin = fopen("entrada.c", "r"); 
     yyout = fopen("salida.txt", "w");	
@@ -70,21 +76,28 @@ int main() {
     FILE * archivoSalida = fopen("Informe.txt","w");
     
     mostrarTitulo(archivoSalida, "IDENTIFICADORES");
+
     mostrarTitulo(archivoSalida, "LITERALES CADENA");
+    
     mostrarTitulo(archivoSalida, "PALABRAS RESERVADAS");
+    
     mostrarTitulo(archivoSalida, "CONSTANTES");
-    mostrarSubtitulo(archivoSalida, "Constantes Decimales");
-    fprintf(archivoSalida, "        Lista de todos los decimales que aparecieron\n");
-    mostrarLista(archivoSalida, listaDecimales);
-    fprintf(archivoSalida, "\n        La suma de todos los decimales es %i \n", sumaDecimales);
-    mostrarSubtitulo(archivoSalida, "Constantes Octales");
-    mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");
-    mostrarSubtitulo(archivoSalida, "Constantes Reales");
-    mostrarSubtitulo(archivoSalida, "Constantes Caracter");
+        mostrarSubtitulo(archivoSalida, "Constantes Decimales");
+        fprintf(archivoSalida, "        Lista de todos los decimales que aparecieron\n");
+        mostrarLista(archivoSalida, listaDecimales);
+        fprintf(archivoSalida, "\n        La suma de todos los decimales es %i \n", sumaDecimales);
+        mostrarSubtitulo(archivoSalida, "Constantes Octales");
+        mostrarListaOctal(archivoSalida, listaOctales);
+        mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");
+        mostrarListaHexa(archivoSalida, listaHexadecimales);
+        mostrarSubtitulo(archivoSalida, "Constantes Reales");
+        mostrarSubtitulo(archivoSalida, "Constantes Caracter");
+    
     mostrarTitulo(archivoSalida, "OPERADORES");
-    mostrarOperadores(archivoSalida, operadores);
+        mostrarOperadores(archivoSalida, operadores);
+    
     mostrarTitulo(archivoSalida, "CARACTERES DE PUNTUACION");
-    mostrarCdePuntuacion(archivoSalida, caracteresP);
+        mostrarCdePuntuacion(archivoSalida, caracteresP);
     mostrarTitulo(archivoSalida, "COMENTARIOS");
     mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
     

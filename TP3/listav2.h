@@ -35,3 +35,27 @@ void mostrarLista (FILE *archivo, Nodo *cabeza){
         aux = aux->sig;
     }
 }
+
+void mostrarOctal (FILE* archivo, int octal){
+    fprintf(archivo, "        %o -> valor decimal %d \n", octal, octal);
+}
+
+void mostrarHexa (FILE* archivo, int hexa){
+    fprintf(archivo, "        %x -> valor decimal %d \n", hexa, hexa);
+}
+
+void mostrarListaOctal (FILE *archivo, Nodo *cabeza){ 
+    Nodo *aux = cabeza;
+    while(aux != NULL){
+        mostrarOctal (archivo, aux->numero);
+        aux = aux->sig;
+    }
+}
+
+void mostrarListaHexa (FILE *archivo, Nodo *cabeza){ 
+    Nodo *aux = cabeza;
+    while(aux != NULL){
+        mostrarHexa (archivo, aux->numero);
+        aux = aux->sig;
+    }
+}

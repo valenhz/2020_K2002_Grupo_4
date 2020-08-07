@@ -470,8 +470,10 @@ char *yytext;
 
 int sumaDecimales = 0;
 Nodo *listaDecimales = NULL;
+Nodo *listaOctales = NULL;
+Nodo *listaHexadecimales = NULL;
 
-#line 475 "lex.yy.c"
+#line 477 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -622,10 +624,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 22 "flex.l"
+#line 24 "flex.l"
 
 
-#line 629 "lex.yy.c"
+#line 631 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -710,7 +712,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 24 "flex.l"
+#line 26 "flex.l"
 {
     int numero = atoi(yytext);
     sumaDecimales += numero;
@@ -719,37 +721,43 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 29 "flex.l"
-{printf("Encontre una constante entera octal\n");}
+#line 31 "flex.l"
+{
+    int numero = strtol(yytext, NULL, 8);
+    insertar(&listaOctales, numero);
+}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 30 "flex.l"
-{printf("Encontre una constante entera hexadecimal\n");}
+#line 35 "flex.l"
+{
+    int numero = strtol(yytext, NULL, 16);
+    insertar(&listaHexadecimales, numero);
+}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 31 "flex.l"
+#line 39 "flex.l"
 {printf("Encontre un numero real en punto fijo\n");}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 33 "flex.l"
+#line 41 "flex.l"
 {printf("Encontre el comentario de una linea: %s\n", yytext);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 34 "flex.l"
+#line 42 "flex.l"
 {printf("Encontre el comentario largo: %s\n", yytext);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 36 "flex.l"
+#line 44 "flex.l"
 {printf("Encontre una constante caracter\n");}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 38 "flex.l"
+#line 46 "flex.l"
 {
     printf("Encontre el caracter de puntuacion %c \n",yytext[0]);
     agregarCaracter(yytext[0], caracteresP);
@@ -757,32 +765,32 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 43 "flex.l"
+#line 51 "flex.l"
 {printf("Encontre una palabra reservada \n");}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 45 "flex.l"
+#line 53 "flex.l"
 {printf("Encontre un tipo de dato \n");}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 47 "flex.l"
+#line 55 "flex.l"
 {printf("Encontre una estructura de control \n");}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 49 "flex.l"
+#line 57 "flex.l"
 {printf("Encontre un identificador \n");}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 51 "flex.l"
+#line 59 "flex.l"
 {printf("Se encontro un literal cadena \n");}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 53 "flex.l"
+#line 61 "flex.l"
 {
     printf("Encontre un operador \n");
     agregarOperador(yytext, operadores);
@@ -790,15 +798,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 58 "flex.l"
+#line 66 "flex.l"
 {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 60 "flex.l"
+#line 68 "flex.l"
 ECHO;
 	YY_BREAK
-#line 802 "lex.yy.c"
+#line 810 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1684,12 +1692,10 @@ int main()
 	return 0;
 	}
 #endif
-#line 60 "flex.l"
+#line 68 "flex.l"
 
 
 int main() {
-   
-    int a = 0;
 
     yyin = fopen("entrada.c", "r"); 
     yyout = fopen("salida.txt", "w");	
@@ -1698,21 +1704,28 @@ int main() {
     FILE * archivoSalida = fopen("Informe.txt","w");
     
     mostrarTitulo(archivoSalida, "IDENTIFICADORES");
+
     mostrarTitulo(archivoSalida, "LITERALES CADENA");
+    
     mostrarTitulo(archivoSalida, "PALABRAS RESERVADAS");
+    
     mostrarTitulo(archivoSalida, "CONSTANTES");
-    mostrarSubtitulo(archivoSalida, "Constantes Decimales");
-    fprintf(archivoSalida, "        Lista de todos los decimales que aparecieron\n");
-    mostrarLista(archivoSalida, listaDecimales);
-    fprintf(archivoSalida, "\n        La suma de todos los decimales es %i \n", sumaDecimales);
-    mostrarSubtitulo(archivoSalida, "Constantes Octales");
-    mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");
-    mostrarSubtitulo(archivoSalida, "Constantes Reales");
-    mostrarSubtitulo(archivoSalida, "Constantes Caracter");
+        mostrarSubtitulo(archivoSalida, "Constantes Decimales");
+        fprintf(archivoSalida, "        Lista de todos los decimales que aparecieron\n");
+        mostrarLista(archivoSalida, listaDecimales);
+        fprintf(archivoSalida, "\n        La suma de todos los decimales es %i \n", sumaDecimales);
+        mostrarSubtitulo(archivoSalida, "Constantes Octales");
+        mostrarListaOctal(archivoSalida, listaOctales);
+        mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");
+        mostrarListaHexa(archivoSalida, listaHexadecimales);
+        mostrarSubtitulo(archivoSalida, "Constantes Reales");
+        mostrarSubtitulo(archivoSalida, "Constantes Caracter");
+    
     mostrarTitulo(archivoSalida, "OPERADORES");
-    mostrarOperadores(archivoSalida, operadores);
+        mostrarOperadores(archivoSalida, operadores);
+    
     mostrarTitulo(archivoSalida, "CARACTERES DE PUNTUACION");
-    mostrarCdePuntuacion(archivoSalida, caracteresP);
+        mostrarCdePuntuacion(archivoSalida, caracteresP);
     mostrarTitulo(archivoSalida, "COMENTARIOS");
     mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
     

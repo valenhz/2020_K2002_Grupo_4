@@ -24,9 +24,15 @@
 
     **Constantes Octales**
 
+        557 -> valor decimal 367 
+        77 -> valor decimal 63 
+        31 -> valor decimal 25 
+        256 -> valor decimal 174 
 
     **Constantes Hexadecimales**
 
+        a29 -> valor decimal 2601 
+        57 -> valor decimal 87 
 
     **Constantes Reales**
 
