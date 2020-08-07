@@ -4,11 +4,13 @@
 %{
 
 #include <stdio.h>
-#include "listas.h"
+//#include "listas.h"
+#include "listav2.h"
 #include "operadores.h"
 #include "masfunciones.h"
 
 int sumaDecimales = 0;
+Nodo *listaDecimales = NULL;
 
 %}
 
@@ -22,6 +24,7 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 [1-9][0-9]* {
     int numero = atoi(yytext);
     sumaDecimales += numero;
+    insertar(&listaDecimales, numero);
 }
 0[0-7]* {printf("Encontre una constante entera octal\n");}
 0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal\n");}
@@ -71,7 +74,8 @@ int main() {
     mostrarTitulo(archivoSalida, "PALABRAS RESERVADAS");
     mostrarTitulo(archivoSalida, "CONSTANTES");
     mostrarSubtitulo(archivoSalida, "Constantes Decimales");
-    fprintf(archivoSalida, "        aca va la lista de todos los decimales que aparecieron\n");
+    fprintf(archivoSalida, "        Lista de todos los decimales que aparecieron\n");
+    mostrarLista(archivoSalida, listaDecimales);
     fprintf(archivoSalida, "\n        La suma de todos los decimales es %i \n", sumaDecimales);
     mostrarSubtitulo(archivoSalida, "Constantes Octales");
     mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");

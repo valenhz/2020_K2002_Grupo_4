@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct caracterPuntuacion {
     char caracter;
@@ -30,9 +31,9 @@ void mostrarCdePuntuacion (FILE* archivo, Puntuacion vector[]) {
     for (int i = 0; i < 8; i++) {
         if (vector[i].cantidad > 0) {
             if (vector[i].cantidad == 1) {
-                fprintf(archivo, "El caracter de puntuacion %c aparecio %i vez \n", vector[i].caracter, vector[i].cantidad);    
+                fprintf(archivo, "        El caracter de puntuacion %c aparecio %i vez \n", vector[i].caracter, vector[i].cantidad);    
             } else {
-                fprintf(archivo, "El caracter de puntuacion %c aparecio %i veces \n", vector[i].caracter, vector[i].cantidad);
+                fprintf(archivo, "        El caracter de puntuacion %c aparecio %i veces \n", vector[i].caracter, vector[i].cantidad);
             }
         }  
     }
@@ -76,13 +77,13 @@ void agregarOperador (char operadorNuevo[2], Operador vector[]) {
     }
 }
 
-void mostrarOperador (FILE* archivo, Operador vector[]) {
+void mostrarOperadores (FILE* archivo, Operador vector[]) {
     for (int i = 0; i < 19; i++) {
         if (vector[i].cantidad > 0) {
             if (vector[i].cantidad == 1) {
-                fprintf(archivo, "      El operador %s aparecio %i vez \n", vector[i].caracter, vector[i].cantidad);    
+                fprintf(archivo, "        El operador %s aparecio %i vez \n", vector[i].caracter, vector[i].cantidad);    
             } else {
-                fprintf(archivo, "      El operador de puntuacion %s aparecio %i veces \n", vector[i].caracter, vector[i].cantidad);
+                fprintf(archivo, "        El operador %s aparecio %i veces \n", vector[i].caracter, vector[i].cantidad);
             }
         }  
     }

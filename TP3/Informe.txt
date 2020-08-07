@@ -13,7 +13,12 @@
 
     **Constantes Decimales**
 
-        aca va la lista de todos los decimales que aparecieron
+        Lista de todos los decimales que aparecieron
+        -> 55
+        -> 10
+        -> 5
+        -> 5
+        -> 23
 
         La suma de todos los decimales es 98 
 
@@ -31,17 +36,21 @@
 
 *OPERADORES*
 
+        El operador + aparecio 1 vez 
+        El operador = aparecio 2 veces 
+        El operador < aparecio 1 vez 
+        El operador ++ aparecio 1 vez 
 
 *CARACTERES DE PUNTUACION*
 
-El caracter de puntuacion ( aparecio 2 veces 
-El caracter de puntuacion ) aparecio 2 veces 
-El caracter de puntuacion [ aparecio 1 vez 
-El caracter de puntuacion ] aparecio 2 veces 
-El caracter de puntuacion { aparecio 4 veces 
-El caracter de puntuacion } aparecio 4 veces 
-El caracter de puntuacion ; aparecio 3 veces 
-El caracter de puntuacion , aparecio 3 veces 
+        El caracter de puntuacion ( aparecio 2 veces 
+        El caracter de puntuacion ) aparecio 2 veces 
+        El caracter de puntuacion [ aparecio 1 vez 
+        El caracter de puntuacion ] aparecio 2 veces 
+        El caracter de puntuacion { aparecio 4 veces 
+        El caracter de puntuacion } aparecio 4 veces 
+        El caracter de puntuacion ; aparecio 3 veces 
+        El caracter de puntuacion , aparecio 3 veces 
 
 *COMENTARIOS*
 
