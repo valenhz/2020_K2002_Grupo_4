@@ -13,6 +13,9 @@ int sumaDecimales = 0;
 Nodo *listaDecimales = NULL;
 Nodo *listaOctales = NULL;
 Nodo *listaHexadecimales = NULL;
+NodoChar *listaDeComentarios = NULL;
+NodoChar *listaDeComentariosLargos = NULL;
+NodoL *listaDeLiteralesCadena = NULL;
 
 %}
 
@@ -21,30 +24,39 @@ TIPOS_DE_DATO "char"|"double"|"float"|"int"|"long"|"struct"|"void"|"unsigned"|"s
 OTRAS_PALABRASRESERVADAS "return"|"sizeof"|"typedef"
 
 OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="|"=="|"||"
+CARACTERES_DE_PUNTUACION [(){}\[\]\;\,]
+
+DIGITO_DECIMAL [0-9]
+DIGITO_OCTAL [0-7]
+DIGITO_HEXA [0-9a-fA-F]
+
 %%
 
-[1-9][0-9]* {
+[1-9]{DIGITO_DECIMAL}* {
     int numero = atoi(yytext);
     sumaDecimales += numero;
     insertar(&listaDecimales, numero);
 }
-0[0-7]* {
+0{DIGITO_OCTAL}* {
     int numero = strtol(yytext, NULL, 8);
     insertar(&listaOctales, numero);
 }
-0[xX][0-9a-fA-F]+ {
+0[xX]{DIGITO_HEXA}+ {
     int numero = strtol(yytext, NULL, 16);
     insertar(&listaHexadecimales, numero);
 }
 [0–9]*\.[0–9]+ {printf("Encontre un numero real en punto fijo\n");}
 
-\/\/[^\n]* {printf("Encontre el comentario de una linea: %s\n", yytext);}
-\/\*[^(\*\/)]*\*+\/ {printf("Encontre el comentario largo: %s\n", yytext);}
+\/\/[^\n]* {
+    insertarC(&listaDeComentarios, yytext);    
+}
+\/\*[^(\*\/)]*\*+\/ {
+    insertarC(&listaDeComentariosLargos, yytext);    
+}
 
 \'.\' {printf("Encontre una constante caracter\n");}
 
-[(){}\[\]\;\,] {
-    printf("Encontre el caracter de puntuacion %c \n",yytext[0]);
+{CARACTERES_DE_PUNTUACION} {
     agregarCaracter(yytext[0], caracteresP);
 }
 
@@ -56,10 +68,11 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 
 [a-zA-Z_][a-zA-Z0-9_]* {printf("Encontre un identificador \n");}
 
-\".*\" {printf("Se encontro un literal cadena \n");}
+\"[^"]*\" {
+    insertarL(&listaDeLiteralesCadena, yytext, yyleng);
+}
 
 {OPERADORES} {
-    printf("Encontre un operador \n");
     agregarOperador(yytext, operadores);
     }
 
@@ -78,6 +91,7 @@ int main() {
     mostrarTitulo(archivoSalida, "IDENTIFICADORES");
 
     mostrarTitulo(archivoSalida, "LITERALES CADENA");
+        mostrarListaL(archivoSalida, listaDeLiteralesCadena);
     
     mostrarTitulo(archivoSalida, "PALABRAS RESERVADAS");
     
@@ -99,6 +113,10 @@ int main() {
     mostrarTitulo(archivoSalida, "CARACTERES DE PUNTUACION");
         mostrarCdePuntuacion(archivoSalida, caracteresP);
     mostrarTitulo(archivoSalida, "COMENTARIOS");
+        mostrarSubtitulo(archivoSalida, "Comentarios de una linea");
+        mostrarListaC(archivoSalida, listaDeComentarios);
+        mostrarSubtitulo(archivoSalida, "Comentarios largos");
+        mostrarListaC(archivoSalida, listaDeComentariosLargos);
     mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
     
 

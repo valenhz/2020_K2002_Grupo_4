@@ -350,12 +350,12 @@ static yyconst short int yy_base[126] =
         0,    0,  216,  217,  195,  210,  217,  207,    0,  217,
        39,   37,   42,   45,   49,   55,  192,  191,  190,    0,
       170,   49,  171,  172,   40,   46,  169,  176,   46,  159,
-      167,  165,  169,  153,   65,  217,  195,  194,  190,  183,
-       73,  186,    0,   74,   81,   38,   87,    0,   91,   99,
-        0,  165,  153,  167,  155,  148,  149,  151,  148,    0,
-      145,  149,  143,   64,  144,  149,  143,  140,  146,  145,
-      217,  168,   48,    0,    0,  151,  146,  135,  133,  146,
-      142,  145,    0,  135,  120,  118,  120,  104,  104,  115,
+      167,  165,  169,  153,   65,  217,  195,  217,  191,  184,
+       73,  187,    0,   74,   81,   38,   87,    0,   91,   99,
+        0,  166,  154,  168,  156,  149,  150,  152,  149,    0,
+      146,  150,  144,   64,  145,  150,  144,  141,  147,  146,
+      217,  169,   48,    0,    0,  152,  147,  136,  134,  147,
+      143,  146,    0,  139,  124,  126,  125,  104,  104,  115,
       110,  114,  106,  217,  106,   98,  103,   96,   97,  105,
 
        96,  105,  104,  102,   97,   98,   97,   89,   96,   93,
@@ -368,7 +368,7 @@ static yyconst short int yy_def[126] =
       119,    1,  119,  119,  119,  120,  119,  119,  121,  119,
       119,  119,  119,  119,  119,  119,  119,  119,  119,  122,
       122,  122,  122,  122,  122,  122,  122,  122,  122,  122,
-      122,  122,  122,  119,  119,  119,  120,  120,  119,  119,
+      122,  122,  122,  119,  119,  119,  120,  119,  119,  119,
       119,  123,  124,  119,  119,  119,  119,  125,  119,  119,
       122,  122,  122,  122,  122,  122,  122,  122,  122,  122,
       122,  122,  122,  122,  122,  122,  122,  122,  122,  122,
@@ -398,12 +398,12 @@ static yyconst short int yy_nxt[266] =
       117,   44,   47,   50,   49,   49,   50,  116,   60,   83,
        41,   41,  115,   83,  115,   83,   60,  114,   47,  113,
       112,  111,  110,  109,   47,  108,   83,  107,   83,   60,
-      106,   83,  105,  104,  103,  102,   47,   37,  101,   37,
-       37,   37,   39,  100,   39,   39,   39,   51,   51,   72,
-       72,   99,   72,   72,   74,   83,   74,   74,   74,   98,
-       60,   97,   96,   83,   60,   95,   73,   93,   92,   91,
-       90,   89,   88,   85,   84,   83,   60,   82,   81,   80,
-       79,   78,   77,   76,   73,   40,   71,   38,   38,   36,
+      106,   83,  105,  104,  103,  102,   47,   37,   37,   37,
+       37,   37,   39,  101,   39,   39,   39,   51,   51,   72,
+       72,  100,   72,   72,   74,   99,   74,   74,   74,   83,
+       98,   60,   97,   96,   83,   60,   95,   73,   93,   92,
+       91,   90,   89,   88,   85,   84,   83,   60,   82,   81,
+       80,   79,   78,   77,   76,   73,   40,   71,   38,   36,
 
        70,   69,   68,   67,   63,   62,   57,   56,   52,   36,
        36,   36,   36,   38,   36,  119,    3,  119,  119,  119,
@@ -431,12 +431,12 @@ static yyconst short int yy_chk[266] =
       114,   50,   35,   50,   50,   50,   50,  113,  112,  111,
        41,   44,  110,  109,  108,  107,  106,  105,   45,  104,
       103,  102,  101,  100,   47,   99,   98,   97,   96,   95,
-       93,   92,   91,   90,   89,   88,   50,  120,   87,  120,
-      120,  120,  121,   86,  121,  121,  121,  122,  122,  123,
-      123,   85,  123,  123,  124,   84,  124,  124,  124,   82,
-       81,   80,   79,   78,   77,   76,   72,   70,   69,   68,
-       67,   66,   65,   63,   62,   61,   59,   58,   57,   56,
-       55,   54,   53,   52,   42,   40,   39,   38,   37,   34,
+       93,   92,   91,   90,   89,   88,   50,  120,  120,  120,
+      120,  120,  121,   87,  121,  121,  121,  122,  122,  123,
+      123,   86,  123,  123,  124,   85,  124,  124,  124,   84,
+       82,   81,   80,   79,   78,   77,   76,   72,   70,   69,
+       68,   67,   66,   65,   63,   62,   61,   59,   58,   57,
+       56,   55,   54,   53,   52,   42,   40,   39,   37,   34,
 
        33,   32,   31,   30,   28,   27,   24,   23,   21,   19,
        18,   17,    8,    6,    5,    3,  119,  119,  119,  119,
@@ -472,8 +472,11 @@ int sumaDecimales = 0;
 Nodo *listaDecimales = NULL;
 Nodo *listaOctales = NULL;
 Nodo *listaHexadecimales = NULL;
+NodoChar *listaDeComentarios = NULL;
+NodoChar *listaDeComentariosLargos = NULL;
+NodoL *listaDeLiteralesCadena = NULL;
 
-#line 477 "lex.yy.c"
+#line 480 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -624,10 +627,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 24 "flex.l"
+#line 33 "flex.l"
 
 
-#line 631 "lex.yy.c"
+#line 634 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -712,7 +715,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 26 "flex.l"
+#line 35 "flex.l"
 {
     int numero = atoi(yytext);
     sumaDecimales += numero;
@@ -721,7 +724,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 31 "flex.l"
+#line 40 "flex.l"
 {
     int numero = strtol(yytext, NULL, 8);
     insertar(&listaOctales, numero);
@@ -729,7 +732,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 35 "flex.l"
+#line 44 "flex.l"
 {
     int numero = strtol(yytext, NULL, 16);
     insertar(&listaHexadecimales, numero);
@@ -737,76 +740,80 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 39 "flex.l"
+#line 48 "flex.l"
 {printf("Encontre un numero real en punto fijo\n");}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 41 "flex.l"
-{printf("Encontre el comentario de una linea: %s\n", yytext);}
+#line 50 "flex.l"
+{
+    insertarC(&listaDeComentarios, yytext);    
+}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 42 "flex.l"
-{printf("Encontre el comentario largo: %s\n", yytext);}
+#line 53 "flex.l"
+{
+    insertarC(&listaDeComentariosLargos, yytext);    
+}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 44 "flex.l"
+#line 57 "flex.l"
 {printf("Encontre una constante caracter\n");}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 46 "flex.l"
+#line 59 "flex.l"
 {
-    printf("Encontre el caracter de puntuacion %c \n",yytext[0]);
     agregarCaracter(yytext[0], caracteresP);
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 51 "flex.l"
+#line 63 "flex.l"
 {printf("Encontre una palabra reservada \n");}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 53 "flex.l"
+#line 65 "flex.l"
 {printf("Encontre un tipo de dato \n");}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 55 "flex.l"
+#line 67 "flex.l"
 {printf("Encontre una estructura de control \n");}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 57 "flex.l"
+#line 69 "flex.l"
 {printf("Encontre un identificador \n");}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 59 "flex.l"
-{printf("Se encontro un literal cadena \n");}
+#line 71 "flex.l"
+{
+    insertarL(&listaDeLiteralesCadena, yytext, yyleng);
+}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 61 "flex.l"
+#line 75 "flex.l"
 {
-    printf("Encontre un operador \n");
     agregarOperador(yytext, operadores);
     }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 66 "flex.l"
+#line 79 "flex.l"
 {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 68 "flex.l"
+#line 81 "flex.l"
 ECHO;
 	YY_BREAK
-#line 810 "lex.yy.c"
+#line 817 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1692,7 +1699,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 68 "flex.l"
+#line 81 "flex.l"
 
 
 int main() {
@@ -1706,6 +1713,7 @@ int main() {
     mostrarTitulo(archivoSalida, "IDENTIFICADORES");
 
     mostrarTitulo(archivoSalida, "LITERALES CADENA");
+        mostrarListaL(archivoSalida, listaDeLiteralesCadena);
     
     mostrarTitulo(archivoSalida, "PALABRAS RESERVADAS");
     
@@ -1727,6 +1735,10 @@ int main() {
     mostrarTitulo(archivoSalida, "CARACTERES DE PUNTUACION");
         mostrarCdePuntuacion(archivoSalida, caracteresP);
     mostrarTitulo(archivoSalida, "COMENTARIOS");
+        mostrarSubtitulo(archivoSalida, "Comentarios de una linea");
+        mostrarListaC(archivoSalida, listaDeComentarios);
+        mostrarSubtitulo(archivoSalida, "Comentarios largos");
+        mostrarListaC(archivoSalida, listaDeComentariosLargos);
     mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
     
 

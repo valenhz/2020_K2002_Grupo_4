@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct nodo{
     int numero;
@@ -57,5 +58,78 @@ void mostrarListaHexa (FILE *archivo, Nodo *cabeza){
     while(aux != NULL){
         mostrarHexa (archivo, aux->numero);
         aux = aux->sig;
+    }
+}
+
+typedef struct nodochar{
+    char palabra[500];
+    struct nodochar *sig;
+}NodoChar;
+
+NodoChar* CrearNodoC(char nuevaPalabra[]){
+    NodoChar* nodo = NULL;
+    nodo = (NodoChar *) malloc(sizeof (NodoChar));
+        if (nodo != NULL){
+        strcpy(nodo->palabra, nuevaPalabra);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int insertarC(NodoChar **cabeza, char nuevaPalabra[]){ 
+    NodoChar *nuevo;
+    nuevo = CrearNodoC(nuevaPalabra);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void mostrarListaC (FILE* archivo, NodoChar *cabeza){ 
+    NodoChar *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "        %s\n",auxi->palabra);
+        auxi = auxi->sig;
+    }
+}
+
+typedef struct nodoliteralcadena{
+    char cadena[500];
+    int largo;
+    struct nodoliteralcadena *sig;
+}NodoL;
+
+NodoL* CrearNodoL(char nuevaCadena[], int tamanio){
+    NodoL* nodo = NULL;
+    nodo = (NodoL *) malloc(sizeof (NodoL));
+        if (nodo != NULL){
+        strcpy(nodo->cadena, nuevaCadena);
+        nodo->largo = tamanio;
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int insertarL(NodoL **cabeza, char nuevaCadena[], int tamanio){ 
+    NodoL *nuevo;
+    nuevo = CrearNodoL(nuevaCadena, tamanio);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void mostrarListaL (FILE* archivo, NodoL *cabeza){ 
+    NodoL *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "        %s\n",auxi->cadena);
+        fprintf(archivo, "        largo = %d\n\n",auxi->largo);
+        auxi = auxi->sig;
     }
 }

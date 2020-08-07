@@ -4,6 +4,12 @@
 
 *LITERALES CADENA*
 
+        "sanguche de miga"
+        largo = 18
+
+        "milanesa"
+        largo = 10
+
 
 *PALABRAS RESERVADAS*
 
@@ -60,6 +66,15 @@
 
 *COMENTARIOS*
 
+
+    **Comentarios de una linea**
+
+        //hola
+        //holisssssss  hola letra int void 
+
+    **Comentarios largos**
+
+        /* holaassisisinonono */
 
 *CARACTERES NO RECONOCIDOS*
 
