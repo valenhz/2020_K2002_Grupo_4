@@ -29,6 +29,21 @@ int insertar(Nodo **cabeza, int numero){
     }
 }
 
+int insertarFinal(Nodo **cabeza, int numero){ 
+    Nodo *nuevo = NULL, *aux = *cabeza;
+    nuevo = CrearNodo(numero);
+    if (nuevo != NULL){    
+        while(aux->sig != NULL){
+                aux = aux->sig;
+            } 
+            aux->sig = nuevo;
+            return 1;
+    } else {
+        return 0;
+    } 
+}
+
+
 void mostrarLista (FILE *archivo, Nodo *cabeza){ 
     Nodo *aux = cabeza;
     while(aux != NULL){
@@ -86,6 +101,20 @@ int insertarC(NodoChar **cabeza, char nuevaPalabra[]){
     } else{
         return 0;
     }
+}
+
+int insertarFinalC(NodoChar **cabeza, char nuevaPalabra[]){ 
+    NodoChar *nuevo = NULL, *aux = *cabeza;
+    nuevo = CrearNodoC(nuevaPalabra);
+    if (nuevo != NULL){    
+        while(aux->sig != NULL){
+                aux = aux->sig;
+            } 
+            aux->sig = nuevo;
+            return 1;
+    } else {
+        return 0;
+    } 
 }
 
 void mostrarListaC (FILE* archivo, NodoChar *cabeza){ 
@@ -174,5 +203,35 @@ void mostrarListaId(NodoId **listaId, FILE * informe){
         fprintf(informe, "%d) %s     numero de apariciones: %d \n",numeroDeIdentificador, actual->identificador, actual->nroRepeticiones);
         actual = actual->sig;
     numeroDeIdentificador++;
+    }
+}
+
+int insertarEnOrdenC(NodoChar **cabeza, char nuevaPalabra[]){ 
+    if (*cabeza == NULL){
+        insertarC(cabeza, nuevaPalabra);
+        return 1;
+    } else {
+        insertarFinalC(cabeza, nuevaPalabra);
+        return 2;
+    }
+}
+
+int insertarEnOrden(Nodo **cabeza, int numero){ 
+    if (*cabeza == NULL){
+        insertar(cabeza, numero);
+        return 1;
+    } else {
+        insertarFinal(cabeza, numero);
+        return 2;
+    }
+}
+
+void mostrarListaEnumerada (FILE* archivo, NodoChar *cabeza){ 
+    NodoChar *auxi = cabeza;
+    int i = 1;
+    while(auxi != NULL){
+        fprintf(archivo, "        %d- %s\n",i, auxi->palabra);
+        auxi = auxi->sig;
+        i++;
     }
 }

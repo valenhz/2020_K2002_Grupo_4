@@ -4,14 +4,30 @@
 
 *LITERALES CADENA*
 
-        "sanguche de miga"
-        largo = 18
+        "saasasas"
+        largo = 10
 
         "milanesa"
         largo = 10
 
 
 *PALABRAS RESERVADAS*
+
+
+    **Tipos de dato**
+
+        int
+        char
+        int
+        void
+
+    **Estructuras de control**
+
+        while
+        do
+        if
+
+    **Otros**
 
 
 *CONSTANTES*
@@ -45,6 +61,9 @@
 
     **Constantes Caracter**
 
+        1- 'a'
+        2- '+'
+        3- '\n'
 
 *OPERADORES*
 
@@ -74,7 +93,10 @@
 
     **Comentarios largos**
 
-        /* holaassisisinonono */
+        /* 
+holaas
+sisisi
+nonono */
 
 *CARACTERES NO RECONOCIDOS*
 
