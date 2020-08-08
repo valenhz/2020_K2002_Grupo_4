@@ -133,3 +133,46 @@ void mostrarListaL (FILE* archivo, NodoL *cabeza){
         auxi = auxi->sig;
     }
 }
+
+typedef struct nodoId{
+    char identificador[500];
+    int nroRepeticiones;
+    struct nodoId *sig;
+} NodoId;
+
+void insertarId(NodoId **listaId, char nuevoId[]){
+    NodoId* nuevo_nodo = NULL;
+    nuevo_nodo = (NodoId *) malloc(sizeof (NodoId));
+        strcpy(nuevo_nodo->identificador, nuevoId);
+    nuevo_nodo -> nroRepeticiones = 1;
+    NodoId *aux1 = *listaId;
+    NodoId *aux2 = NULL;
+    
+    while((aux1 != NULL) && (strcasecmp(aux1->identificador, nuevoId) <= 0) ){
+        if(strcmp(aux1->identificador, nuevoId) == 0){
+            aux1->nroRepeticiones++;
+            return;
+        } else {
+            aux2 = aux1;
+            aux1 = aux1 -> sig;}
+    }
+    if(*listaId == aux1){
+        *listaId = nuevo_nodo;
+    }
+    else {
+        aux2->sig = nuevo_nodo;}
+    
+    nuevo_nodo->sig = aux1;
+}
+
+void mostrarListaId(NodoId **listaId, FILE * informe){
+    NodoId* actual = NULL;
+    actual = (NodoId *) malloc(sizeof (NodoId));
+    actual = *listaId;
+    int numeroDeIdentificador = 1;
+    while(actual != NULL){
+        fprintf(informe, "%d) %s     numero de apariciones: %d \n",numeroDeIdentificador, actual->identificador, actual->nroRepeticiones);
+        actual = actual->sig;
+    numeroDeIdentificador++;
+    }
+}

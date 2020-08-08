@@ -16,6 +16,7 @@ Nodo *listaHexadecimales = NULL;
 NodoChar *listaDeComentarios = NULL;
 NodoChar *listaDeComentariosLargos = NULL;
 NodoL *listaDeLiteralesCadena = NULL;
+NodoId *listaDeIdentificadores = NULL;
 
 %}
 
@@ -67,7 +68,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 {ESTRUCTURAS_DE_CONTROL} {printf("Encontre una palabra reservada del tipo "estructura de control" \n");}
 
-[a-zA-Z_][a-zA-Z0-9_]* {printf("Encontre un identificador \n");}
+[a-zA-Z_][a-zA-Z0-9_]* { insertarId(&listaDeIdentificadores, yytext);}
 
 \"[^"]*\" {
     insertarL(&listaDeLiteralesCadena, yytext, yyleng);
@@ -90,6 +91,7 @@ int main() {
     FILE * archivoSalida = fopen("Informe.txt","w");
     
     mostrarTitulo(archivoSalida, "IDENTIFICADORES");
+    mostrarListaId(listaDeIdentificadores, archivoSalida);
 
     mostrarTitulo(archivoSalida, "LITERALES CADENA");
         mostrarListaL(archivoSalida, listaDeLiteralesCadena);
