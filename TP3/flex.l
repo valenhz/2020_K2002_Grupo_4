@@ -16,6 +16,10 @@ Nodo *listaHexadecimales = NULL;
 NodoChar *listaDeComentarios = NULL;
 NodoChar *listaDeComentariosLargos = NULL;
 NodoL *listaDeLiteralesCadena = NULL;
+NodoChar *listaDeConstantesCaracter = NULL;
+NodoChar *listaDeTiposDeDato = NULL;
+NodoChar *listaDeEstructurasDeControl = NULL;
+NodoChar *listaDeOtrasPalabrasReservadas = NULL;
 
 %}
 
@@ -37,35 +41,47 @@ DIGITO_HEXA [0-9a-fA-F]
     sumaDecimales += numero;
     insertar(&listaDecimales, numero);
 }
+
 0{DIGITO_OCTAL}* {
     int numero = strtol(yytext, NULL, 8);
     insertar(&listaOctales, numero);
 }
+
 0[xX]{DIGITO_HEXA}+ {
     int numero = strtol(yytext, NULL, 16);
     insertar(&listaHexadecimales, numero);
 }
+
 [0–9]*\.[0–9]+ {printf("Encontre un numero real en punto fijo\n");}
-[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {printf("Encontre un numero real en punto flotante\n")}
+[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {printf("Encontre un numero real en punto flotante\n");}
 
 \/\/[^\n]* {
     insertarC(&listaDeComentarios, yytext);    
 }
+
 \/\*[^(\*\/)]*\*+\/ {
     insertarC(&listaDeComentariosLargos, yytext);    
 }
 
-\'.\' {printf("Encontre una constante caracter\n");}
+\'(.|\\n)\' {
+    insertarEnOrdenC(&listaDeConstantesCaracter, yytext);
+}
 
 {CARACTERES_DE_PUNTUACION} {
     agregarCaracter(yytext[0], caracteresP);
 }
 
-{OTRAS_PALABRASRESERVADAS} {printf("Encontre una palabra reservada del tipo "otros" \n");}
+{OTRAS_PALABRASRESERVADAS} {
+    insertarEnOrdenC(&listaDeOtrasPalabrasReservadas, yytext);
+}
 
-{TIPOS_DE_DATO} {printf("Encontre una palabra reservada del tipo "tipo de dato" \n");}
+{TIPOS_DE_DATO} {
+    insertarEnOrdenC(&listaDeTiposDeDato, yytext);
+}
 
-{ESTRUCTURAS_DE_CONTROL} {printf("Encontre una palabra reservada del tipo "estructura de control" \n");}
+{ESTRUCTURAS_DE_CONTROL} {
+    insertarEnOrdenC(&listaDeEstructurasDeControl, yytext);
+}
 
 [a-zA-Z_][a-zA-Z0-9_]* {printf("Encontre un identificador \n");}
 
@@ -75,7 +91,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 {OPERADORES} {
     agregarOperador(yytext, operadores);
-    }
+}
 
 [.]* {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
 
@@ -95,6 +111,12 @@ int main() {
         mostrarListaL(archivoSalida, listaDeLiteralesCadena);
     
     mostrarTitulo(archivoSalida, "PALABRAS RESERVADAS");
+        mostrarSubtitulo(archivoSalida, "Tipos de dato");
+        mostrarListaC(archivoSalida, listaDeTiposDeDato);
+        mostrarSubtitulo(archivoSalida, "Estructuras de control");
+        mostrarListaC(archivoSalida, listaDeEstructurasDeControl);
+        mostrarSubtitulo(archivoSalida, "Otros");
+        mostrarListaC(archivoSalida, listaDeOtrasPalabrasReservadas);
     
     mostrarTitulo(archivoSalida, "CONSTANTES");
         mostrarSubtitulo(archivoSalida, "Constantes Decimales");
@@ -107,17 +129,20 @@ int main() {
         mostrarListaHexa(archivoSalida, listaHexadecimales);
         mostrarSubtitulo(archivoSalida, "Constantes Reales");
         mostrarSubtitulo(archivoSalida, "Constantes Caracter");
+        mostrarListaEnumerada(archivoSalida, listaDeConstantesCaracter);
     
     mostrarTitulo(archivoSalida, "OPERADORES");
         mostrarOperadores(archivoSalida, operadores);
     
     mostrarTitulo(archivoSalida, "CARACTERES DE PUNTUACION");
         mostrarCdePuntuacion(archivoSalida, caracteresP);
+
     mostrarTitulo(archivoSalida, "COMENTARIOS");
         mostrarSubtitulo(archivoSalida, "Comentarios de una linea");
         mostrarListaC(archivoSalida, listaDeComentarios);
         mostrarSubtitulo(archivoSalida, "Comentarios largos");
         mostrarListaC(archivoSalida, listaDeComentariosLargos);
+
     mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
     
 
