@@ -12,8 +12,8 @@ int sumaDecimales = 0;
 
 %}
 
-ESTRUCTURAS_DE_CONTROL "if"|"else"|"do"|"for"|"while"|"switch"|"case"|"break"
-TIPOS_DE_DATO "char"|"double"|"float"|"int"|"long"|"struct"|"void"|"unsigned"|"signed"|"const"
+ESTRUCTURAS_DE_CONTROL "if"|"else"|"do"|"for"|"while"|"switch"|"case"|"break"|"continue"|"default"|"return"
+TIPOS_DE_DATO "char"|"double"|"float"|"int"|"long"|"short"|"struct"|"void"|"unsigned"|"signed"|"const"|"typedef"|"enum"|"union"
 
 OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="|"=="|"||"
 %%
@@ -25,8 +25,11 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
 0[0-7]* {printf("Encontre una constante entera octal \n");}
 0[xX][0-9a-fA-F]+ {printf("Encontre una constante entera hexadecimal \n");}
 [0–9]*\.[0–9]+ {printf("Encontre un numero real en punto fijo\n");}
+[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {printf("Encontre un numero real en punto flotante\n")}
 
-\/\/[^\n]* {printf("Encontre un comentario \n");}
+
+\/\/[^\n]* {printf("Encontre un comentario de una linea \n");}
+\/\*.+\*\/ {printf("Encontre un comentario de multiples lineas")}
 
 \'.\' {printf("Encontre una constante caracter\n");}
 
@@ -35,11 +38,11 @@ OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="
     agregarCaracter(yytext[0], caracteresP);
 }
 
-"return"|"sizeof"|"typedef" {printf("Encontre una palabra reservada \n");}
+"sizeof"|"auto"|"extern"|"register"|"goto"|"static"|"volatile" {printf("Encontre una palabra reservada del tipo "otros" \n");}
 
-{TIPOS_DE_DATO} {printf("Encontre un tipo de dato \n");}
+{TIPOS_DE_DATO} {printf("Encontre una palabra reservada del tipo "tipo de dato" \n");}
 
-{ESTRUCTURAS_DE_CONTROL} {printf("Encontre una estructura de control \n");}
+{ESTRUCTURAS_DE_CONTROL} {printf("Encontre una palabra reservada del tipo "estructura de control" \n");}
 
 [a-zA-Z_][a-zA-Z0-9_]* {printf("Encontre un identificador \n");}
 
