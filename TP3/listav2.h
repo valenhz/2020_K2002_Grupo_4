@@ -237,10 +237,11 @@ void mostrarListaEnumerada (FILE* archivo, NodoChar *cabeza){
 
 typedef struct nodoDesconocido{
     char desconocido[500];
+    int linea;
     struct nodoDesconocido *sig;
 }NodoD;
 
-NodoD* CrearNodoD(char cadenaDesconocida[]){
+NodoD* CrearNodoD(char cadenaDesconocida[], int linea){
     NodoD* nodo = NULL;
     nodo = (NodoD *) malloc(sizeof (NodoD));
         if (nodo != NULL){
@@ -250,9 +251,9 @@ NodoD* CrearNodoD(char cadenaDesconocida[]){
     return nodo;
 }
 
-int insertarD(NodoD **cabeza, char cadenaDesconocida[]){ 
+int insertarD(NodoD **cabeza, char cadenaDesconocida[], int linea){ 
     NodoD *nuevo;
-    nuevo = CrearNodoD(cadenaDesconocida);
+    nuevo = CrearNodoD(cadenaDesconocida, linea);
     if (nuevo != NULL){
         nuevo->sig = *cabeza;
         *cabeza = nuevo;
@@ -262,10 +263,10 @@ int insertarD(NodoD **cabeza, char cadenaDesconocida[]){
     }
 }
 
-void mostrarListaD (FILE* archivo, NodoD *cabeza, int linea){ 
+void mostrarListaD (FILE* archivo, NodoD *cabeza){ 
     NodoD *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "        %s           linea: %d\n\n",auxi->desconocido, linea);
+        fprintf(archivo, "        %s           linea: %d\n\n",auxi->desconocido, auxi->linea);
         auxi = auxi->sig;
     }
 }

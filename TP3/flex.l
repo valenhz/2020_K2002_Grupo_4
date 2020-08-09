@@ -10,7 +10,7 @@
 #include "masfunciones.h"
 
 int sumaDecimales = 0;
-int linea = 1;
+int linea = 0;
 Nodo *listaDecimales = NULL;
 Nodo *listaOctales = NULL;
 Nodo *listaHexadecimales = NULL;
@@ -101,7 +101,7 @@ DIGITO_HEXA [0-9a-fA-F]
     agregarOperador(yytext, operadores);
 }
 
-[.]* {insertarD(&listaDeCaracteresDesconocidos), yytext)}
+[.]* {insertarD(&listaDeCaracteresDesconocidos, yytext, linea);}
 
 %%
 
@@ -153,7 +153,7 @@ int main() {
         mostrarListaC(archivoSalida, listaDeComentariosLargos);
 
     mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
-    mostrarListaD(archivoSalida, listaDeCaracteresDesconocidos, linea);
+    mostrarListaD(archivoSalida, listaDeCaracteresDesconocidos);
     
 
     return 0;
