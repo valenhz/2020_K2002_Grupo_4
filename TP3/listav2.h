@@ -235,3 +235,39 @@ void mostrarListaEnumerada (FILE* archivo, NodoChar *cabeza){
         i++;
     }
 }
+
+
+typedef struct nodoDesconocido{
+    char desconocido[500];
+    struct nodoDesconocido *sig;
+}NodoD;
+
+NodoD* CrearNodoD(char cadenaDesconocida[]){
+    NodoD* nodo = NULL;
+    nodo = (NodoD *) malloc(sizeof (NodoD));
+        if (nodo != NULL){
+        strcpy(nodo->desconocido, cadenaDesconocida);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int insertarD(NodoD **cabeza, char cadenaDesconocida[]){ 
+    NodoD *nuevo;
+    nuevo = CrearNodoD(cadenaDesconocida);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void mostrarListaD (FILE* archivo, NodoD *cabeza, int linea){ 
+    NodoD *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "        %s           linea: %d\n\n",auxi->desconocido, linea);
+        auxi = auxi->sig;
+    }
+}

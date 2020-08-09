@@ -10,6 +10,7 @@
 #include "masfunciones.h"
 
 int sumaDecimales = 0;
+int linea = 1;
 Nodo *listaDecimales = NULL;
 Nodo *listaOctales = NULL;
 Nodo *listaHexadecimales = NULL;
@@ -21,6 +22,7 @@ NodoChar *listaDeConstantesCaracter = NULL;
 NodoChar *listaDeTiposDeDato = NULL;
 NodoChar *listaDeEstructurasDeControl = NULL;
 NodoChar *listaDeOtrasPalabrasReservadas = NULL;
+NodoD *listaDeCaracteresDesconocidos = NULL;
 
 
 %}
@@ -38,6 +40,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 %%
 
+[\\n]{ linea++;}
 [1-9]{DIGITO_DECIMAL}* {
     int numero = atoi(yytext);
     sumaDecimales += numero;
@@ -95,7 +98,7 @@ DIGITO_HEXA [0-9a-fA-F]
     agregarOperador(yytext, operadores);
 }
 
-[.]* {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
+[.]* {insertarD(&listaDeCaracteresDesconocidos), yytext)}
 
 %%
 
@@ -147,6 +150,7 @@ int main() {
         mostrarListaC(archivoSalida, listaDeComentariosLargos);
 
     mostrarTitulo(archivoSalida, "CARACTERES NO RECONOCIDOS");
+    mostrarListaD(archivoSalida, listaDeCaracteresDesconocidos, linea);
     
 
     return 0;
