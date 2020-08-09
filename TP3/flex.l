@@ -5,8 +5,7 @@
 
 #include <stdio.h>
 #include <math.h>
-//#include "listas.h"
-#include "listav2.h"
+#include "listas.h"
 #include "operadores.h"
 #include "masfunciones.h"
 
@@ -61,8 +60,13 @@ DIGITO_HEXA [0-9a-fA-F]
     insertar(&listaHexadecimales, numero);
 }
 
-[0–9]*\.[0–9]+ {constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal); }
-[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal);}
+[0–9]*\.[0–9]+ {
+    constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal);
+}
+
+[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {
+    constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal);
+}
 
 \/\/[^\n]* {
     insertarC(&listaDeComentarios, yytext);    

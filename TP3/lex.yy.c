@@ -505,13 +505,14 @@ char *yytext;
 #line 5 "flex.l"
 
 #include <stdio.h>
-//#include "listas.h"
-#include "listav2.h"
+#include <math.h>
+#include "listas.h"
 #include "operadores.h"
 #include "masfunciones.h"
 
 int sumaDecimales = 0;
 int linea = 1;
+double constanteReal;
 Nodo *listaDecimales = NULL;
 Nodo *listaOctales = NULL;
 Nodo *listaHexadecimales = NULL;
@@ -524,9 +525,10 @@ NodoChar *listaDeTiposDeDato = NULL;
 NodoChar *listaDeEstructurasDeControl = NULL;
 NodoChar *listaDeOtrasPalabrasReservadas = NULL;
 NodoL *listaDeCaracteresDesconocidos = NULL;
+NodoReal *listaDeConstantesReales = NULL;
 
 
-#line 530 "lex.yy.c"
+#line 532 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -677,10 +679,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 41 "flex.l"
+#line 43 "flex.l"
 
 
-#line 684 "lex.yy.c"
+#line 686 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -765,12 +767,12 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 43 "flex.l"
+#line 45 "flex.l"
 {linea++;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 45 "flex.l"
+#line 47 "flex.l"
 {
     int numero = atoi(yytext);
     sumaDecimales += numero;
@@ -779,7 +781,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 51 "flex.l"
+#line 53 "flex.l"
 {
     int numero = strtol(yytext, NULL, 8);
     insertar(&listaOctales, numero);
@@ -787,7 +789,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "flex.l"
+#line 58 "flex.l"
 {
     int numero = strtol(yytext, NULL, 16);
     insertar(&listaHexadecimales, numero);
@@ -795,95 +797,99 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 61 "flex.l"
-{printf("Encontre un numero real en punto fijo\n");}
+#line 63 "flex.l"
+{
+    constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal);
+}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 62 "flex.l"
-{printf("Encontre un numero real en punto flotante\n");}
+#line 67 "flex.l"
+{
+    constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal);
+}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 64 "flex.l"
+#line 71 "flex.l"
 {
     insertarC(&listaDeComentarios, yytext);    
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 68 "flex.l"
+#line 75 "flex.l"
 {
     insertarC(&listaDeComentariosLargos, yytext);    
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 72 "flex.l"
+#line 79 "flex.l"
 {
     insertarEnOrdenC(&listaDeConstantesCaracter, yytext);
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 76 "flex.l"
+#line 83 "flex.l"
 {
     agregarCaracter(yytext[0], caracteresP);
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 80 "flex.l"
+#line 87 "flex.l"
 {
     insertarEnOrdenC(&listaDeOtrasPalabrasReservadas, yytext);
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 84 "flex.l"
+#line 91 "flex.l"
 {
     insertarEnOrdenC(&listaDeTiposDeDato, yytext);
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 88 "flex.l"
+#line 95 "flex.l"
 {
     insertarEnOrdenC(&listaDeEstructurasDeControl, yytext);
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 92 "flex.l"
+#line 99 "flex.l"
 {
     insertarId(&listaDeIdentificadores, yytext);
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 96 "flex.l"
+#line 103 "flex.l"
 {
     insertarL(&listaDeLiteralesCadena, yytext, yyleng);
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 100 "flex.l"
+#line 107 "flex.l"
 {
     agregarOperador(yytext, operadores);
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 104 "flex.l"
+#line 111 "flex.l"
 {insertarL(&listaDeCaracteresDesconocidos, yytext, linea);}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 106 "flex.l"
+#line 113 "flex.l"
 ECHO;
 	YY_BREAK
-#line 887 "lex.yy.c"
+#line 893 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1769,7 +1775,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 106 "flex.l"
+#line 113 "flex.l"
 
 
 int main() {
@@ -1804,6 +1810,7 @@ int main() {
         mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");
         mostrarListaHexa(archivoSalida, listaHexadecimales);
         mostrarSubtitulo(archivoSalida, "Constantes Reales");
+        mostrarListaReales(archivoSalida, listaDeConstantesReales);
         mostrarSubtitulo(archivoSalida, "Constantes Caracter");
         mostrarListaEnumerada(archivoSalida, listaDeConstantesCaracter);
     
