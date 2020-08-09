@@ -194,15 +194,13 @@ void insertarId(NodoId **listaId, char nuevoId[]){
     nuevo_nodo->sig = aux1;
 }
 
-void mostrarListaId(NodoId **listaId, FILE * informe){
+void mostrarListaId(FILE *informe, NodoId *listaId){
     NodoId* actual = NULL;
     actual = (NodoId *) malloc(sizeof (NodoId));
-    actual = *listaId;
-    int numeroDeIdentificador = 1;
+    actual = listaId;
     while(actual != NULL){
-        fprintf(informe, "%d) %s     numero de apariciones: %d \n",numeroDeIdentificador, actual->identificador, actual->nroRepeticiones);
+        fprintf(informe, "        %s  ->  numero de apariciones: %d \n", actual->identificador, actual->nroRepeticiones);
         actual = actual->sig;
-    numeroDeIdentificador++;
     }
 }
 

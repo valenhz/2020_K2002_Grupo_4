@@ -85,7 +85,10 @@ DIGITO_HEXA [0-9a-fA-F]
     insertarEnOrdenC(&listaDeEstructurasDeControl, yytext);
 }
 
-[a-zA-Z_][a-zA-Z0-9_]* { insertarId(&listaDeIdentificadores, yytext);}
+[a-zA-Z_][a-zA-Z0-9_]* {
+    insertarId(&listaDeIdentificadores, yytext);
+    printf("encontre el identificador %s\n", yytext);
+}
 
 \"[^"]*\" {
     insertarL(&listaDeLiteralesCadena, yytext, yyleng);
@@ -108,7 +111,7 @@ int main() {
     FILE * archivoSalida = fopen("Informe.txt","w");
     
     mostrarTitulo(archivoSalida, "IDENTIFICADORES");
-    mostrarListaId(listaDeIdentificadores, archivoSalida);
+        mostrarListaId(archivoSalida, listaDeIdentificadores);
 
     mostrarTitulo(archivoSalida, "LITERALES CADENA");
         mostrarListaL(archivoSalida, listaDeLiteralesCadena);
