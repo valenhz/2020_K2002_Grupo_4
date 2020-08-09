@@ -4,6 +4,7 @@
 %{
 
 #include <stdio.h>
+#include <math.h>
 //#include "listas.h"
 #include "listav2.h"
 #include "operadores.h"
@@ -11,6 +12,7 @@
 
 int sumaDecimales = 0;
 int linea = 1;
+double constanteReal;
 Nodo *listaDecimales = NULL;
 Nodo *listaOctales = NULL;
 Nodo *listaHexadecimales = NULL;
@@ -23,6 +25,7 @@ NodoChar *listaDeTiposDeDato = NULL;
 NodoChar *listaDeEstructurasDeControl = NULL;
 NodoChar *listaDeOtrasPalabrasReservadas = NULL;
 NodoL *listaDeCaracteresDesconocidos = NULL;
+NodoReal *listaDeConstantesReales = NULL;
 
 
 %}
@@ -58,8 +61,8 @@ DIGITO_HEXA [0-9a-fA-F]
     insertar(&listaHexadecimales, numero);
 }
 
-[0–9]*\.[0–9]+ {printf("Encontre un numero real en punto fijo\n");}
-[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {printf("Encontre un numero real en punto flotante\n");}
+[0–9]*\.[0–9]+ {constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal); }
+[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {constanteReal = atof(yytext); insertarReal(&listaDeConstantesReales, constanteReal);}
 
 \/\/[^\n]* {
     insertarC(&listaDeComentarios, yytext);    
@@ -137,6 +140,7 @@ int main() {
         mostrarSubtitulo(archivoSalida, "Constantes Hexadecimales");
         mostrarListaHexa(archivoSalida, listaHexadecimales);
         mostrarSubtitulo(archivoSalida, "Constantes Reales");
+        mostrarListaReales(archivoSalida, listaDeConstantesReales);
         mostrarSubtitulo(archivoSalida, "Constantes Caracter");
         mostrarListaEnumerada(archivoSalida, listaDeConstantesCaracter);
     

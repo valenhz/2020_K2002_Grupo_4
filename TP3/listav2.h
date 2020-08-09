@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 typedef struct nodo{
     int numero;
@@ -268,5 +269,41 @@ void mostrarListaD (FILE* archivo, NodoL *cabeza){
     while(auxi != NULL){
         fprintf(archivo, "        %s  ->  linea: %d\n\n",auxi->cadena, auxi->largo);
         auxi = auxi->sig;
+    }
+}
+
+typedef struct nodoReal{
+    double parteEntera;
+    double mantisa;
+    struct nodoReal *sig;
+}NodoReal;
+
+NodoReal* CrearNodoReal(double constanteReal){
+    NodoReal* nodo = NULL;
+    nodo = (NodoReal *) malloc(sizeof (NodoReal));
+        if (nodo != NULL){
+        nodo->mantisa = modf(constanteReal, &nodo->parteEntera);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int insertarReal(NodoReal **cabeza, double constanteReal){ 
+    NodoReal *nuevo;
+    nuevo = CrearNodoReal(constanteReal);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void mostrarListaReales (FILE *archivo, NodoReal *cabeza){ 
+    NodoReal *aux = cabeza;
+    while(aux != NULL){
+        fprintf(archivo, "        Parte entera: %f\t    Mantisa: %f\n",aux->parteEntera, aux->mantisa);
+        aux = aux->sig;
     }
 }
