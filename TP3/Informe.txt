@@ -1,6 +1,12 @@
 
 *IDENTIFICADORES*
 
+        a  ->  numero de apariciones: 2 
+        awhile  ->  numero de apariciones: 1 
+        calabaza  ->  numero de apariciones: 1 
+        casa  ->  numero de apariciones: 2 
+        holissss  ->  numero de apariciones: 1 
+        whilen  ->  numero de apariciones: 1 
 
 *LITERALES CADENA*
 

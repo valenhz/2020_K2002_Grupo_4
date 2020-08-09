@@ -517,12 +517,14 @@ Nodo *listaHexadecimales = NULL;
 NodoChar *listaDeComentarios = NULL;
 NodoChar *listaDeComentariosLargos = NULL;
 NodoL *listaDeLiteralesCadena = NULL;
+NodoId *listaDeIdentificadores = NULL;
 NodoChar *listaDeConstantesCaracter = NULL;
 NodoChar *listaDeTiposDeDato = NULL;
 NodoChar *listaDeEstructurasDeControl = NULL;
 NodoChar *listaDeOtrasPalabrasReservadas = NULL;
 
-#line 526 "lex.yy.c"
+
+#line 528 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -673,10 +675,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 37 "flex.l"
+#line 39 "flex.l"
 
 
-#line 680 "lex.yy.c"
+#line 682 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -761,7 +763,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 39 "flex.l"
+#line 41 "flex.l"
 {
     int numero = atoi(yytext);
     sumaDecimales += numero;
@@ -770,7 +772,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 45 "flex.l"
+#line 47 "flex.l"
 {
     int numero = strtol(yytext, NULL, 8);
     insertar(&listaOctales, numero);
@@ -778,7 +780,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 50 "flex.l"
+#line 52 "flex.l"
 {
     int numero = strtol(yytext, NULL, 16);
     insertar(&listaHexadecimales, numero);
@@ -786,93 +788,96 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 55 "flex.l"
+#line 57 "flex.l"
 {printf("Encontre un numero real en punto fijo\n");}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 56 "flex.l"
+#line 58 "flex.l"
 {printf("Encontre un numero real en punto flotante\n");}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 58 "flex.l"
+#line 60 "flex.l"
 {
     insertarC(&listaDeComentarios, yytext);    
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 62 "flex.l"
+#line 64 "flex.l"
 {
     insertarC(&listaDeComentariosLargos, yytext);    
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 66 "flex.l"
+#line 68 "flex.l"
 {
     insertarEnOrdenC(&listaDeConstantesCaracter, yytext);
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 70 "flex.l"
+#line 72 "flex.l"
 {
     agregarCaracter(yytext[0], caracteresP);
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 74 "flex.l"
+#line 76 "flex.l"
 {
     insertarEnOrdenC(&listaDeOtrasPalabrasReservadas, yytext);
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 78 "flex.l"
+#line 80 "flex.l"
 {
     insertarEnOrdenC(&listaDeTiposDeDato, yytext);
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 82 "flex.l"
+#line 84 "flex.l"
 {
     insertarEnOrdenC(&listaDeEstructurasDeControl, yytext);
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 86 "flex.l"
-{printf("Encontre un identificador \n");}
+#line 88 "flex.l"
+{
+    insertarId(&listaDeIdentificadores, yytext);
+    printf("encontre el identificador %s\n", yytext);
+}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 88 "flex.l"
+#line 93 "flex.l"
 {
     insertarL(&listaDeLiteralesCadena, yytext, yyleng);
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 92 "flex.l"
+#line 97 "flex.l"
 {
     agregarOperador(yytext, operadores);
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 96 "flex.l"
+#line 101 "flex.l"
 {printf("Encontre un caracter/ cadena de caracteres no reconocidos \n");}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 98 "flex.l"
+#line 103 "flex.l"
 ECHO;
 	YY_BREAK
-#line 876 "lex.yy.c"
+#line 881 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1758,7 +1763,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 98 "flex.l"
+#line 103 "flex.l"
 
 
 int main() {
@@ -1770,6 +1775,7 @@ int main() {
     FILE * archivoSalida = fopen("Informe.txt","w");
     
     mostrarTitulo(archivoSalida, "IDENTIFICADORES");
+        mostrarListaId(archivoSalida, listaDeIdentificadores);
 
     mostrarTitulo(archivoSalida, "LITERALES CADENA");
         mostrarListaL(archivoSalida, listaDeLiteralesCadena);
