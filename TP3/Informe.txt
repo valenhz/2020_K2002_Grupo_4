@@ -5,7 +5,6 @@
         awhile  ->  numero de apariciones: 1 
         calabaza  ->  numero de apariciones: 1 
         casa  ->  numero de apariciones: 2 
-        holissss  ->  numero de apariciones: 1 
         whilen  ->  numero de apariciones: 1 
 
 *LITERALES CADENA*
@@ -105,4 +104,10 @@ sisisi
 nonono */
 
 *CARACTERES NO RECONOCIDOS*
+
+        .......  ->  linea: 29
+
+        .  ->  linea: 21
+
+        ..  ->  linea: 20
 

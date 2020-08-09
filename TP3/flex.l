@@ -10,7 +10,7 @@
 #include "masfunciones.h"
 
 int sumaDecimales = 0;
-int linea = 0;
+int linea = 1;
 Nodo *listaDecimales = NULL;
 Nodo *listaOctales = NULL;
 Nodo *listaHexadecimales = NULL;
@@ -22,7 +22,7 @@ NodoChar *listaDeConstantesCaracter = NULL;
 NodoChar *listaDeTiposDeDato = NULL;
 NodoChar *listaDeEstructurasDeControl = NULL;
 NodoChar *listaDeOtrasPalabrasReservadas = NULL;
-NodoD *listaDeCaracteresDesconocidos = NULL;
+NodoL *listaDeCaracteresDesconocidos = NULL;
 
 
 %}
@@ -40,7 +40,8 @@ DIGITO_HEXA [0-9a-fA-F]
 
 %%
 
-[\\n]{ linea++;}
+[\n] {linea++;}
+
 [1-9]{DIGITO_DECIMAL}* {
     int numero = atoi(yytext);
     sumaDecimales += numero;
@@ -90,7 +91,6 @@ DIGITO_HEXA [0-9a-fA-F]
 
 [a-zA-Z_][a-zA-Z0-9_]* {
     insertarId(&listaDeIdentificadores, yytext);
-    printf("encontre el identificador %s\n", yytext);
 }
 
 \"[^"]*\" {
@@ -101,7 +101,7 @@ DIGITO_HEXA [0-9a-fA-F]
     agregarOperador(yytext, operadores);
 }
 
-[.]* {insertarD(&listaDeCaracteresDesconocidos, yytext, linea);}
+[.]* {insertarL(&listaDeCaracteresDesconocidos, yytext, linea);}
 
 %%
 

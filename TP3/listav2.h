@@ -234,7 +234,7 @@ void mostrarListaEnumerada (FILE* archivo, NodoChar *cabeza){
     }
 }
 
-
+/* 
 typedef struct nodoDesconocido{
     char desconocido[500];
     int linea;
@@ -261,12 +261,12 @@ int insertarD(NodoD **cabeza, char cadenaDesconocida[], int linea){
     } else{
         return 0;
     }
-}
+} */
 
-void mostrarListaD (FILE* archivo, NodoD *cabeza){ 
-    NodoD *auxi = cabeza;
+void mostrarListaD (FILE* archivo, NodoL *cabeza){ 
+    NodoL *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "        %s           linea: %d\n\n",auxi->desconocido, auxi->linea);
+        fprintf(archivo, "        %s  ->  linea: %d\n\n",auxi->cadena, auxi->largo);
         auxi = auxi->sig;
     }
 }
