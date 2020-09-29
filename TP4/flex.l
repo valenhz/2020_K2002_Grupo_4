@@ -8,8 +8,7 @@
 %}
 
 ESTRUCTURAS_DE_CONTROL "if"|"else"|"do"|"for"|"while"|"switch"|"case"|"break"|"continue"|"default"|"return"
-TIPOS_DE_DATO "char"|"double"|"float"|"int"|"long"|"short"|"struct"|"void"|"unsigned"|"signed"|"const"|"typedef"|"enum"|"union"
-OTRAS_PALABRASRESERVADAS "sizeof"|"auto"|"extern"|"register"|"goto"|"static"|"volatile"
+PALABRAS_RESERVADAS "char"|"double"|"float"|"int"|"long"|"short"|"struct"|"void"|"unsigned"|"signed"|"const"|"typedef"|"enum"|"union"|"sizeof"|"auto"|"extern"|"register"|"goto"|"static"|"volatile"
 
 OPERADORES "*"|"/"|"-"|"+"|"++"|"&"|"%"|"<"|">"|"="|"!"|"!="|"&&"|"<="|">="|"+="|"=="|"||"
 CARACTERES_DE_PUNTUACION [(){}\[\]\;\,]
@@ -22,52 +21,34 @@ DIGITO_HEXA [0-9a-fA-F]
 
 [\n] {linea++;}
 
-[1-9]{DIGITO_DECIMAL}* {
-}
+[1-9]{DIGITO_DECIMAL}* { yylval.numero = atoi(yytext); return NUM; }
 
-0{DIGITO_OCTAL}* {
-}
+0{DIGITO_OCTAL}* {yylval.numero = atoi(yytext); return NUM; }
 
-0[xX]{DIGITO_HEXA}+ {
-}
+0[xX]{DIGITO_HEXA}+ {yylval.numero = atoi(yytext); return NUM; }
 
-[0–9]*\.[0–9]+ {
-}
+[0–9]*\.[0–9]+ { }
 
-[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {
-}
+[0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? { }
 
-\/\/[^\n]* {
-}
+\/\/[^\n]* { }
 
-\/\*[^(\*\/)]*\*+\/ {
-}
+\/\*[^(\*\/)]*\*+\/ { }
 
-\'(.|\\n)\' {
-}
+\'(.|\\n)\' { }
 
-{CARACTERES_DE_PUNTUACION} {
-}
+{CARACTERES_DE_PUNTUACION} {return yytext[0];}
 
-{OTRAS_PALABRASRESERVADAS} {
-}
+{PALABRAS_RESERVADAS} {strcpy(yylval.cadena, yytext); return PALABRA_RESERVADA;}
 
-{TIPOS_DE_DATO} {
-}
+{ESTRUCTURAS_DE_CONTROL} { }
 
-{ESTRUCTURAS_DE_CONTROL} {
-}
+[a-zA-Z_][a-zA-Z0-9_]* { strcpy(yylval.cadena, yytext); return ID; }
 
-[a-zA-Z_][a-zA-Z0-9_]* {
-}
+\"[^"]*\" { }
 
-\"[^"]*\" {
-}
+{OPERADORES} { }
 
-{OPERADORES} {
-}
-
-.* {
-}
+.* { }
 
 %%
