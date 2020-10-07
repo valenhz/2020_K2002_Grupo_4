@@ -66,14 +66,14 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     NUM = 258,
-     ID = 259,
+     NUMERO = 258,
+     IDENTIFICADOR = 259,
      PALABRA_RESERVADA = 260
    };
 #endif
 /* Tokens.  */
-#define NUM 258
-#define ID 259
+#define NUMERO 258
+#define IDENTIFICADOR 259
 #define PALABRA_RESERVADA 260
 
 
@@ -85,7 +85,7 @@
 
 // delimitadores de codigo C
 #include <stdio.h>
-#include <stdlib.h>  // delimitadores de codigo C 
+#include <stdlib.h>   
 
 
 /* Enabling traces.  */
@@ -413,8 +413,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    20,    20,    21,    23,    24,    27,    28,    29,    30,
-      31
+       0,    21,    21,    22,    24,    25,    28,    29,    30,    31,
+      32
 };
 #endif
 
@@ -423,8 +423,9 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NUM", "ID", "PALABRA_RESERVADA",
-  "'\\n'", "'+'", "'-'", "'*'", "'/'", "$accept", "input", "line", "exp", 0
+  "$end", "error", "$undefined", "NUMERO", "IDENTIFICADOR",
+  "PALABRA_RESERVADA", "'\\n'", "'+'", "'-'", "'*'", "'/'", "$accept",
+  "input", "line", "exp", 0
 };
 #endif
 
@@ -1320,7 +1321,7 @@ yyreduce:
     {
       
 /* Line 1267 of yacc.c.  */
-#line 1324 "bison.tab.c"
+#line 1325 "bison.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1534,8 +1535,7 @@ yyreturn:
 }
 
 
-#line 33 "bison.y"
-
+#line 35 "bison.y"
 
 
 

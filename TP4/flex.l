@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "bison.tab.h"
 
 %}
 
@@ -19,13 +20,13 @@ DIGITO_HEXA [0-9a-fA-F]
 
 %%
 
-[\n] {linea++;}
+[\n] {}
 
-[1-9]{DIGITO_DECIMAL}* { yylval.numero = atoi(yytext); return NUM; }
+[1-9]{DIGITO_DECIMAL}* { yylval.numero = atoi(yytext); return NUMERO; }
 
-0{DIGITO_OCTAL}* {yylval.numero = atoi(yytext); return NUM; }
+0{DIGITO_OCTAL}* {yylval.numero = atoi(yytext); return NUMERO; }
 
-0[xX]{DIGITO_HEXA}+ {yylval.numero = atoi(yytext); return NUM; }
+0[xX]{DIGITO_HEXA}+ {yylval.numero = atoi(yytext); return NUMERO; }
 
 [0–9]*\.[0–9]+ { }
 
@@ -43,7 +44,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 {ESTRUCTURAS_DE_CONTROL} { }
 
-[a-zA-Z_][a-zA-Z0-9_]* { strcpy(yylval.cadena, yytext); return ID; }
+[a-zA-Z_][a-zA-Z0-9_]* { strcpy(yylval.cadena, yytext); return IDENTIFICADOR; }
 
 \"[^"]*\" { }
 

@@ -11,12 +11,13 @@
     int numero;
 }
 
-%token <numero> NUM
-%token <cadena> ID
+%token <numero> NUMERO
+%token <cadena> IDENTIFICADOR
 %token <cadena> PALABRA_RESERVADA
 
 
 %%
+
 input: /* vacio */
       | input line
     ;
@@ -24,14 +25,14 @@ line:  '\n'
       | exp '\n'
 ;
 
-exp: NUM
-     | exp '+' exp
+exp: NUMERO
+     | exp '+' exp 
      | exp '-' exp
      | exp '*' exp
      | exp '/' exp
     ;
-%%
 
+%%
 
 
 int main(){
