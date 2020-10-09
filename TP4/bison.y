@@ -32,9 +32,12 @@
 %token <cadena> OPERADOR_DECREMENTO
 %token <cadena> SIZE_OF
 %token <cadena> FLECHA
+%token <cadena> ESPECIFICADOR_CLASE_ALMACENAMIENTO
+%token <cadena> ESPECIFICADOR_DE_TIPO
+%token <cadena> CALIFICADOR_DE_TIPO
+%token <cadena> STRUCT_O_UNION
 
-
-%start token 
+%start input 
 
 
 %%
@@ -44,6 +47,10 @@ input: /* vacio */
 
 line: '\n'
     | expresion '\n'
+    | declaracion '\n'
+    | sentencia '\n'
+
+
 
 expresion: expresionAsignacion
            | expresion ',' expresionAsignacion
@@ -121,7 +128,44 @@ expresionPrimaria: IDENTIFICADOR
                   | CONSTANTE_REAL
                   | CONSTANTE_CARACTER
                   | LITERAL_CADENA
-                  | '('expresion')'               
+                  | '('expresion')'          
+
+
+declaracion: especificadoresDeDeclaracion listaDeDeclaradores
+            | especificadoresDeDeclaracion 
+
+especificadoresDeDeclaracion: ESPECIFICADOR_CLASE_ALMACENAMIENTO especificadoresDeDeclaracion
+                             | ESPECIFICADOR_CLASE_ALMACENAMIENTO 
+                             | especificadorDeTipo especificadoresDeDeclaracion
+                             | especificadorDeTipo
+                             | CALIFICADOR_DE_TIPO especificadoresDeDeclaracion
+                             | CALIFICADOR_DE_TIPO 
+
+listaDeDeclaradores: declarador 
+                    | listaDeDeclaradores ',' declarador
+
+declarador: decla
+           | decla '=' inicializador
+
+inicializador: expresionAsignacion 
+              | '{'listaDeInicializadores'}' 
+              | '{'listaDeInicializadores ',' '}' 
+
+listaDeInicializadores: inicializador
+                       | listaDeInicializadores ',' inicializador
+
+especificadorDeTipo: ESPECIFICADOR_DE_TIPO
+                    | especificadorStructOUnion
+                    | especificadorDeEnum
+                    | nombreDeTypedef
+
+especificadorStructOUnion: STRUCT_O_UNION IDENTIFICADOR '{'listaDeDeclaracionesStruct'}'
+                          | STRUCT_O_UNION '{'listaDeDeclaracionesStruct'}'
+                          | STRUCT_O_UNION IDENTIFICADOR
+
+
+
+
 
 
 %%

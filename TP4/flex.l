@@ -9,7 +9,11 @@
 %}
 
 ESTRUCTURAS_DE_CONTROL "if"|"else"|"do"|"for"|"while"|"switch"|"case"|"break"|"continue"|"default"|"return"
-PALABRAS_RESERVADAS "char"|"double"|"float"|"int"|"long"|"short"|"struct"|"void"|"unsigned"|"signed"|"const"|"typedef"|"enum"|"union"|"auto"|"extern"|"register"|"goto"|"static"|"volatile"
+PALABRAS_RESERVADAS "enum"|"goto"
+ESPECIFICADOR_CLASE_ALMACENAMIENTO "typedef"|"static"|"auto"|"extern"|"register"
+ESPECIFICADOR_DE_TIPO "void"|"char"|"short"|"int"|"long"|"float"|"double"|"signed"|"unsigned"
+CALIFICADOR_DE_TIPO "const"|"volatile"
+STRUCT_O_UNION "struct"|"union"
 
 OPERADORES "*"|"/"|"-"|"+"|"&"|"%"|"<"|">"|"!"
 OPERADOR_ASIGNACION "="|"*="|"/="|"%="|"+="|"-="|"^="
@@ -73,6 +77,14 @@ DIGITO_HEXA [0-9a-fA-F]
 {CARACTERES_DE_PUNTUACION} {return yytext[0];}
 
 {PALABRAS_RESERVADAS} {strcpy(yylval.cadena, yytext); return PALABRA_RESERVADA;}
+
+{ESPECIFICADOR_CLASE_ALMACENAMIENTO} {strcpy(yylval.cadena, yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
+
+{ESPECIFICADOR_DE_TIPO} {strcpy(yylval.cadena, yytext); return ESPECIFICADOR_DE_TIPO;}
+
+{CALIFICADOR_DE_TIPO} {strcpy(yylval.cadena, yytext); return CALIFICADOR_DE_TIPO;}
+
+{STRUCT_O_UNION} {strcpy(yylval.cadena, yytext); return STRUCT_O_UNION;}
 
 {ESTRUCTURAS_DE_CONTROL} { }
 
