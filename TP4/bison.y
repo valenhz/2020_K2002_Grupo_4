@@ -14,6 +14,7 @@
 
 %token <entero> CONSTANTE_ENTERA
 %token <flotante> CONSTANTE_REAL
+%token <cadena> CONSTANTE_CARACTER
 
 
 %token <cadena> IDENTIFICADOR
@@ -118,6 +119,7 @@ listaDeArgumentos: expresionAsignacion
 expresionPrimaria: IDENTIFICADOR
                   | CONSTANTE_ENTERA
                   | CONSTANTE_REAL
+                  | CONSTANTE_CARACTER
                   | LITERAL_CADENA
                   | '('expresion')'               
 

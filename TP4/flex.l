@@ -80,6 +80,8 @@ DIGITO_HEXA [0-9a-fA-F]
 
 \"[^"]*\" { }
 
+\'.\' {yyval.cadena = strdup(yytext); return CONSTANTE_CARACTER}
+
 {OPERADORES} {return yytext[0];}
 
 {OPERADOR_ASIGNACION} {strcpy(yylval.cadena, yytext); return OPERADOR_ASIGNACION;}
