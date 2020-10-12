@@ -50,8 +50,6 @@ DIGITO_HEXA [0-9a-fA-F]
 
 %%
 
-[\n] {}
-
 {ESPECIFICADOR_CLASE_ALMACENAMIENTO} {strcpy(yylval.cadena, yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
 
 {ESPECIFICADOR_DE_TIPO} {strcpy(yylval.cadena, yytext); return ESPECIFICADOR_DE_TIPO;}
@@ -126,12 +124,10 @@ DIGITO_HEXA [0-9a-fA-F]
 
 \'.\' {yylval.cadena = strdup(yytext); return CONSTANTE_CARACTER;}
 
-\/\/[^\n]* { }
-
-\/\*[^(\*\/)]*\*+\/ { }
-
-\'(.|\\n)\' { }
-
-.* { }
+[.]* {strcpy(yylval.cadena, yytext); return ERROR;}
 
 %%
+
+// \/\/[^\n]* { } 
+
+// \/\*[^(\*\/)]*\*+\/ { } 
