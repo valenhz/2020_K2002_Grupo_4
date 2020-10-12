@@ -6,8 +6,6 @@
 #include <stdlib.h>
 #include "bison.tab.h"
 
- extern FILE* yyin;
-
 %}
 
 ESPECIFICADOR_CLASE_ALMACENAMIENTO "typedef"|"static"|"auto"|"extern"|"register"
