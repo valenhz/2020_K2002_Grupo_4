@@ -67,310 +67,465 @@ FILE* yyin;
 
 %%
 
-input:             {printf("1\n");} 
-      | input line {printf("2\n");}
+input:             
+      | input line 
 ;
 
-line: '\n' {printf("3\n");}
-    | expresion '\n' {printf("4\n");}
-    | declaracion '\n' {printf("5\n");}
-    | sentencia '\n' {printf("6\n");}
+line: '\n' 
+    | expresion '\n' 
+    | declaracion '\n' 
+    | sentencia '\n' 
 ;
 
-expresion: expresionAsignacion {printf("7\n");}
-           | expresion ',' expresionAsignacion {printf("8\n");}
+expresion: expresionAsignacion a 
 ;
 
-expresionAsignacion: expresionCondicional {printf("9\n");}
-                     | expresionUnaria OPERADOR_ASIGNACION expresionAsignacion {printf("10\n");}
+a: ',' expresionAsignacion a 
 ;
 
-expresionCondicional: expresionOLogico {printf("11\n");}
-                     | expresionOLogico '?' expresion ':' expresionCondicional {printf("12\n");}
+expresionAsignacion: expresionCondicional 
+                     | expresionUnaria OPERADOR_ASIGNACION expresionAsignacion 
 ;
 
-expresionOLogico: expresionYLogico {printf("13\n");}
-                 | expresionOLogico OPERADOR_O_LOGICO expresionYLogico {printf("14\n");}
+expresionCondicional: expresionOLogico b 
 ;
 
-expresionYLogico: expresionOInclusivo {printf("15\n");}
-                 | expresionYLogico OPERADOR_Y_LOGICO expresionOInclusivo {printf("16\n");}
+b: '?' expresion ':' expresionCondicional
+  |
 ;
 
-expresionOInclusivo: expresionOExcluyente {printf("17\n");}
-                    | expresionOInclusivo '|' expresionOExcluyente {printf("18\n");}
+expresionOLogico: expresionYLogico c
 ;
 
-expresionOExcluyente: expresionY {printf("19\n");}
-                     | expresionOExcluyente '^' expresionY {printf("20\n");}
+c: OPERADOR_O_LOGICO expresionYLogico c
+  |
 ;
 
-expresionY: expresionDeIgualdad {printf("21\n");}
-            | expresionY '&' expresionDeIgualdad {printf("22\n");}
+expresionYLogico: expresionOInclusivo d
 ;
 
-expresionDeIgualdad: expresionRelacional {printf("23\n");}
-                    | expresionDeIgualdad COMPARADOR_IGUALDAD expresionRelacional {printf("24\n");}
-                    | expresionDeIgualdad COMPARADOR_DISTINTO expresionRelacional {printf("25\n");}
+d: OPERADOR_Y_LOGICO expresionOInclusivo d 
+  |
 ;
 
-expresionRelacional: expresionAditiva {printf("26\n");}
-                    | expresionRelacional '<' expresionAditiva {printf("27\n");}
-                    | expresionRelacional '>' expresionAditiva {printf("28\n");}
-                    | expresionRelacional MENOR_O_IGUAL expresionAditiva {printf("29\n");}
-                    | expresionRelacional MAYOR_O_IGUAL expresionAditiva {printf("30\n");}
+expresionOInclusivo: expresionOExcluyente e
 ;
 
-expresionAditiva: expresionMultiplicativa {printf("31\n");}
-                  | expresionAditiva '+' expresionMultiplicativa {printf("32\n");}
-                  | expresionAditiva '-' expresionMultiplicativa {printf("33\n");}
+e: '|' expresionOExcluyente e
+  |
 ;
 
-expresionMultiplicativa: expresionDeConversion {printf("34\n");}
-                        | expresionMultiplicativa '*' expresionDeConversion {printf("35\n");}
-                        | expresionMultiplicativa '/' expresionDeConversion {printf("36\n");}
-                        | expresionMultiplicativa '%' expresionDeConversion {printf("37\n");}
+expresionOExcluyente: expresionY f
 ;
 
-expresionDeConversion: expresionUnaria {printf("38\n");}
-                      | '('nombreDeTipo')' expresionDeConversion {printf("39\n");}
+f: '^' expresionY f
+  |
 ;
 
-expresionUnaria: expresionSufijo {printf("40\n");}
-                | OPERADOR_INCREMENTO expresionUnaria {printf("41\n");}
-                | OPERADOR_DECREMENTO expresionUnaria {printf("42\n");}
-                | operadorUnario expresionDeConversion {printf("43\n");}
-                | SIZE_OF expresionUnaria {printf("44\n");}
-                | SIZE_OF '('nombreDeTipo')' {printf("45\n");}
+expresionY: expresionDeIgualdad g
 ;
 
-operadorUnario: '&' {printf("46\n");}
-               | '*' {printf("47\n");}
-               | '+' {printf("48\n");}
-               | '-' {printf("49\n");}
-               | '~' {printf("50\n");}
-               | '!' {printf("51\n");}
+g: '&' expresionDeIgualdad g
+  |
 ;
 
-expresionSufijo: expresionPrimaria {printf("52\n");}
-                | expresionSufijo '['expresion']'  {printf("53\n");}
-                | expresionSufijo '('listaDeArgumentos')'  {printf("54\n");}
-                | expresionSufijo '.' IDENTIFICADOR {printf("55n\n");}
-                | expresionSufijo FLECHA IDENTIFICADOR {printf("56\n");}
-                | expresionSufijo OPERADOR_INCREMENTO  {printf("57\n");}
-                | expresionSufijo OPERADOR_DECREMENTO {printf("58\n");}
+expresionDeIgualdad: expresionRelacional h
 ;
 
-listaDeArgumentos: expresionAsignacion {printf("59\n");}
-                  | listaDeArgumentos ',' expresionAsignacion {printf("60\n");}
+h: COMPARADOR_IGUALDAD expresionRelacional h
+ | COMPARADOR_DISTINTO expresionRelacional h
+ |
 ;
 
-expresionPrimaria: IDENTIFICADOR {printf("61\n");}
-                  | CONSTANTE_ENTERA {printf("62\n");}
-                  | CONSTANTE_REAL {printf("63\n");}
-                  | CONSTANTE_CARACTER {printf("64\n");}
-                  | LITERAL_CADENA {printf("65\n");}
-                  | '('expresion')'           {printf("66\n");}
+expresionRelacional: expresionAditiva i
 ;
 
-declaracion: especificadoresDeDeclaracion listaDeDeclaradores {printf("67\n");}
-            | especificadoresDeDeclaracion  {printf("68\n");}
+i: '<' expresionAditiva i
+ | '>' expresionAditiva i
+ | MENOR_O_IGUAL expresionAditiva i
+ | MAYOR_O_IGUAL expresionAditiva i
+ |
 ;
 
-especificadoresDeDeclaracion: ESPECIFICADOR_CLASE_ALMACENAMIENTO especificadoresDeDeclaracion {printf("69\n");}
-                             | ESPECIFICADOR_CLASE_ALMACENAMIENTO {printf("70\n");}
-                             | especificadorDeTipo especificadoresDeDeclaracion {printf("71\n");}
-                             | especificadorDeTipo {printf("72\n");}
-                             | CALIFICADOR_DE_TIPO especificadoresDeDeclaracion {printf("73\n");}
-                             | CALIFICADOR_DE_TIPO  {printf("74\n");}
+expresionAditiva: expresionMultiplicativa j
 ;
 
-listaDeDeclaradores: declarador  {printf("75\n");}
-                    | listaDeDeclaradores ',' declarador {printf("76\n");}
+j: '+' expresionMultiplicativa j
+ | '-' expresionMultiplicativa j
+ |
 ;
 
-declarador: decla {printf("77\n");}
-          | decla '=' inicializador {printf("78\n");}
+expresionMultiplicativa: expresionDeConversion k
 ;
 
-inicializador: expresionAsignacion {printf("79\n");}
-              | '{'listaDeInicializadores'}' {printf("80\n");}
-              | '{'listaDeInicializadores ',' '}' {printf("81\n");}
+k: '*' expresionDeConversion k
+ | '/' expresionDeConversion k
+ | '%' expresionDeConversion k
+ |
 ;
 
-listaDeInicializadores: inicializador {printf("82\n");}
-                       | listaDeInicializadores ',' inicializador {printf("83\n");}
+expresionDeConversion: expresionUnaria 
+                      | '('nombreDeTipo')' expresionDeConversion
 ;
 
-especificadorDeTipo: ESPECIFICADOR_DE_TIPO {printf("84\n");}
-                    | especificadorStructOUnion {printf("85\n");}
-                    | especificadorDeEnum {printf("86\n");}
-                    | nombreDeTypedef {printf("87\n");}
+expresionUnaria: expresionSufijo 
+                | OPERADOR_INCREMENTO expresionUnaria 
+                | OPERADOR_DECREMENTO expresionUnaria 
+                | operadorUnario expresionDeConversion 
+                | SIZE_OF l 
 ;
 
-especificadorStructOUnion: STRUCT_O_UNION IDENTIFICADOR '{'listaDeDeclaracionesStruct'}' {printf("88\n");}
-                          | STRUCT_O_UNION '{'listaDeDeclaracionesStruct'}' {printf("89\n");}
-                          | STRUCT_O_UNION IDENTIFICADOR {printf("90\n");}
+l: expresionUnaria
+ | '('nombreDeTipo')' 
 ;
 
-listaDeDeclaracionesStruct: declaracionStruct  {printf("91\n");}
-                           | listaDeDeclaracionesStruct declaracionStruct {printf("92\n");}
+operadorUnario: '&' 
+               | '*' 
+               | '+' 
+               | '-' 
+               | '~' 
+               | '!' 
 ;
 
-declaracionStruct: listaDeCalificadores declaradoresStruct ';' {printf("93\n");}
+expresionSufijo: expresionPrimaria m
 ;
 
-listaDeCalificadores: especificadorDeTipo listaDeCalificadores {printf("94\n");}
-                     | especificadorDeTipo {printf("95\n");}
-                     | CALIFICADOR_DE_TIPO listaDeCalificadores {printf("96\n");}
-                     | CALIFICADOR_DE_TIPO {printf("97\n");}
+m: '['expresion']' m
+ | '('listaDeArgumentos')' m
+ | '.' IDENTIFICADOR m
+ | FLECHA IDENTIFICADOR m
+ | OPERADOR_INCREMENTO m
+ | OPERADOR_DECREMENTO m
+ |
 ;
 
-declaradoresStruct: declaStruct {printf("98\n");}
-                   | declaradoresStruct ',' declaStruct {printf("99\n");}
+listaDeArgumentos: expresionAsignacion n
 ;
 
-declaStruct: decla {printf("100\n");}
-            | decla ':' expresionConstante {printf("101\n");}
-            | ':' expresionConstante {printf("102\n");}
+n: ',' expresionAsignacion n
+ |
 ;
 
-expresionConstante: expresionCondicional {printf("103\n");}
+expresionPrimaria: IDENTIFICADOR 
+                  | CONSTANTE_ENTERA 
+                  | CONSTANTE_REAL 
+                  | CONSTANTE_CARACTER 
+                  | LITERAL_CADENA 
+                  | '('expresion')'           
 ;
 
-decla: puntero declaradorDirecto {printf("104\n");}
-      | declaradorDirecto {printf("105\n");}
+declaracion: especificadoresDeDeclaracion o 
 ;
 
-puntero: '*' listaCalificadoresTipos {printf("106\n");}
-        | '*' {printf("107\n");}
-        | '*' listaCalificadoresTipos puntero {printf("108\n");}
-        | '*' puntero {printf("109\n");}
+o: listaDeDeclaradores
+ | 
 ;
 
-listaCalificadoresTipos: CALIFICADOR_DE_TIPO  {printf("110\n");}
-                        | listaCalificadoresTipos CALIFICADOR_DE_TIPO {printf("111\n");}
+especificadoresDeDeclaracion: ESPECIFICADOR_CLASE_ALMACENAMIENTO p 
+                             | especificadorDeTipo p 
+                             | CALIFICADOR_DE_TIPO p 
 ;
 
-declaradorDirecto: IDENTIFICADOR {printf("112\n");}
-                  | '('decla')' {printf("113\n");}
-                  | declaradorDirecto '['expresionConstante']' {printf("114\n");}
-                  | declaradorDirecto '['']' {printf("115\n");}
-                  | declaradorDirecto '('listaTiposParametros')' {printf("116\n");}
-                  | declaradorDirecto '('listaDeIdentificadores')' {printf("117\n");}
-                  | declaradorDirecto '('')' {printf("118\n");}
+p: especificadoresDeDeclaracion
+ |
 ;
 
-listaTiposParametros: listaDeParametros {printf("119\n");}
-                     | listaDeParametros ',' '.''.''.' {printf("120\n");}
+listaDeDeclaradores: declarador  q
 ;
 
-listaDeParametros: declaracionDeParametro {printf("121\n");}
-                  | listaDeParametros ',' declaracionDeParametro {printf("122\n");}
+q: ',' declarador q
+ |
 ;
 
-declaracionDeParametro: especificadoresDeDeclaracion decla {printf("123\n");}
-                       | especificadoresDeDeclaracion declaradorAbstracto {printf("124\n");}
-                       | especificadoresDeDeclaracion {printf("125\n");}
+declarador: decla r
 ;
 
-listaDeIdentificadores: IDENTIFICADOR {printf("126\n");}
-                       | listaDeIdentificadores ',' IDENTIFICADOR {printf("127\n");}
+r: '=' inicializador
+ |
 ;
 
-especificadorDeEnum: ENUM IDENTIFICADOR '{'listaDeEnumeradores'}' {printf("128\n");}
-                    | ENUM '{'listaDeEnumeradores'}' {printf("129\n");}
-                    | ENUM IDENTIFICADOR {printf("130\n");}
+inicializador: expresionAsignacion 
+              | '{'listaDeInicializadores s
 ;
 
-listaDeEnumeradores: enumerador {printf("131\n");}
-                    | listaDeEnumeradores ',' enumerador  {printf("132\n");}
+s: '}'
+ | ',' '}'
 ;
 
-enumerador: constanteDeEnumeracion {printf("133\n");}
-           | constanteDeEnumeracion '=' expresionConstante {printf("134\n");}
+listaDeInicializadores: inicializador t
 ;
 
-constanteDeEnumeracion: IDENTIFICADOR {printf("135\n");}
+t: ',' inicializador t
+ |
 ;
 
-nombreDeTypedef: IDENTIFICADOR {printf("136\n");}
+especificadorDeTipo: ESPECIFICADOR_DE_TIPO 
+                    | especificadorStructOUnion 
+                    | especificadorDeEnum 
+                    | nombreDeTypedef 
 ;
 
-nombreDeTipo: listaDeCalificadores declaradorAbstracto {printf("137\n");}
-             | listaDeCalificadores {printf("138\n");}
+especificadorStructOUnion: STRUCT_O_UNION u
 ;
 
-declaradorAbstracto: puntero {printf("139\n");}
-                    | puntero declaradorAbstractoDirecto {printf("140\n");}
-                    | declaradorAbstractoDirecto {printf("141\n");}
+u: IDENTIFICADOR v
+ | '{'listaDeDeclaracionesStruct'}'
 ;
 
-declaradorAbstractoDirecto: '(' declaradorAbstracto ')' {printf("142\n");}
-                           | declaradorAbstractoDirecto '[' expresionConstante ']' {printf("143\n");}
-                           | declaradorAbstractoDirecto '[' ']' {printf("144\n");}
-                           | '[' expresionConstante ']' {printf("145\n");}
-                           | '[' ']' {printf("146\n");}
-                           | declaradorAbstractoDirecto '(' listaTiposParametros ')' {printf("147\n");}
-                           | declaradorAbstractoDirecto '(' ')' {printf("148\n");}
-                           | '(' listaTiposParametros ')' {printf("149\n");}
-                           | '(' ')' {printf("150\n");}
+v: '{'listaDeDeclaracionesStruct'}'
+ |
 ;
 
-sentencia: sentenciaExpresion {printf("151\n");}
-          | sentenciaCompuesta {printf("152\n");}
-          | sentenciaDeSeleccion {printf("153\n");}
-          | sentenciaDeIteracion {printf("154\n");}
-          | sentenciaEtiquetada {printf("155\n");}
-          | sentenciaDeSalto {printf("156\n");}
+listaDeDeclaracionesStruct: declaracionStruct w
 ;
 
-sentenciaExpresion: expresion ';' {printf("157\n");}
-                   | ';' {printf("158\n");}
+w: declaracionStruct w
+ |
 ;
 
-sentenciaCompuesta: '{'listaDeDeclaraciones listaDeSentencias '}' {printf("159\n");}
-                   | '{'listaDeDeclaraciones '}' {printf("160\n");}
-                   | '{' listaDeSentencias '}' {printf("161\n");}
-                   | '{' '}' {printf("162\n");}
+declaracionStruct: listaDeCalificadores declaradoresStruct ';' 
 ;
 
-listaDeDeclaraciones: declaracion {printf("163\n");}
-                    | listaDeDeclaraciones declaracion {printf("164\n");}
+listaDeCalificadores: especificadorDeTipo x
+                     | CALIFICADOR_DE_TIPO x
 ;
 
-listaDeSentencias: sentencia {printf("165\n");}
-                  | listaDeSentencias sentencia {printf("166\n");}
+x: listaDeCalificadores
+ |
 ;
 
-sentenciaDeSeleccion: IF '(' expresion ')' sentencia {printf("167\n");}
-                    | IF '(' expresion ')' sentencia ELSE sentencia {printf("168\n");}
-                    SWITCH '(' expresion ')' sentencia {printf("169\n");}
+declaradoresStruct: declaStruct y
 ;
 
-sentenciaDeIteracion: WHILE '(' expresion ')' sentencia {printf("170\n");}
-                    | DO sentencia WHILE '(' expresion ')' ';' {printf("171\n");}
-                    | FOR '(' expresion ';' expresion ';' expresion ')' sentencia {printf("172\n");}
-                    | FOR '(' ';' expresion ';' expresion ')' sentencia {printf("173\n");}
-                    | FOR '(' expresion ';'  ';' expresion ')' sentencia {printf("174\n");}
-                    | FOR '(' expresion ';' expresion ';' ')' sentencia {printf("175\n");}
-                    | FOR '(' ';' ';' expresion ')' sentencia {printf("176\n");}
-                    | FOR '(' ';' expresion ';' ')' sentencia {printf("177\n");}
-                    | FOR '(' expresion ';' ';' ')' sentencia {printf("178\n");}
-                    | | FOR '(' ';' ';' ')' sentencia {printf("179\n");}
+y: ',' declaStruct y 
+ |
 ;
 
-sentenciaEtiquetada: CASE expresionConstante ':' sentencia {printf("180\n");}
-                   | DEFAULT ':' sentencia {printf("181\n");}
-                   | IDENTIFICADOR ':' sentencia {printf("182\n");}
+declaStruct: decla z
+            | ':' expresionConstante 
 ;
 
-sentenciaDeSalto: CONTINUE ';' {printf("183\n");}
-                | BREAK ';' {printf("184\n");}
-                | RETURN expresion ';' {printf("185\n");}
-                | RETURN ';' {printf("186\n");}
+z: ':' expresionConstante
+ |
 ;
 
+expresionConstante: expresionCondicional 
+;
+
+decla: puntero declaradorDirecto 
+      | declaradorDirecto 
+;
+
+puntero: '*' aa
+;
+
+aa: listaCalificadoresTipos ab
+ | puntero
+ |
+;
+
+ab: puntero
+ |
+;
+
+listaCalificadoresTipos: CALIFICADOR_DE_TIPO  ac
+;
+
+ac: CALIFICADOR_DE_TIPO ac
+ |
+;
+
+declaradorDirecto: IDENTIFICADOR ad
+                  | '('decla')' ad
+;
+
+ad: '[' ae
+ | '(' af
+ |
+;
+
+ae: expresionConstante']' ad
+ | ']' ad
+;
+
+af: listaTiposParametros')' ad
+ | listaDeIdentificadores')' ad
+ | ')' ad
+;
+
+listaTiposParametros: listaDeParametros ag
+;
+
+ag: ',' '.''.''.'
+ |
+;
+
+listaDeParametros: declaracionDeParametro ah
+;
+
+ah: ',' declaracionDeParametro ah
+ |
+;
+
+declaracionDeParametro: especificadoresDeDeclaracion ai
+;
+
+ai: decla
+ | declaradorAbstracto
+ |
+;
+
+listaDeIdentificadores: IDENTIFICADOR aj
+;
+
+aj: ',' IDENTIFICADOR aj
+ |
+;
+
+especificadorDeEnum: ENUM ak
+;
+
+ak: IDENTIFICADOR al
+ | '{'listaDeEnumeradores'}'
+;
+
+al: '{'listaDeEnumeradores'}'
+ |
+;
+
+listaDeEnumeradores: enumerador am
+;
+
+am: ',' enumerador am
+ |
+;
+
+enumerador: constanteDeEnumeracion an
+;
+
+an: '=' expresionConstante
+ |
+;
+
+constanteDeEnumeracion: IDENTIFICADOR 
+;
+
+nombreDeTypedef: IDENTIFICADOR 
+;
+
+nombreDeTipo: listaDeCalificadores ao
+;
+
+ao: declaradorAbstracto
+ |
+;
+
+declaradorAbstracto: puntero ap
+                    | declaradorAbstractoDirecto 
+;
+
+ap: declaradorAbstractoDirecto
+ |
+;
+
+declaradorAbstractoDirecto: '(' ar
+                           | '[' as
+;
+
+aq: '[' as
+ | '(' at
+ |
+;
+
+ar: declaradorAbstracto ')' aq
+ | listaTiposParametros ')' aq
+ | ')' aq
+;
+
+as: expresionConstante ']' aq
+ | ']' aq
+;
+
+at: listaTiposParametros ')' aq
+ | ')' aq
+;
+
+sentencia: sentenciaExpresion
+          | sentenciaCompuesta 
+          | sentenciaDeSeleccion 
+          | sentenciaDeIteracion 
+          | sentenciaEtiquetada 
+          | sentenciaDeSalto 
+;
+
+sentenciaExpresion: expresion ';' 
+                   | ';' 
+;
+
+sentenciaCompuesta: '{' au
+;
+
+au: listaDeDeclaraciones av
+ | listaDeSentencias '}'
+ | '}'
+;
+
+av: listaDeSentencias '}'
+ | '}'
+;
+
+listaDeDeclaraciones: declaracion aw
+;
+
+aw: declaracion aw
+ |
+;
+
+listaDeSentencias: sentencia ax
+;
+
+ax: sentencia ax
+ |
+;
+
+sentenciaDeSeleccion: IF '(' expresion ')' sentencia ay
+                    SWITCH '(' expresion ')' sentencia 
+;
+
+ay: ELSE sentencia
+ | 
+;
+
+sentenciaDeIteracion: WHILE '(' expresion ')' sentencia 
+                    | DO sentencia WHILE '(' expresion ')' ';' 
+                    | FOR '(' az
+;
+
+az: expresion ';' ba
+ | ';' ba
+;
+
+ba: expresion ';' bd
+ | ';' bd
+;
+
+bd: expresion ')' sentencia
+ | ')' sentencia
+; 
+
+sentenciaEtiquetada: CASE expresionConstante ':' sentencia 
+                   | DEFAULT ':' sentencia 
+                   | IDENTIFICADOR ':' sentencia 
+;
+
+sentenciaDeSalto: CONTINUE ';' 
+                | BREAK ';' 
+                | RETURN be
+;
+
+be: expresion ';'
+ | ';'
+;
 
 %%
 
