@@ -4,7 +4,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "bison.tab.h"
+#include <string.h>
+//#include <bison.tab.h>
 
 %}
 
