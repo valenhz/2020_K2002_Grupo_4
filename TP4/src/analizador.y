@@ -6,6 +6,7 @@
     #include <string.h>
     #include <math.h>
     #include <ctype.h>
+    
     #define YYDEBUG 1
 
 int yylex();
