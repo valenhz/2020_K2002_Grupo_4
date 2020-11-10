@@ -530,6 +530,10 @@ be: expresion ';'
 
 int main(){
 
+ #ifdef BISON_DEBUG
+        yydebug = 1;
+#endif    
+
 yyin = fopen("ingreso.c", "r");
 
 yyparse();
