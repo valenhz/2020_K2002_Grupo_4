@@ -6,7 +6,6 @@
     #include <string.h>
     #include <math.h>
     #include <ctype.h>
-    #define YYDEBUG 1
 
 int yylex();
 int yywrap() {
@@ -214,7 +213,7 @@ expresionPrimaria: IDENTIFICADOR
                   | '('expresion')'           
 ;
 
-declaracion: especificadoresDeDeclaracion o 
+declaracion: especificadoresDeDeclaracion o {printf("Se declaro una variable");}
 ;
 
 o: listaDeDeclaradores

@@ -1,23 +1,24 @@
-
-/* A Bison parser, made by GNU Bison 2.4.1.  */
+/* A Bison parser, made by GNU Bison 2.3.  */
 
 /* Skeleton interface for Bison's Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+
+   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
    Free Software Foundation, Inc.
-   
-   This program is free software: you can redistribute it and/or modify
+
+   This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-   
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA 02110-1301, USA.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -28,10 +29,9 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
-
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -74,31 +74,60 @@
      RETURN = 290
    };
 #endif
+/* Tokens.  */
+#define CONSTANTE_ENTERA 258
+#define CONSTANTE_REAL 259
+#define CONSTANTE_CARACTER 260
+#define ERROR 261
+#define IDENTIFICADOR 262
+#define LITERAL_CADENA 263
+#define OPERADOR_ASIGNACION 264
+#define OPERADOR_O_LOGICO 265
+#define OPERADOR_Y_LOGICO 266
+#define COMPARADOR_IGUALDAD 267
+#define COMPARADOR_DISTINTO 268
+#define MAYOR_O_IGUAL 269
+#define MENOR_O_IGUAL 270
+#define OPERADOR_INCREMENTO 271
+#define OPERADOR_DECREMENTO 272
+#define SIZE_OF 273
+#define FLECHA 274
+#define ESPECIFICADOR_CLASE_ALMACENAMIENTO 275
+#define ESPECIFICADOR_DE_TIPO 276
+#define CALIFICADOR_DE_TIPO 277
+#define STRUCT_O_UNION 278
+#define ENUM 279
+#define IF 280
+#define ELSE 281
+#define SWITCH 282
+#define WHILE 283
+#define DO 284
+#define FOR 285
+#define CASE 286
+#define DEFAULT 287
+#define CONTINUE 288
+#define BREAK 289
+#define RETURN 290
+
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
+#line 23 "../src/analizador.y"
 {
-
-/* Line 1676 of yacc.c  */
-#line 24 "../src/analizador.y"
-
     char* cadena;
     char caracter;
     int entero;
     float flotante;
-
-
-
-/* Line 1676 of yacc.c  */
-#line 96 "analizador.tab.h"
-} YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
+}
+/* Line 1529 of yacc.c.  */
+#line 126 "analizador.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
 #endif
 
 extern YYSTYPE yylval;
-
 
