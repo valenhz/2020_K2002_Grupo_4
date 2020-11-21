@@ -155,244 +155,49 @@ expPrimaria:    IDENTIFICADOR
 constante:  CONSTANTE_ENTERA
           | CONSTANTE_REAL
           | CONSTANTE_CARACTER
-
-/////////////
-
-declaracion: especificadoresDeDeclaracion o {printf("Se declaro una variable");}
 ;
 
-o: listaDeDeclaradores
- | 
+/* DECLARACIONES */
+
+
+declaracion:  declaracionVariablesSimples
+              | declaracionFunciones
+              | definicionFunciones
 ;
 
-especificadoresDeDeclaracion: ESPECIFICADOR_CLASE_ALMACENAMIENTO p 
-                             | especificadorDeTipo p 
-                             | CALIFICADOR_DE_TIPO p 
+declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';'  {printf(" de tipo %s.", $<cadena>1);}
 ;
 
-p: especificadoresDeDeclaracion
- |
+listaVariablesSimples:  variableSimple  {printf("\nSe declara la variable %s", $<cadena>1);}
+                        | listaVariablesSimples ',' unaVariableSimple {printf(", la variable %s", $<cadena>3);}
 ;
 
-listaDeDeclaradores: declarador  q
+variableSimple:  IDENTIFICADOR opcionInicializacion  {strcpy($<cadena>$, $<cadena>1);}
 ;
 
-q: ',' declarador q
- |
+opcionInicializacion:   /* vacio */
+                        | OPERADOR_ASIGNACION expCondicional
 ;
 
-declarador: decla r
+declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' ';' {printf("\nSe declara la funcion %s de tipo %s", $<cadena>2, $<cadena>1); }
 ;
 
-r: '=' inicializador
- |
+opcionArgumentosConTipo:        /* vacio */ 
+                                | TIPO_DATO opcionReferencia IDENTIFICADOR 
+                                | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo
 ;
 
-inicializador: expresionAsignacion 
-              | '{'listaDeInicializadores s
+argumentosConTipo:      TIPO_DATO opcionReferencia IDENTIFICADOR
+                        | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo 
 ;
 
-s: '}'
- | ',' '}'
+opcionReferencia:       /* vacio */
+                        | '&'
 ;
 
-listaDeInicializadores: inicializador t
-;
+definicionFunciones:    TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' sentencia {printf("\nSe define la funcion %s de tipo %s", $<cadena>2, $<cadena>1);}
 
-t: ',' inicializador t
- |
-;
-
-especificadorDeTipo: ESPECIFICADOR_DE_TIPO 
-                    | especificadorStructOUnion 
-                    | especificadorDeEnum 
-                    | nombreDeTypedef 
-;
-
-especificadorStructOUnion: STRUCT_O_UNION u
-;
-
-u: IDENTIFICADOR v
- | '{'listaDeDeclaracionesStruct'}'
-;
-
-v: '{'listaDeDeclaracionesStruct'}'
- |
-;
-
-listaDeDeclaracionesStruct: declaracionStruct w
-;
-
-w: declaracionStruct w
- |
-;
-
-declaracionStruct: listaDeCalificadores declaradoresStruct ';' 
-;
-
-listaDeCalificadores: especificadorDeTipo x
-                     | CALIFICADOR_DE_TIPO x
-;
-
-x: listaDeCalificadores
- |
-;
-
-declaradoresStruct: declaStruct y
-;
-
-y: ',' declaStruct y 
- |
-;
-
-declaStruct: decla z
-            | ':' expresionConstante 
-;
-
-z: ':' expresionConstante
- |
-;
-
-expresionConstante: expresionCondicional 
-;
-
-decla: puntero declaradorDirecto 
-      | declaradorDirecto 
-;
-
-puntero: '*' aa
-;
-
-aa: listaCalificadoresTipos ab
- | puntero
- |
-;
-
-ab: puntero
- |
-;
-
-listaCalificadoresTipos: CALIFICADOR_DE_TIPO  ac
-;
-
-ac: CALIFICADOR_DE_TIPO ac
- |
-;
-
-declaradorDirecto: IDENTIFICADOR ad
-                  | '('decla')' ad
-;
-
-ad: '[' ae
- | '(' af
- |
-;
-
-ae: expresionConstante']' ad
- | ']' ad
-;
-
-af: listaTiposParametros')' ad
- | listaDeIdentificadores')' ad
- | ')' ad
-;
-
-listaTiposParametros: listaDeParametros ag
-;
-
-ag: ',' '.''.''.'
- |
-;
-
-listaDeParametros: declaracionDeParametro ah
-;
-
-ah: ',' declaracionDeParametro ah
- |
-;
-
-declaracionDeParametro: especificadoresDeDeclaracion ai
-;
-
-ai: decla
- | declaradorAbstracto
- |
-;
-
-listaDeIdentificadores: IDENTIFICADOR aj
-;
-
-aj: ',' IDENTIFICADOR aj
- |
-;
-
-especificadorDeEnum: ENUM ak
-;
-
-ak: IDENTIFICADOR al
- | '{'listaDeEnumeradores'}'
-;
-
-al: '{'listaDeEnumeradores'}'
- |
-;
-
-listaDeEnumeradores: enumerador am
-;
-
-am: ',' enumerador am
- |
-;
-
-enumerador: constanteDeEnumeracion an
-;
-
-an: '=' expresionConstante
- |
-;
-
-constanteDeEnumeracion: IDENTIFICADOR 
-;
-
-nombreDeTypedef: IDENTIFICADOR 
-;
-
-nombreDeTipo: listaDeCalificadores ao
-;
-
-ao: declaradorAbstracto
- |
-;
-
-declaradorAbstracto: puntero ap
-                    | declaradorAbstractoDirecto 
-;
-
-ap: declaradorAbstractoDirecto
- |
-;
-
-declaradorAbstractoDirecto: '(' ar
-                           | '[' as
-;
-
-aq: '[' as
- | '(' at
- |
-;
-
-ar: declaradorAbstracto ')' aq
- | listaTiposParametros ')' aq
- | ')' aq
-;
-
-as: expresionConstante ']' aq
- | ']' aq
-;
-
-at: listaTiposParametros ')' aq
- | ')' aq
-;
+/* SENTENCIAS */
 
 sentencia: sentenciaExpresion
           | sentenciaCompuesta 
@@ -402,74 +207,40 @@ sentencia: sentenciaExpresion
           | sentenciaDeSalto 
 ;
 
-sentenciaExpresion: expresion ';' 
-                   | ';' 
+sentenciaCompuesta:  '{' opcionListaDeclaraciones opcionListaSentencias '}'  {printf("\nSe encontro una sentencia compuesta con %i declaraciones y otras %i sentencias.", contadorDeclaraciones, contadorSentencias); contadorDeclaraciones = 0; contadorSentencias = 0;}
 ;
 
-sentenciaCompuesta: '{' au
+opcionListaDeclaraciones:       /* vacio */
+                                | declaracion                           {contadorDeclaraciones++;}
+                                | opcionListaDeclaraciones declaracion  {contadorDeclaraciones++;}
 ;
 
-au: listaDeDeclaraciones av
- | listaDeSentencias '}'
- | '}'
+opcionListaSentencias:  /* vacio*/
+                        | sentencia                     {contadorSentencias++;}
+                        | listaSentencias sentencia     {contadorSentencias++;}
 ;
 
-av: listaDeSentencias '}'
- | '}'
+sentenciaExpresion:     ';'                     {printf("\nSe encontro una sentencia vacia.");}
+                        | expresion ';'         {printf("\nSe encontro una sentencia expresion.");}
 ;
 
-listaDeDeclaraciones: declaracion aw
+sentenciaSeleccion:     IF '(' expresion ')' sentencia                  {printf("\nSe encontro una sentencia de seleccion (if).");}
+                        | IF '(' expresion ')' sentencia ELSE sentencia {printf("\nSe encontro una sentencia de seleccion (if y else).");}
+                        | SWITCH '(' expresion ')' sentencia            {printf("\nSe encontro una sentencia de seleccion (switch).");}
 ;
 
-aw: declaracion aw
- |
+sentenciaIteracion:     WHILE '(' expresion ')' sentencia                                               {printf("\nSe encontro una sentencia de iteracion (while).");}
+                        | DO sentencia WHILE '(' expresion ')' ';'                                      {printf("\nSe encontro una sentencia de iteracion (do while).");}
+                        | FOR '(' opcionExpresion ';' opcionExpresion ';' opcionExpresion ')' sentencia {printf("\nSe encontro una sentencia de iteracion (for).");}
 ;
 
-listaDeSentencias: sentencia ax
+sentenciaSalto: RETURN opcionExpresion ';'      {printf("\nSe encontro una sentencia de salto.");}
 ;
 
-ax: sentencia ax
- |
+opcionExpresion:    /* vacio */
+                    | expresion
 ;
 
-sentenciaDeSeleccion: IF '(' expresion ')' sentencia ay
-                    SWITCH '(' expresion ')' sentencia 
-;
-
-ay: ELSE sentencia
- | 
-;
-
-sentenciaDeIteracion: WHILE '(' expresion ')' sentencia 
-                    | DO sentencia WHILE '(' expresion ')' ';' 
-                    | FOR '(' az
-;
-
-az: expresion ';' ba
- | ';' ba
-;
-
-ba: expresion ';' bd
- | ';' bd
-;
-
-bd: expresion ')' sentencia
- | ')' sentencia
-; 
-
-sentenciaEtiquetada: CASE expresionConstante ':' sentencia 
-                   | DEFAULT ':' sentencia 
-                   | IDENTIFICADOR ':' sentencia 
-;
-
-sentenciaDeSalto: CONTINUE ';' 
-                | BREAK ';' 
-                | RETURN be
-;
-
-be: expresion ';'
- | ';'
-;
 
 %%
 
