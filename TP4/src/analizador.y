@@ -8,21 +8,23 @@
     #include <ctype.h>
 
 int yylex();
+
+FILE* yyin;
+
 int yywrap() {
     return(1);
              }    
 
 void yyerror (char const *s) {
    fprintf (stderr, "%s\n", s);
-}                                                               
+}          
 
-FILE* yyin;
+int linea = 1;
 
 %}
 
 %union {
     char* cadena;
-    char caracter;
     int entero;
     float flotante;
 }
@@ -31,7 +33,6 @@ FILE* yyin;
 %token <flotante> CONSTANTE_REAL
 %token <cadena> CONSTANTE_CARACTER
 %token <cadena> ERROR
-
 
 %token <cadena> IDENTIFICADOR
 %token <cadena> LITERAL_CADENA
@@ -64,16 +65,17 @@ FILE* yyin;
 %token <cadena> BREAK 
 %token <cadena> RETURN  
 
+%type <cadena> error
+
 %%
 
-input:             
-      | input line 
+input:  /* vacio */
+        | input line
 ;
 
-line: '\n' 
-    | expresion '\n' 
-    | declaracion '\n' 
-    | sentencia '\n' 
+line:   declaracion '\n'        {linea++;}
+        | sentencia '\n'        {linea++;}
+        | error '\n'            {printf("\nSe detecto un error sintactico en la linea %i.", linea); linea++;}     
 ;
 
 expresion: expresionAsignacion a 
@@ -534,7 +536,7 @@ int main(){
         yydebug = 1;
 #endif    
 
-yyin = fopen("ingreso.c", "r");
+yyin = fopen("ingreso.c", "r"); 
 
 yyparse();
 
