@@ -43,11 +43,10 @@ int linea = 1;
 %token <cadena> COMPARADOR_IGUALDAD
 %token <cadena> OPERADOR_RELACION
 %token <cadena> OPERADOR_INCREMENTO
-%token <cadena> OPERADOR_DECREMENTO
 %token <cadena> SIZE_OF
 %token <cadena> FLECHA
 %token <cadena> ESPECIFICADOR_CLASE_ALMACENAMIENTO
-%token <cadena> ESPECIFICADOR_DE_TIPO
+%token <cadena> TIPO_DATO
 %token <cadena> CALIFICADOR_DE_TIPO
 %token <cadena> STRUCT_O_UNION
 %token <cadena> ENUM
@@ -64,6 +63,9 @@ int linea = 1;
 %token <cadena> RETURN  
 
 %type <cadena> error
+
+%left '+' '-'
+%left '*' '/'  // esto no se q ondis
 
 %%
 
@@ -106,18 +108,32 @@ expRelacional:  expAditiva
                 | expRelacional OPERADOR_RELACION expAditiva /* CAMBIE HASTA ACA FALTAN LOS DEMAS TERMINALES */
 ;
 
-expAditiva:     expMultiplicativa
-                | expAditiva OPER_ADITIVO expMultiplicativa
+expAditiva: expMultiplicativa
+            | expAditiva operAditivo expMultiplicativa
 ;
 
-expMultiplicativa:      expUnaria
-                        | expMultiplicativa OPER_MULTIPLICATIVO expUnaria
+operAditivo:    '+'
+              | '-'
+;
+
+expMultiplicativa:  expUnaria
+                    | expMultiplicativa operMultiplicativo expUnaria
+;
+
+operMultiplicativo:  '*'
+                    |'/'
 ;
 
 expUnaria:      expPostfijo
-                | OPER_INCREMENTO expUnaria
-                | OPER_UNARIO expUnaria
-                | OPER_SIZEOF '(' TIPO_DATO ')'
+                | OPERADOR_INCREMENTO expUnaria
+                | operUnario expUnaria                 
+                | SIZE_OF '(' TIPO_DATO ')'
+;
+
+operUnario:  '*'
+            |'&'
+            |'-'
+            |'!'
 ;
 
 expPostfijo:    expPrimaria
@@ -135,6 +151,10 @@ expPrimaria:    IDENTIFICADOR
                 | LITERAL_CADENA
                 | '(' expresion ')'
 ;
+
+constante:  CONSTANTE_ENTERA
+          | CONSTANTE_REAL
+          | CONSTANTE_CARACTER
 
 /////////////
 

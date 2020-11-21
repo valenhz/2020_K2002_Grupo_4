@@ -10,7 +10,7 @@
 %}
 
 ESPECIFICADOR_CLASE_ALMACENAMIENTO "typedef"|"static"|"auto"|"extern"|"register"
-ESPECIFICADOR_DE_TIPO "void"|"char"|"short"|"int"|"long"|"float"|"double"|"signed"|"unsigned"
+TIPO_DATO "void"|"char"|"short"|"int"|"long"|"float"|"double"|"signed"|"unsigned"
 CALIFICADOR_DE_TIPO "const"|"volatile"
 STRUCT_O_UNION "struct"|"union"
 ENUM "enum"
@@ -26,14 +26,13 @@ CONTINUE "continue"
 BREAK "break"
 RETURN "return"
 
-OPERADORES "*"|"/"|"-"|"+"|"&"|"%"|"<"|">"|"!"
+OPERADORES "*"|"/"|"-"|"+"|"&"|"%"|"!"
 OPERADOR_ASIGNACION "="|"*="|"/="|"%="|"+="|"-="|"^="
 OPERADOR_O_LOGICO "||"
 OPERADOR_Y_LOGICO "&&"
 COMPARADOR_IGUALDAD "==" "!="
 OPERADOR_RELACION ">"|"<"|"<="|">="
-OPERADOR_INCREMENTO "++"
-OPERADOR_DECREMENTO "--"
+OPERADOR_INCREMENTO "++" "--"
 SIZE_OF "sizeof"
 FLECHA "->"
 
@@ -49,7 +48,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 {ESPECIFICADOR_CLASE_ALMACENAMIENTO} {yylval.cadena = strdup(yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
 
-{ESPECIFICADOR_DE_TIPO} {yylval.cadena = strdup(yytext); return ESPECIFICADOR_DE_TIPO;}
+{TIPO_DATO} {yylval.cadena = strdup(yytext); return TIPO_DATO;}
 
 {CALIFICADOR_DE_TIPO} {yylval.cadena = strdup(yytext); return CALIFICADOR_DE_TIPO;}
 
@@ -92,8 +91,6 @@ DIGITO_HEXA [0-9a-fA-F]
 {OPERADOR_RELACION} {yylval.cadena = strdup(yytext); return OPERADOR_RELACION;}
 
 {OPERADOR_INCREMENTO} {yylval.cadena = strdup(yytext); return OPERADOR_INCREMENTO;}
-
-{OPERADOR_DECREMENTO} {yylval.cadena = strdup(yytext); return OPERADOR_DECREMENTO;}
 
 {SIZE_OF} {yylval.cadena = strdup(yytext); return SIZE_OF;}
 
