@@ -20,6 +20,9 @@ void yyerror (char const *s) {
 }          
 
 int linea = 1;
+int contadorDeclaraciones = 0;
+int contadorSentencias = 0;
+
 
 %}
 
