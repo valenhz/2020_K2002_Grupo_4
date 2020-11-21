@@ -78,6 +78,7 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
+        | '\n'                  {linea++;}
         | error '\n'            {printf("\nSe detecto un error sintactico en la linea %i.", linea); linea++;}     
 ;
 
