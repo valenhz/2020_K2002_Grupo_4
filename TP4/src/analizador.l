@@ -30,10 +30,8 @@ OPERADORES "*"|"/"|"-"|"+"|"&"|"%"|"<"|">"|"!"
 OPERADOR_ASIGNACION "="|"*="|"/="|"%="|"+="|"-="|"^="
 OPERADOR_O_LOGICO "||"
 OPERADOR_Y_LOGICO "&&"
-COMPARADOR_IGUALDAD "=="
-COMPARADOR_DISTINTO "!="
-MAYOR_O_IGUAL ">="
-MENOR_O_IGUAL "<="
+COMPARADOR_IGUALDAD "==" "!="
+OPERADOR_RELACION ">"|"<"|"<="|">="
 OPERADOR_INCREMENTO "++"
 OPERADOR_DECREMENTO "--"
 SIZE_OF "sizeof"
@@ -91,11 +89,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 {COMPARADOR_IGUALDAD} {yylval.cadena = strdup(yytext); return COMPARADOR_IGUALDAD;}
 
-{COMPARADOR_DISTINTO} {yylval.cadena = strdup(yytext); return COMPARADOR_DISTINTO;}
-
-{MAYOR_O_IGUAL} {yylval.cadena = strdup(yytext); return MAYOR_O_IGUAL;}
-
-{MENOR_O_IGUAL} {yylval.cadena = strdup(yytext); return MENOR_O_IGUAL;}
+{OPERADOR_RELACION} {yylval.cadena = strdup(yytext); return OPERADOR_RELACION;}
 
 {OPERADOR_INCREMENTO} {yylval.cadena = strdup(yytext); return OPERADOR_INCREMENTO;}
 

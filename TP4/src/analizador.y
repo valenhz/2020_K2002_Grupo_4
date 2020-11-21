@@ -41,9 +41,7 @@ int linea = 1;
 %token <cadena> OPERADOR_O_LOGICO
 %token <cadena> OPERADOR_Y_LOGICO
 %token <cadena> COMPARADOR_IGUALDAD
-%token <cadena> COMPARADOR_DISTINTO
-%token <cadena> MAYOR_O_IGUAL
-%token <cadena> MENOR_O_IGUAL
+%token <cadena> OPERADOR_RELACION
 %token <cadena> OPERADOR_INCREMENTO
 %token <cadena> OPERADOR_DECREMENTO
 %token <cadena> SIZE_OF
@@ -78,142 +76,67 @@ line:   declaracion '\n'        {linea++;}
         | error '\n'            {printf("\nSe detecto un error sintactico en la linea %i.", linea); linea++;}     
 ;
 
-expresion: expresionAsignacion a 
+
+/* EXPRESIONES */
+
+expresion:      expAsignacion
 ;
 
-a: ',' expresionAsignacion a 
+expAsignacion:  expCondicional
+                | expUnaria OPERADOR_ASIGNACION expAsignacion
 ;
 
-expresionAsignacion: expresionCondicional 
-                     | expresionUnaria OPERADOR_ASIGNACION expresionAsignacion 
+expCondicional: expOr
+                | expOr '?' expresion ':' expCondicional
 ;
 
-expresionCondicional: expresionOLogico b 
+expOr:  expAnd
+        | expOr OPERADOR_O_LOGICO expAnd
 ;
 
-b: '?' expresion ':' expresionCondicional
-  |
+expAnd: expIgualdad
+        | expAnd OPERADOR_Y_LOGICO expIgualdad
 ;
 
-expresionOLogico: expresionYLogico c
+expIgualdad:    expRelacional
+                | expIgualdad COMPARADOR_IGUALDAD expRelacional
 ;
 
-c: OPERADOR_O_LOGICO expresionYLogico c
-  |
+expRelacional:  expAditiva
+                | expRelacional OPERADOR_RELACION expAditiva /* CAMBIE HASTA ACA FALTAN LOS DEMAS TERMINALES */
 ;
 
-expresionYLogico: expresionOInclusivo d
+expAditiva:     expMultiplicativa
+                | expAditiva OPER_ADITIVO expMultiplicativa
 ;
 
-d: OPERADOR_Y_LOGICO expresionOInclusivo d 
-  |
+expMultiplicativa:      expUnaria
+                        | expMultiplicativa OPER_MULTIPLICATIVO expUnaria
 ;
 
-expresionOInclusivo: expresionOExcluyente e
+expUnaria:      expPostfijo
+                | OPER_INCREMENTO expUnaria
+                | OPER_UNARIO expUnaria
+                | OPER_SIZEOF '(' TIPO_DATO ')'
 ;
 
-e: '|' expresionOExcluyente e
-  |
+expPostfijo:    expPrimaria
+                | expPostfijo '[' expresion ']'
+                | expPostfijo '(' opcionListaArgumentos ')'
 ;
 
-expresionOExcluyente: expresionY f
+opcionListaArgumentos:  /* vacio*/
+                        | expAsignacion
+                        | opcionListaArgumentos ',' expAsignacion
 ;
 
-f: '^' expresionY f
-  |
+expPrimaria:    IDENTIFICADOR
+                | constante
+                | LITERAL_CADENA
+                | '(' expresion ')'
 ;
 
-expresionY: expresionDeIgualdad g
-;
-
-g: '&' expresionDeIgualdad g
-  |
-;
-
-expresionDeIgualdad: expresionRelacional h
-;
-
-h: COMPARADOR_IGUALDAD expresionRelacional h
- | COMPARADOR_DISTINTO expresionRelacional h
- |
-;
-
-expresionRelacional: expresionAditiva i
-;
-
-i: '<' expresionAditiva i
- | '>' expresionAditiva i
- | MENOR_O_IGUAL expresionAditiva i
- | MAYOR_O_IGUAL expresionAditiva i
- |
-;
-
-expresionAditiva: expresionMultiplicativa j
-;
-
-j: '+' expresionMultiplicativa j
- | '-' expresionMultiplicativa j
- |
-;
-
-expresionMultiplicativa: expresionDeConversion k
-;
-
-k: '*' expresionDeConversion k
- | '/' expresionDeConversion k
- | '%' expresionDeConversion k
- |
-;
-
-expresionDeConversion: expresionUnaria 
-                      | '('nombreDeTipo')' expresionDeConversion
-;
-
-expresionUnaria: expresionSufijo 
-                | OPERADOR_INCREMENTO expresionUnaria 
-                | OPERADOR_DECREMENTO expresionUnaria 
-                | operadorUnario expresionDeConversion 
-                | SIZE_OF l 
-;
-
-l: expresionUnaria
- | '('nombreDeTipo')' 
-;
-
-operadorUnario: '&' 
-               | '*' 
-               | '+' 
-               | '-' 
-               | '~' 
-               | '!' 
-;
-
-expresionSufijo: expresionPrimaria m
-;
-
-m: '['expresion']' m
- | '('listaDeArgumentos')' m
- | '.' IDENTIFICADOR m
- | FLECHA IDENTIFICADOR m
- | OPERADOR_INCREMENTO m
- | OPERADOR_DECREMENTO m
- |
-;
-
-listaDeArgumentos: expresionAsignacion n
-;
-
-n: ',' expresionAsignacion n
- |
-;
-
-expresionPrimaria: IDENTIFICADOR 
-                  | CONSTANTE_ENTERA 
-                  | CONSTANTE_REAL 
-                  | CONSTANTE_CARACTER 
-                  | LITERAL_CADENA 
-                  | '('expresion')'           
-;
+/////////////
 
 declaracion: especificadoresDeDeclaracion o {printf("Se declaro una variable");}
 ;
