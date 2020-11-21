@@ -1,11 +1,9 @@
 %{
-
-// delimitadores de codigo C
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-    #include <math.h>
-    #include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <ctype.h>
 
 int yylex();
 
@@ -15,9 +13,7 @@ int yywrap() {
     return(1);
              }    
 
-void yyerror (char const *s) {
-   fprintf (stderr, "%s\n", s);
-}          
+void yyerror (char const *s) {}          
 
 int linea = 1;
 int contadorDeclaraciones = 0;
@@ -27,7 +23,7 @@ int contadorSentencias = 0;
 %}
 
 %union {
-    char* cadena;
+    char cadena[50];
     int entero;
     float flotante;
 }
@@ -35,12 +31,9 @@ int contadorSentencias = 0;
 %token <entero> CONSTANTE_ENTERA
 %token <flotante> CONSTANTE_REAL
 %token <cadena> CONSTANTE_CARACTER
-%token <cadena> ERROR
-
 %token <cadena> IDENTIFICADOR
 %token <cadena> LITERAL_CADENA
 %token <cadena> OPERADOR_ASIGNACION
-
 %token <cadena> OPERADOR_O_LOGICO
 %token <cadena> OPERADOR_Y_LOGICO
 %token <cadena> COMPARADOR_IGUALDAD
@@ -66,9 +59,7 @@ int contadorSentencias = 0;
 %token <cadena> RETURN  
 
 %type <cadena> error
-
-%left '+' '-'
-%left '*' '/'  // esto no se q ondis
+%type <cadena> variableSimple
 
 %%
 
@@ -78,14 +69,13 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
-        | '\n'                  {linea++;}
         | error '\n'            {printf("\nSe detecto un error sintactico en la linea %i.", linea); linea++;}     
 ;
 
 
 /* EXPRESIONES */
 
-expresion:      expAsignacion
+expresion:  expAsignacion
 ;
 
 expAsignacion:  expCondicional
@@ -109,7 +99,7 @@ expIgualdad:    expRelacional
 ;
 
 expRelacional:  expAditiva
-                | expRelacional OPERADOR_RELACION expAditiva /* CAMBIE HASTA ACA FALTAN LOS DEMAS TERMINALES */
+                | expRelacional OPERADOR_RELACION expAditiva 
 ;
 
 expAditiva: expMultiplicativa
@@ -173,7 +163,7 @@ declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';'  {printf(" de 
 ;
 
 listaVariablesSimples:  variableSimple  {printf("\nSe declara la variable %s", $<cadena>1);}
-                        | listaVariablesSimples ',' unaVariableSimple {printf(", la variable %s", $<cadena>3);}
+                        | listaVariablesSimples ',' variableSimple {printf(", la variable %s", $<cadena>3);}
 ;
 
 variableSimple:  IDENTIFICADOR opcionInicializacion  {strcpy($<cadena>$, $<cadena>1);}
@@ -207,16 +197,19 @@ sentencia: sentenciaExpresion
           | sentenciaCompuesta 
           | sentenciaDeSeleccion 
           | sentenciaDeIteracion 
-          | sentenciaEtiquetada 
           | sentenciaDeSalto 
 ;
 
-sentenciaCompuesta:  '{' opcionListaDeclaraciones opcionListaSentencias '}'  {printf("\nSe encontro una sentencia compuesta con %i declaraciones y otras %i sentencias.", contadorDeclaraciones, contadorSentencias); contadorDeclaraciones = 0; contadorSentencias = 0;}
+sentenciaCompuesta:  '{' opcionListaDeclaraciones opcionListaSentencias '}'  {printf("\nSe encontro una sentencia compuesta con %i declaraciones y %i sentencias.", contadorDeclaraciones, contadorSentencias); contadorDeclaraciones = 0; contadorSentencias = 0;}
 ;
 
 opcionListaDeclaraciones:       /* vacio */
                                 | declaracion                           {contadorDeclaraciones++;}
                                 | opcionListaDeclaraciones declaracion  {contadorDeclaraciones++;}
+;
+
+listaSentencias:        sentencia                       {contadorSentencias++;}
+                        | listaSentencias sentencia     {contadorSentencias++;}
 ;
 
 opcionListaSentencias:  /* vacio*/
@@ -228,17 +221,17 @@ sentenciaExpresion:     ';'                     {printf("\nSe encontro una sente
                         | expresion ';'         {printf("\nSe encontro una sentencia expresion.");}
 ;
 
-sentenciaSeleccion:     IF '(' expresion ')' sentencia                  {printf("\nSe encontro una sentencia de seleccion (if).");}
+sentenciaDeSeleccion:     IF '(' expresion ')' sentencia                  {printf("\nSe encontro una sentencia de seleccion (if).");}
                         | IF '(' expresion ')' sentencia ELSE sentencia {printf("\nSe encontro una sentencia de seleccion (if y else).");}
                         | SWITCH '(' expresion ')' sentencia            {printf("\nSe encontro una sentencia de seleccion (switch).");}
 ;
 
-sentenciaIteracion:     WHILE '(' expresion ')' sentencia                                               {printf("\nSe encontro una sentencia de iteracion (while).");}
+sentenciaDeIteracion:     WHILE '(' expresion ')' sentencia                                               {printf("\nSe encontro una sentencia de iteracion (while).");}
                         | DO sentencia WHILE '(' expresion ')' ';'                                      {printf("\nSe encontro una sentencia de iteracion (do while).");}
                         | FOR '(' opcionExpresion ';' opcionExpresion ';' opcionExpresion ')' sentencia {printf("\nSe encontro una sentencia de iteracion (for).");}
 ;
 
-sentenciaSalto: RETURN opcionExpresion ';'      {printf("\nSe encontro una sentencia de salto.");}
+sentenciaDeSalto: RETURN opcionExpresion ';'      {printf("\nSe encontro una sentencia de salto.");}
 ;
 
 opcionExpresion:    /* vacio */
@@ -250,13 +243,12 @@ opcionExpresion:    /* vacio */
 
 int main(){
 
- #ifdef BISON_DEBUG
+/*  #ifdef BISON_DEBUG
         yydebug = 1;
-#endif    
+#endif     */
 
-yyin = fopen("ingreso.c", "r"); 
-
-yyparse();
+        yyin = fopen("ingreso.c", "r"); 
+        yyparse();
 
 
 

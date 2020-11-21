@@ -499,10 +499,10 @@ static const yytype_uint8 yyrline[] =
      101,   102,   105,   106,   109,   110,   111,   112,   115,   116,
      117,   120,   121,   122,   125,   126,   127,   128,   135,   136,
      137,   140,   143,   144,   147,   150,   151,   156,   159,   160,
-     161,   164,   165,   168,   169,   172,   178,   179,   180,   181,
-     182,   185,   188,   189,   190,   193,   194,   197,   198,   199,
-     202,   203,   206,   207,   208,   211,   212,   213,   216,   219,
-     220,   229,   230,   231,   232,   233
+     161,   164,   165,   168,   169,   172,   179,   180,   181,   182,
+     183,   186,   189,   190,   191,   194,   195,   198,   199,   200,
+     203,   204,   207,   208,   209,   212,   213,   214,   217,   220,
+     221,   230,   231,   232,   233,   234
 };
 #endif
 
@@ -1627,112 +1627,112 @@ yyreduce:
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 185 "../src/tp4_ssl.y"
+#line 186 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia compuesta con %i declaraciones y otras %i sentencias.", contadorDeclaraciones, contadorSentencias); contadorDeclaraciones = 0; contadorSentencias = 0;;}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 189 "../src/tp4_ssl.y"
+#line 190 "../src/tp4_ssl.y"
     {contadorDeclaraciones++;;}
     break;
 
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 190 "../src/tp4_ssl.y"
+#line 191 "../src/tp4_ssl.y"
     {contadorDeclaraciones++;;}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 193 "../src/tp4_ssl.y"
+#line 194 "../src/tp4_ssl.y"
     {contadorSentencias++;;}
     break;
 
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 194 "../src/tp4_ssl.y"
+#line 195 "../src/tp4_ssl.y"
     {contadorSentencias++;;}
     break;
 
   case 68:
 
 /* Line 1455 of yacc.c  */
-#line 198 "../src/tp4_ssl.y"
+#line 199 "../src/tp4_ssl.y"
     {contadorSentencias++;;}
     break;
 
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 199 "../src/tp4_ssl.y"
+#line 200 "../src/tp4_ssl.y"
     {contadorSentencias++;;}
     break;
 
   case 70:
 
 /* Line 1455 of yacc.c  */
-#line 202 "../src/tp4_ssl.y"
+#line 203 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia vacia.");;}
     break;
 
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 203 "../src/tp4_ssl.y"
+#line 204 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia expresion.");;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 206 "../src/tp4_ssl.y"
+#line 207 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia de seleccion (if).");;}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 207 "../src/tp4_ssl.y"
+#line 208 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia de seleccion (if y else).");;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 208 "../src/tp4_ssl.y"
+#line 209 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia de seleccion (switch).");;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 211 "../src/tp4_ssl.y"
+#line 212 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia de iteracion (while).");;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 212 "../src/tp4_ssl.y"
+#line 213 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia de iteracion (do while).");;}
     break;
 
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 213 "../src/tp4_ssl.y"
+#line 214 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia de iteracion (for).");;}
     break;
 
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 216 "../src/tp4_ssl.y"
+#line 217 "../src/tp4_ssl.y"
     {printf("\nSe encontro una sentencia de salto.");;}
     break;
 
@@ -1951,7 +1951,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 236 "../src/tp4_ssl.y"
+#line 237 "../src/tp4_ssl.y"
 
 
 int main ()

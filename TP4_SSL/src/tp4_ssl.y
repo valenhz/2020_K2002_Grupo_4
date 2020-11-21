@@ -170,6 +170,7 @@ opcionReferencia:       /* vacio */
 ;
 
 definicionFunciones:    TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' sentencia {printf("\nSe define la funcion %s de tipo %s que recibe %i parametro/s.", $<cadena>2, $<cadena>1, contadorParametros); contadorParametros = 0;}
+;
 
 /* --------------------------------------------------------------------------------------
    -----------------------------GRAMATICA DE LAS SENTENCIAS------------------------------

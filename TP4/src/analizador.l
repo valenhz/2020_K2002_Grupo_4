@@ -1,13 +1,11 @@
-%option noyywrap
-
 %{
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "analizador.tab.h"
-
+    #include "analizador.tab.h"
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
 %}
+
+%option noyywrap
 
 ESPECIFICADOR_CLASE_ALMACENAMIENTO "typedef"|"static"|"auto"|"extern"|"register"
 TIPO_DATO "void"|"char"|"short"|"int"|"long"|"float"|"double"|"signed"|"unsigned"
@@ -30,9 +28,9 @@ OPERADORES "*"|"/"|"-"|"+"|"&"|"%"|"!"
 OPERADOR_ASIGNACION "="|"*="|"/="|"%="|"+="|"-="|"^="
 OPERADOR_O_LOGICO "||"
 OPERADOR_Y_LOGICO "&&"
-COMPARADOR_IGUALDAD "==" "!="
+COMPARADOR_IGUALDAD "=="|"!="
 OPERADOR_RELACION ">"|"<"|"<="|">="
-OPERADOR_INCREMENTO "++" "--"
+OPERADOR_INCREMENTO "++"|"--"
 SIZE_OF "sizeof"
 FLECHA "->"
 
@@ -46,61 +44,65 @@ DIGITO_HEXA [0-9a-fA-F]
 
 %%
 
-{ESPECIFICADOR_CLASE_ALMACENAMIENTO} {yylval.cadena = strdup(yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
+"\n" {return '\n';}
 
-{TIPO_DATO} {yylval.cadena = strdup(yytext); return TIPO_DATO;}
+" "|"\t"
 
-{CALIFICADOR_DE_TIPO} {yylval.cadena = strdup(yytext); return CALIFICADOR_DE_TIPO;}
+{ESPECIFICADOR_CLASE_ALMACENAMIENTO} {strcpy(yylval.cadena, yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
 
-{STRUCT_O_UNION} {yylval.cadena = strdup(yytext); return STRUCT_O_UNION;}
+{TIPO_DATO} {strcpy(yylval.cadena, yytext); return TIPO_DATO;}
 
-{ENUM} {yylval.cadena = strdup(yytext); return ENUM;}
+{CALIFICADOR_DE_TIPO} {strcpy(yylval.cadena, yytext); return CALIFICADOR_DE_TIPO;}
 
-{IF} {yylval.cadena = strdup(yytext); return IF;}
+{STRUCT_O_UNION} {strcpy(yylval.cadena, yytext); return STRUCT_O_UNION;}
 
-{ELSE} {yylval.cadena = strdup(yytext); return ELSE;}
+{ENUM} {strcpy(yylval.cadena, yytext); return ENUM;}
 
-{SWITCH} {yylval.cadena = strdup(yytext); return SWITCH;}
+{IF} {strcpy(yylval.cadena, yytext); return IF;}
 
-{WHILE} {yylval.cadena = strdup(yytext); return WHILE;}
+{ELSE} {strcpy(yylval.cadena, yytext); return ELSE;}
 
-{DO} {yylval.cadena = strdup(yytext); return DO;}
+{SWITCH} {strcpy(yylval.cadena, yytext); return SWITCH;}
 
-{FOR} {yylval.cadena = strdup(yytext); return FOR;}
+{WHILE} {strcpy(yylval.cadena, yytext); return WHILE;}
 
-{CASE} {yylval.cadena = strdup(yytext); return CASE;}
+{DO} {strcpy(yylval.cadena, yytext); return DO;}
 
-{DEFAULT} {yylval.cadena = strdup(yytext); return DEFAULT;}
+{FOR} {strcpy(yylval.cadena, yytext); return FOR;}
 
-{CONTINUE} {yylval.cadena = strdup(yytext); return CONTINUE;}
+{CASE} {strcpy(yylval.cadena, yytext); return CASE;}
 
-{BREAK} {yylval.cadena = strdup(yytext); return BREAK;}
+{DEFAULT} {strcpy(yylval.cadena, yytext); return DEFAULT;}
 
-{RETURN} {yylval.cadena = strdup(yytext); return RETURN;}
+{CONTINUE} {strcpy(yylval.cadena, yytext); return CONTINUE;}
+
+{BREAK} {strcpy(yylval.cadena, yytext); return BREAK;}
+
+{RETURN} {strcpy(yylval.cadena, yytext); return RETURN;}
 
 {OPERADORES} {return yytext[0];}
 
-{OPERADOR_ASIGNACION} {yylval.cadena = strdup(yytext); return OPERADOR_ASIGNACION;}
+{OPERADOR_ASIGNACION} {strcpy(yylval.cadena, yytext); return OPERADOR_ASIGNACION;}
 
-{OPERADOR_O_LOGICO} {yylval.cadena = strdup(yytext); return OPERADOR_O_LOGICO;}
+{OPERADOR_O_LOGICO} {strcpy(yylval.cadena, yytext); return OPERADOR_O_LOGICO;}
 
-{OPERADOR_Y_LOGICO} {yylval.cadena = strdup(yytext); return OPERADOR_Y_LOGICO;}
+{OPERADOR_Y_LOGICO} {strcpy(yylval.cadena, yytext); return OPERADOR_Y_LOGICO;}
 
-{COMPARADOR_IGUALDAD} {yylval.cadena = strdup(yytext); return COMPARADOR_IGUALDAD;}
+{COMPARADOR_IGUALDAD} {strcpy(yylval.cadena, yytext); return COMPARADOR_IGUALDAD;}
 
-{OPERADOR_RELACION} {yylval.cadena = strdup(yytext); return OPERADOR_RELACION;}
+{OPERADOR_RELACION} {strcpy(yylval.cadena, yytext); return OPERADOR_RELACION;}
 
-{OPERADOR_INCREMENTO} {yylval.cadena = strdup(yytext); return OPERADOR_INCREMENTO;}
+{OPERADOR_INCREMENTO} {strcpy(yylval.cadena, yytext); return OPERADOR_INCREMENTO;}
 
-{SIZE_OF} {yylval.cadena = strdup(yytext); return SIZE_OF;}
+{SIZE_OF} {strcpy(yylval.cadena, yytext); return SIZE_OF;}
 
-{FLECHA} {yylval.cadena = strdup(yytext); return FLECHA;}
+{FLECHA} {strcpy(yylval.cadena, yytext); return FLECHA;}
 
-{IDENTIFICADOR} {yylval.cadena = strdup(yytext); return IDENTIFICADOR;}
+{IDENTIFICADOR} {strcpy(yylval.cadena, yytext); return IDENTIFICADOR;}
 
 {CARACTERES_DE_PUNTUACION} {return yytext[0];}
 
-{LITERAL_CADENA} {yylval.cadena = strdup(yytext);; return LITERAL_CADENA;}
+{LITERAL_CADENA} {strcpy(yylval.cadena, yytext); return LITERAL_CADENA;}
 
 [1-9]{DIGITO_DECIMAL}* {yylval.entero = atoi(yytext); return CONSTANTE_ENTERA;}
 
@@ -112,9 +114,9 @@ DIGITO_HEXA [0-9a-fA-F]
 
 [0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {yylval.flotante = atof(yytext); return CONSTANTE_REAL;}
 
-\'.\' {yylval.cadena = strdup(yytext); return CONSTANTE_CARACTER;}
+\'.\' {strcpy(yylval.cadena, yytext); return CONSTANTE_CARACTER;}
 
-[.]* {yylval.cadena = strdup(yytext); return ERROR;}
+[.]* {printf("\nCaracter no reconocido: %c", yytext[0]);} 
 
 %%
 
