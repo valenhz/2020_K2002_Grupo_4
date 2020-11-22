@@ -9,12 +9,6 @@ typedef struct dec {
     struct dec *sig;
 } DECLARACION;
 
-typedef struct asig {
-    char *ID;
-    char *valor;
-    struct asig *sig;
-} ASIGNACION;
-
 DECLARACION* CrearNodo(char *tipo, char *identificador){
     DECLARACION* nodo = NULL;
     nodo = (DECLARACION *) malloc(sizeof (DECLARACION));
@@ -42,6 +36,43 @@ void MostrarLista (FILE* archivo, DECLARACION *cabeza){
     DECLARACION *auxi = cabeza;
     while(auxi != NULL){
         fprintf(archivo, "Se declaro un identificador de tipo %s y nombre %s\n",auxi->tipoDato,auxi->ID);
+        auxi = auxi->sig;
+    }
+}
+
+typedef struct asig {
+    char *ID;
+    char *valor;
+    struct asig *sig;
+} ASIGNACION;
+
+ASIGNACION* CrearNodoA(char *value, char *identificador){
+    ASIGNACION* nodo = NULL;
+    nodo = (ASIGNACION *) malloc(sizeof (ASIGNACION));
+        if (nodo != NULL){
+        strcpy(nodo->valor, value);
+        strcpy(nodo->ID, identificador);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int Insertar(ASIGNACION **cabeza, char *value, char *identificador){ 
+    ASIGNACION *nuevo;
+    nuevo = CrearNodoA(value, identificador);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void MostrarLista (FILE* archivo, ASIGNACION *cabeza){ 
+    ASIGNACION *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "Al identificador %s se le asigno el valor %s\n",auxi->ID,auxi->valor);
         auxi = auxi->sig;
     }
 }
