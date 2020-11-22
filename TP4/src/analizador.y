@@ -4,6 +4,7 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
+#include <listas.h>
 
 int yylex();
 
@@ -17,6 +18,7 @@ void yyerror (char const *s) {}
 int linea = 1;
 int contadorDeclaraciones = 0;
 int contadorSentencias = 0;
+DECLARACION *listaDeclaraciones = NULL;
 
 
 %}
@@ -158,7 +160,7 @@ declaracion:  declaracionVariablesSimples
               | definicionFunciones
 ;
 
-declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';'  {printf(" de tipo %s.", $<cadena>1);}
+declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';'  {Insertar(&listaDeclaraciones, $<cadena>1, $<cadena>2);}
 ;
 
 listaVariablesSimples:  variableSimple  {printf("\nSe declara la variable %s", $<cadena>1);}
@@ -247,7 +249,10 @@ int main(){
 #endif     */
     
     FILE* yyin;
+
     yyin = fopen("ingreso.c", "r"); 
     yyparse();
+
+    
 
 }  
