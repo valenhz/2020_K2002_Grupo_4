@@ -1665,7 +1665,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 221 "../src/analizador.y"
-    {printf("\nSe encontro una sentencia vacia.");;}
+    {fprintf(archivoSalida ,"\nSe encontro una sentencia vacia.");;}
     break;
 
   case 82:
