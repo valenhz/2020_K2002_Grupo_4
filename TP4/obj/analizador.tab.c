@@ -1577,6 +1577,13 @@ yyreduce:
     {printf("\nSe detecto un error sintactico en la linea %i.", linea); linea++;;}
     break;
 
+  case 52:
+
+/* Line 1455 of yacc.c  */
+#line 163 "../src/analizador.y"
+    {Insertar(&listaDeclaraciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(2) - (3)].cadena));}
+    break;
+
   case 53:
 
 /* Line 1455 of yacc.c  */
@@ -1665,7 +1672,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 221 "../src/analizador.y"
-    {fprintf(archivoSalida ,"\nSe encontro una sentencia vacia.");;}
+    {printf("\nSe encontro una sentencia vacia.");;}
     break;
 
   case 82:
@@ -1727,7 +1734,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1731 "analizador.tab.c"
+#line 1738 "analizador.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1956,6 +1963,7 @@ int main(){
     FILE * archivoSalida = fopen("Informe.txt","w");
 
     fprintf(archivoSalida, "holaaa :)");
+    MostrarLista(archivoSalida, listaDeclaraciones);
     
 
 }  

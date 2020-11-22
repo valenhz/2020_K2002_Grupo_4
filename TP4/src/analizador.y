@@ -160,7 +160,7 @@ declaracion:  declaracionVariablesSimples
               | definicionFunciones
 ;
 
-declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' 
+declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' {Insertar(&listaDeclaraciones, $<cadena>1, $<cadena>2)}
 ;
 
 listaVariablesSimples:  variableSimple  {printf("\nSe declara la variable %s", $<cadena>1);}
@@ -256,6 +256,7 @@ int main(){
     FILE * archivoSalida = fopen("Informe.txt","w");
 
     fprintf(archivoSalida, "holaaa :)");
+    MostrarLista(archivoSalida, listaDeclaraciones);
     
 
 }  
