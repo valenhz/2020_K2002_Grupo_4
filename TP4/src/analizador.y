@@ -23,7 +23,7 @@ int contadorSentencias = 0;
 %}
 
 %union {
-    char cadena[50];
+    char* cadena;
     int entero;
     float flotante;
 }

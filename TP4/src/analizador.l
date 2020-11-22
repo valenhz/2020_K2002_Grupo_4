@@ -48,61 +48,61 @@ DIGITO_HEXA [0-9a-fA-F]
 
 " "|"\t"
 
-{ESPECIFICADOR_CLASE_ALMACENAMIENTO} {strcpy(yylval.cadena, yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
+{ESPECIFICADOR_CLASE_ALMACENAMIENTO} {yylval.cadena = stdrup(yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
 
-{TIPO_DATO} {strcpy(yylval.cadena, yytext); return TIPO_DATO;}
+{TIPO_DATO} {yylval.cadena = stdrup(yytext); return TIPO_DATO;}
 
-{CALIFICADOR_DE_TIPO} {strcpy(yylval.cadena, yytext); return CALIFICADOR_DE_TIPO;}
+{CALIFICADOR_DE_TIPO} {yylval.cadena = stdrup(yytext); return CALIFICADOR_DE_TIPO;}
 
-{STRUCT_O_UNION} {strcpy(yylval.cadena, yytext); return STRUCT_O_UNION;}
+{STRUCT_O_UNION} {yylval.cadena = stdrup(yytext); return STRUCT_O_UNION;}
 
-{ENUM} {strcpy(yylval.cadena, yytext); return ENUM;}
+{ENUM} {yylval.cadena = stdrup(yytext); return ENUM;}
 
-{IF} {strcpy(yylval.cadena, yytext); return IF;}
+{IF} {yylval.cadena = stdrup(yytext); return IF;}
 
-{ELSE} {strcpy(yylval.cadena, yytext); return ELSE;}
+{ELSE} {yylval.cadena = stdrup(yytext); return ELSE;}
 
-{SWITCH} {strcpy(yylval.cadena, yytext); return SWITCH;}
+{SWITCH} {yylval.cadena = stdrup(yytext); return SWITCH;}
 
-{WHILE} {strcpy(yylval.cadena, yytext); return WHILE;}
+{WHILE} {yylval.cadena = stdrup(yytext); return WHILE;}
 
-{DO} {strcpy(yylval.cadena, yytext); return DO;}
+{DO} {yylval.cadena = stdrup(yytext); return DO;}
 
-{FOR} {strcpy(yylval.cadena, yytext); return FOR;}
+{FOR} {yylval.cadena = stdrup(yytext); return FOR;}
 
-{CASE} {strcpy(yylval.cadena, yytext); return CASE;}
+{CASE} {yylval.cadena = stdrup(yytext); return CASE;}
 
-{DEFAULT} {strcpy(yylval.cadena, yytext); return DEFAULT;}
+{DEFAULT} {yylval.cadena = stdrup(yytext); return DEFAULT;}
 
-{CONTINUE} {strcpy(yylval.cadena, yytext); return CONTINUE;}
+{CONTINUE} {yylval.cadena = stdrup(yytext); return CONTINUE;}
 
-{BREAK} {strcpy(yylval.cadena, yytext); return BREAK;}
+{BREAK} {yylval.cadena = stdrup(yytext); return BREAK;}
 
-{RETURN} {strcpy(yylval.cadena, yytext); return RETURN;}
+{RETURN} {yylval.cadena = stdrup(yytext); return RETURN;}
 
 {OPERADORES} {return yytext[0];}
 
-{OPERADOR_ASIGNACION} {strcpy(yylval.cadena, yytext); return OPERADOR_ASIGNACION;}
+{OPERADOR_ASIGNACION} {yylval.cadena = stdrup(yytext); return OPERADOR_ASIGNACION;}
 
-{OPERADOR_O_LOGICO} {strcpy(yylval.cadena, yytext); return OPERADOR_O_LOGICO;}
+{OPERADOR_O_LOGICO} {yylval.cadena = stdrup(yytext); return OPERADOR_O_LOGICO;}
 
-{OPERADOR_Y_LOGICO} {strcpy(yylval.cadena, yytext); return OPERADOR_Y_LOGICO;}
+{OPERADOR_Y_LOGICO} {yylval.cadena = stdrup(yytext); return OPERADOR_Y_LOGICO;}
 
-{COMPARADOR_IGUALDAD} {strcpy(yylval.cadena, yytext); return COMPARADOR_IGUALDAD;}
+{COMPARADOR_IGUALDAD} {yylval.cadena = stdrup(yytext); return COMPARADOR_IGUALDAD;}
 
-{OPERADOR_RELACION} {strcpy(yylval.cadena, yytext); return OPERADOR_RELACION;}
+{OPERADOR_RELACION} {yylval.cadena = stdrup(yytext); return OPERADOR_RELACION;}
 
-{OPERADOR_INCREMENTO} {strcpy(yylval.cadena, yytext); return OPERADOR_INCREMENTO;}
+{OPERADOR_INCREMENTO} {yylval.cadena = stdrup(yytext); return OPERADOR_INCREMENTO;}
 
-{SIZE_OF} {strcpy(yylval.cadena, yytext); return SIZE_OF;}
+{SIZE_OF} {yylval.cadena = stdrup(yytext); return SIZE_OF;}
 
-{FLECHA} {strcpy(yylval.cadena, yytext); return FLECHA;}
+{FLECHA} {yylval.cadena = stdrup(yytext); return FLECHA;}
 
-{IDENTIFICADOR} {strcpy(yylval.cadena, yytext); return IDENTIFICADOR;}
+{IDENTIFICADOR} {yylval.cadena = stdrup(yytext); return IDENTIFICADOR;}
 
 {CARACTERES_DE_PUNTUACION} {return yytext[0];}
 
-{LITERAL_CADENA} {strcpy(yylval.cadena, yytext); return LITERAL_CADENA;}
+{LITERAL_CADENA} {yylval.cadena = stdrup(yytext); return LITERAL_CADENA;}
 
 [1-9]{DIGITO_DECIMAL}* {yylval.entero = atoi(yytext); return CONSTANTE_ENTERA;}
 
@@ -114,7 +114,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 [0-9]*(\.)[0-9]+([eE]([\+\-]?)[0-9]+)? {yylval.flotante = atof(yytext); return CONSTANTE_REAL;}
 
-\'.\' {strcpy(yylval.cadena, yytext); return CONSTANTE_CARACTER;}
+\'.\' {yylval.cadena = stdrup(yytext); return CONSTANTE_CARACTER;}
 
 [.]* {printf("\nCaracter no reconocido: %c", yytext[0]);} 
 
