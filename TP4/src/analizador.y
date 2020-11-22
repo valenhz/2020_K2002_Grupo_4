@@ -218,7 +218,7 @@ opcionListaSentencias:  /* vacio*/
                         | listaSentencias sentencia     {contadorSentencias++;}
 ;
 
-sentenciaExpresion:     ';'                     {printf("\nSe encontro una sentencia vacia.");}
+sentenciaExpresion:     ';'                     {fprintf(archivoSalida ,"\nSe encontro una sentencia vacia.");}
                         | expresion ';'         {printf("\nSe encontro una sentencia expresion.");}
 ;
 
