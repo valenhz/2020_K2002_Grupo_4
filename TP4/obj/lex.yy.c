@@ -264,13 +264,9 @@ static void yy_flex_free YY_PROTO(( void * ));
 
 #define yywrap() 1
 #define YY_SKIP_YYWRAP
-
-#define FLEX_DEBUG
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
-
-#define FLEX_DEBUG
 extern char *yytext;
 #define yytext_ptr yytext
 
@@ -496,17 +492,6 @@ static yyconst short int yy_chk[369] =
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
-extern int yy_flex_debug;
-int yy_flex_debug = 1;
-
-static yyconst short int yy_rule_linenum[38] =
-    {   0,
-       47,   49,   51,   53,   55,   57,   59,   61,   63,   65,
-       67,   69,   71,   73,   75,   77,   79,   81,   83,   85,
-       87,   89,   91,   93,   95,   97,   99,  101,  103,  105,
-      107,  109,  111,  113,  115,  117,  119
-    } ;
-
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
  */
@@ -522,7 +507,7 @@ char *yytext;
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
-#line 526 "lex.yy.c"
+#line 511 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -676,7 +661,7 @@ YY_DECL
 #line 45 "../src/analizador.l"
 
 
-#line 680 "lex.yy.c"
+#line 665 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -749,21 +734,6 @@ yy_find_action:
 
 do_action:	/* This label is used only to access EOF actions. */
 
-		if ( yy_flex_debug )
-			{
-			if ( yy_act == 0 )
-				fprintf( stderr, "--scanner backing up\n" );
-			else if ( yy_act < 38 )
-				fprintf( stderr, "--accepting rule at line %d (\"%s\")\n",
-				         yy_rule_linenum[yy_act], yytext );
-			else if ( yy_act == 38 )
-				fprintf( stderr, "--accepting default rule (\"%s\")\n",
-				         yytext );
-			else if ( yy_act == 39 )
-				fprintf( stderr, "--(end of buffer or a NUL)\n" );
-			else
-				fprintf( stderr, "--EOF (start condition %d)\n", YY_START );
-			}
 
 		switch ( yy_act )
 	{ /* beginning of action switch */
@@ -787,82 +757,82 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 51 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
+{yylval.cadena = strdup(yytext); return ESPECIFICADOR_CLASE_ALMACENAMIENTO;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 53 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return TIPO_DATO;}
+{yylval.cadena = strdup(yytext); return TIPO_DATO;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 55 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return CALIFICADOR_DE_TIPO;}
+{yylval.cadena = strdup(yytext); return CALIFICADOR_DE_TIPO;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 57 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return STRUCT_O_UNION;}
+{yylval.cadena = strdup(yytext); return STRUCT_O_UNION;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 59 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return ENUM;}
+{yylval.cadena = strdup(yytext); return ENUM;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 61 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return IF;}
+{yylval.cadena = strdup(yytext); return IF;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 63 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return ELSE;}
+{yylval.cadena = strdup(yytext); return ELSE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 65 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return SWITCH;}
+{yylval.cadena = strdup(yytext); return SWITCH;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 67 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return WHILE;}
+{yylval.cadena = strdup(yytext); return WHILE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 69 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return DO;}
+{yylval.cadena = strdup(yytext); return DO;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 71 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return FOR;}
+{yylval.cadena = strdup(yytext); return FOR;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 73 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return CASE;}
+{yylval.cadena = strdup(yytext); return CASE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 75 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return DEFAULT;}
+{yylval.cadena = strdup(yytext); return DEFAULT;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 77 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return CONTINUE;}
+{yylval.cadena = strdup(yytext); return CONTINUE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 79 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return BREAK;}
+{yylval.cadena = strdup(yytext); return BREAK;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 81 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return RETURN;}
+{yylval.cadena = strdup(yytext); return RETURN;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
@@ -872,47 +842,47 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 85 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return OPERADOR_ASIGNACION;}
+{yylval.cadena = strdup(yytext); return OPERADOR_ASIGNACION;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 87 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return OPERADOR_O_LOGICO;}
+{yylval.cadena = strdup(yytext); return OPERADOR_O_LOGICO;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 89 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return OPERADOR_Y_LOGICO;}
+{yylval.cadena = strdup(yytext); return OPERADOR_Y_LOGICO;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
 #line 91 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return COMPARADOR_IGUALDAD;}
+{yylval.cadena = strdup(yytext); return COMPARADOR_IGUALDAD;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 93 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return OPERADOR_RELACION;}
+{yylval.cadena = strdup(yytext); return OPERADOR_RELACION;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 95 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return OPERADOR_INCREMENTO;}
+{yylval.cadena = strdup(yytext); return OPERADOR_INCREMENTO;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 97 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return SIZE_OF;}
+{yylval.cadena = strdup(yytext); return SIZE_OF;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 99 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return FLECHA;}
+{yylval.cadena = strdup(yytext); return FLECHA;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 101 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return IDENTIFICADOR;}
+{yylval.cadena = strdup(yytext); return IDENTIFICADOR;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
@@ -922,7 +892,7 @@ YY_RULE_SETUP
 case 30:
 YY_RULE_SETUP
 #line 105 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return LITERAL_CADENA;}
+{yylval.cadena = strdup(yytext); return LITERAL_CADENA;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
@@ -952,7 +922,7 @@ YY_RULE_SETUP
 case 36:
 YY_RULE_SETUP
 #line 117 "../src/analizador.l"
-{strcpy(yylval.cadena, yytext); return CONSTANTE_CARACTER;}
+{yylval.cadena = strdup(yytext); return CONSTANTE_CARACTER;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
@@ -964,7 +934,7 @@ YY_RULE_SETUP
 #line 121 "../src/analizador.l"
 ECHO;
 	YY_BREAK
-#line 968 "lex.yy.c"
+#line 938 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

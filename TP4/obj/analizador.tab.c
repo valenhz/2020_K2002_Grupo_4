@@ -98,7 +98,7 @@ int contadorSentencias = 0;
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 
 /* Enabling verbose error messages.  */
@@ -162,7 +162,7 @@ typedef union YYSTYPE
 /* Line 214 of yacc.c  */
 #line 25 "../src/analizador.y"
 
-    char cadena[50];
+    char* cadena;
     int entero;
     float flotante;
 
