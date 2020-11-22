@@ -78,7 +78,8 @@
 #include <listas.h>
 
 int yylex();
-
+    
+FILE* yyin;
 
 int yywrap() {
     return(1);
@@ -95,7 +96,7 @@ DECLARACION *listaDeclaraciones = NULL;
 
 
 /* Line 189 of yacc.c  */
-#line 99 "analizador.tab.c"
+#line 100 "analizador.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -161,7 +162,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 26 "../src/analizador.y"
+#line 27 "../src/analizador.y"
 
     char* cadena;
     int entero;
@@ -170,7 +171,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 174 "analizador.tab.c"
+#line 175 "analizador.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -182,7 +183,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 186 "analizador.tab.c"
+#line 187 "analizador.tab.c"
 
 #ifdef short
 # undef short
@@ -503,16 +504,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    67,    67,    68,    71,    72,    73,    79,    82,    83,
-      86,    87,    90,    91,    94,    95,    98,    99,   102,   103,
-     106,   107,   110,   111,   114,   115,   118,   119,   122,   123,
-     124,   125,   128,   129,   130,   131,   134,   135,   136,   139,
-     140,   141,   144,   145,   146,   147,   150,   151,   152,   158,
-     159,   160,   163,   166,   167,   170,   173,   174,   177,   180,
-     181,   182,   185,   186,   189,   190,   193,   197,   198,   199,
-     200,   201,   204,   207,   208,   209,   212,   213,   216,   217,
-     218,   221,   222,   225,   226,   227,   230,   231,   232,   235,
-     238,   239
+       0,    68,    68,    69,    72,    73,    74,    80,    83,    84,
+      87,    88,    91,    92,    95,    96,    99,   100,   103,   104,
+     107,   108,   111,   112,   115,   116,   119,   120,   123,   124,
+     125,   126,   129,   130,   131,   132,   135,   136,   137,   140,
+     141,   142,   145,   146,   147,   148,   151,   152,   153,   159,
+     160,   161,   164,   167,   168,   171,   174,   175,   178,   181,
+     182,   183,   186,   187,   190,   191,   194,   198,   199,   200,
+     201,   202,   205,   208,   209,   210,   213,   214,   217,   218,
+     219,   222,   223,   226,   227,   228,   231,   232,   233,   236,
+     239,   240
 };
 #endif
 
@@ -1559,182 +1560,182 @@ yyreduce:
         case 4:
 
 /* Line 1455 of yacc.c  */
-#line 71 "../src/analizador.y"
+#line 72 "../src/analizador.y"
     {linea++;;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 72 "../src/analizador.y"
+#line 73 "../src/analizador.y"
     {linea++;;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 73 "../src/analizador.y"
+#line 74 "../src/analizador.y"
     {printf("\nSe detecto un error sintactico en la linea %i.", linea); linea++;;}
     break;
 
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 163 "../src/analizador.y"
+#line 164 "../src/analizador.y"
     {Insertar(&listaDeclaraciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(2) - (3)].cadena));}
     break;
 
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 166 "../src/analizador.y"
+#line 167 "../src/analizador.y"
     {printf("\nSe declara la variable %s", (yyvsp[(1) - (1)].cadena));;}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 167 "../src/analizador.y"
+#line 168 "../src/analizador.y"
     {printf(", la variable %s", (yyvsp[(3) - (3)].cadena));;}
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 170 "../src/analizador.y"
+#line 171 "../src/analizador.y"
     {strcpy((yyval.cadena), (yyvsp[(1) - (2)].cadena));;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 177 "../src/analizador.y"
+#line 178 "../src/analizador.y"
     {printf("\nSe declara la funcion %s de tipo %s", (yyvsp[(2) - (6)].cadena), (yyvsp[(1) - (6)].cadena)); ;}
     break;
 
   case 66:
 
 /* Line 1455 of yacc.c  */
-#line 193 "../src/analizador.y"
+#line 194 "../src/analizador.y"
     {printf("\nSe define la funcion %s de tipo %s", (yyvsp[(2) - (6)].cadena), (yyvsp[(1) - (6)].cadena));;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 204 "../src/analizador.y"
+#line 205 "../src/analizador.y"
     {printf("\nSe encontro una sentencia compuesta con %i declaraciones y %i sentencias.", contadorDeclaraciones, contadorSentencias); contadorDeclaraciones = 0; contadorSentencias = 0;;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 208 "../src/analizador.y"
+#line 209 "../src/analizador.y"
     {contadorDeclaraciones++;;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 209 "../src/analizador.y"
+#line 210 "../src/analizador.y"
     {contadorDeclaraciones++;;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 212 "../src/analizador.y"
+#line 213 "../src/analizador.y"
     {contadorSentencias++;;}
     break;
 
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 213 "../src/analizador.y"
+#line 214 "../src/analizador.y"
     {contadorSentencias++;;}
     break;
 
   case 79:
 
 /* Line 1455 of yacc.c  */
-#line 217 "../src/analizador.y"
+#line 218 "../src/analizador.y"
     {contadorSentencias++;;}
     break;
 
   case 80:
 
 /* Line 1455 of yacc.c  */
-#line 218 "../src/analizador.y"
+#line 219 "../src/analizador.y"
     {contadorSentencias++;;}
     break;
 
   case 81:
 
 /* Line 1455 of yacc.c  */
-#line 221 "../src/analizador.y"
+#line 222 "../src/analizador.y"
     {printf("\nSe encontro una sentencia vacia.");;}
     break;
 
   case 82:
 
 /* Line 1455 of yacc.c  */
-#line 222 "../src/analizador.y"
+#line 223 "../src/analizador.y"
     {printf("\nSe encontro una sentencia expresion.");;}
     break;
 
   case 83:
 
 /* Line 1455 of yacc.c  */
-#line 225 "../src/analizador.y"
+#line 226 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de seleccion (if).");;}
     break;
 
   case 84:
 
 /* Line 1455 of yacc.c  */
-#line 226 "../src/analizador.y"
+#line 227 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de seleccion (if y else).");;}
     break;
 
   case 85:
 
 /* Line 1455 of yacc.c  */
-#line 227 "../src/analizador.y"
+#line 228 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de seleccion (switch).");;}
     break;
 
   case 86:
 
 /* Line 1455 of yacc.c  */
-#line 230 "../src/analizador.y"
+#line 231 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de iteracion (while).");;}
     break;
 
   case 87:
 
 /* Line 1455 of yacc.c  */
-#line 231 "../src/analizador.y"
+#line 232 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de iteracion (do while).");;}
     break;
 
   case 88:
 
 /* Line 1455 of yacc.c  */
-#line 232 "../src/analizador.y"
+#line 233 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de iteracion (for).");;}
     break;
 
   case 89:
 
 /* Line 1455 of yacc.c  */
-#line 235 "../src/analizador.y"
+#line 236 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de salto.");;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1738 "analizador.tab.c"
+#line 1739 "analizador.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1946,25 +1947,25 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 243 "../src/analizador.y"
+#line 244 "../src/analizador.y"
 
 
 int main(){
 
-/*  #ifdef BISON_DEBUG
+ /* #ifdef BISON_DEBUG
         yydebug = 1;
-#endif     */
-    
-    FILE* yyin;
+#endif  */   
+
+    FILE * archivoSalida = fopen("Informe.txt","w");
+
+    fprintf(archivoSalida, "holaaa :)");
+    MostrarLista(archivoSalida, listaDeclaraciones); //a veces lo lee a esto y a veces no xd
 
     yyin = fopen("ingreso.c", "r"); 
     yyparse();
     
-    FILE * archivoSalida = fopen("Informe.txt","w");
-
-    fprintf(archivoSalida, "holaaa :)");
-    MostrarLista(archivoSalida, listaDeclaraciones);
     
+    fclose(yyin);
 
 }  
 

@@ -7,7 +7,8 @@
 #include <listas.h>
 
 int yylex();
-
+    
+FILE* yyin;
 
 int yywrap() {
     return(1);
@@ -244,19 +245,19 @@ opcionExpresion:    /* vacio */
 
 int main(){
 
-/*  #ifdef BISON_DEBUG
+ /* #ifdef BISON_DEBUG
         yydebug = 1;
-#endif     */
-    
-    FILE* yyin;
+#endif  */   
+
+    FILE * archivoSalida = fopen("Informe.txt","w");//a veces lo lee a esto y a veces no xd
+
+    fprintf(archivoSalida, "holaaa :)");
+    MostrarLista(archivoSalida, listaDeclaraciones); 
 
     yyin = fopen("ingreso.c", "r"); 
     yyparse();
     
-    FILE * archivoSalida = fopen("Informe.txt","w");
-
-    fprintf(archivoSalida, "holaaa :)");
-    MostrarLista(archivoSalida, listaDeclaraciones);
     
+    fclose(yyin);
 
 }  
