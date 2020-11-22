@@ -7,7 +7,6 @@
 
 int yylex();
 
-FILE* yyin;
 
 int yywrap() {
     return(1);
@@ -246,10 +245,9 @@ int main(){
 /*  #ifdef BISON_DEBUG
         yydebug = 1;
 #endif     */
+    
+    FILE* yyin;
+    yyin = fopen("ingreso.c", "r"); 
+    yyparse();
 
-        yyin = fopen("ingreso.c", "r"); 
-        yyparse();
-
-
-
-}
+}  
