@@ -8,7 +8,7 @@
 
 int yylex();
     
-FILE* yyin;
+extern FILE* yyin;
 
 int yywrap() {
     return(1);
@@ -253,12 +253,10 @@ int main(){
 #endif  */   
 
 
-    yyin = fopen("ingreso.c", "r"); 
+    yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
     FILE * archivoSalida = fopen("Informe.txt","w");//a veces lo lee a esto y a veces no xd
-
-    fprintf(archivoSalida, "holaaa :)");
 
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
