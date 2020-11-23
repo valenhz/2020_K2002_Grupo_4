@@ -9,7 +9,7 @@ typedef struct dec {
     struct dec *sig;
 } DECLARACION;
 
-DECLARACION* CrearNodo(char *tipo, char *identificador){
+DECLARACION* CrearNodoD(char *tipo, char *identificador){
     DECLARACION* nodo = NULL;
     nodo = (DECLARACION *) malloc(sizeof (DECLARACION));
         if (nodo != NULL){
@@ -20,9 +20,9 @@ DECLARACION* CrearNodo(char *tipo, char *identificador){
     return nodo;
 }
 
-int Insertar(DECLARACION **cabeza, char *tipo, char *identificador){ 
+int InsertarD(DECLARACION **cabeza, char *tipo, char *identificador){ 
     DECLARACION *nuevo;
-    nuevo = CrearNodo(tipo, identificador);
+    nuevo = CrearNodoD(tipo, identificador);
     if (nuevo != NULL){
         nuevo->sig = *cabeza;
         *cabeza = nuevo;
@@ -32,7 +32,7 @@ int Insertar(DECLARACION **cabeza, char *tipo, char *identificador){
     }
 }
 
-void MostrarLista (FILE* archivo, DECLARACION *cabeza){ 
+void MostrarListaD (FILE* archivo, DECLARACION *cabeza){ 
     DECLARACION *auxi = cabeza;
     while(auxi != NULL){
         fprintf(archivo, "Se declaro un identificador de tipo %s y nombre %s\n",auxi->tipoDato,auxi->ID);
@@ -57,7 +57,7 @@ ASIGNACION* CrearNodoA(char *value, char *identificador){
     return nodo;
 }
 
-int Insertar(ASIGNACION **cabeza, char *value, char *identificador){ 
+int InsertarA(ASIGNACION **cabeza, char *value, char *identificador){ 
     ASIGNACION *nuevo;
     nuevo = CrearNodoA(value, identificador);
     if (nuevo != NULL){
@@ -69,11 +69,48 @@ int Insertar(ASIGNACION **cabeza, char *value, char *identificador){
     }
 }
 
-void MostrarLista (FILE* archivo, ASIGNACION *cabeza){ 
+void MostrarListaA (FILE* archivo, ASIGNACION *cabeza){ 
     ASIGNACION *auxi = cabeza;
     while(auxi != NULL){
         fprintf(archivo, "Al identificador %s se le asigno el valor %s\n",auxi->ID,auxi->valor);
         auxi = auxi->sig;
+    }
+}
+
+int esEntero(char *valor){
+
+    return 1;
+}
+
+int esReal(char *valor){
+
+    return 1;
+}
+int esLiteralCadena(char *valor){
+    
+    return 1;
+}
+
+int esCaracter(char *valor){
+
+    return 1;
+}
+
+int validarTipo(char *tipo, char *valor){
+    if(tipo == "int" || tipo == "double"){
+        return esEntero(valor);
+    }
+    if(tipo == "float"){
+        return esEntero(valor) || esReal(valor);
+    }
+    if(tipo == "char"){
+        return esCaracter(valor) || esLiteralCadena(valor);
+    }
+    if(tipo == "void"){
+
+    }
+    if(tipo == "struct"){
+
     }
 }
 
@@ -95,38 +132,6 @@ int validacionTipo (char *identificador, ASIGNACION *cabezaA, DECLARACION *cabez
         }
     }
     return validarTipo(tipo, value);
-}
-
-int validarTipo(char *tipo, char *valor){
-    if(tipo == "int" || tipo == "double"){
-        return esEntero(valor);
-    }
-    if(tipo == "float"){
-        return esEntero(valor) || esReal(valor);
-    }
-    if(tipo == "char"){
-        return esCaracter(valor) || esLiteralCadena(valor);
-    }
-    if(tipo == "void"){
-
-    }
-    if(tipo == "struct"){
-
-    }
-}
-
-int esEntero(char *valor){
-
-    return 1;
-}
-
-int esReal(char *valor){
-
-    return 1;
-}
-int esLiteralCadena(char *valor){
-    
-    return 1;
 }
 
 int esCaracter(char *valor){
