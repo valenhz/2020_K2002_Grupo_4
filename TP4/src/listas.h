@@ -139,6 +139,78 @@ int esCaracter(char *valor){
     return 1;
 }
 
+                                    /* DECLARACIONES DE FUNCIONES */
+
+typedef struct par {
+    char *tipoDato;
+    char *ID;
+    struct par *sig;
+} PARAMETRO;
+
+PARAMETRO* CrearNodoP(char *tipo, char *identificador){
+    PARAMETRO* nodo = NULL;
+    nodo = (PARAMETRO *) malloc(sizeof (PARAMETRO));
+        if (nodo != NULL){
+        strcpy(nodo->tipoDato, tipo);
+        strcpy(nodo->ID, identificador);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int InsertarP(PARAMETRO **cabeza, char *tipo, char *identificador){ 
+    PARAMETRO *nuevo;
+    nuevo = CrearNodoP(tipo, identificador);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+typedef struct func {
+    char *tipoDato;
+    char *ID;
+    PARAMETRO *listaParametro = NULL;
+    struct func *sig;
+} FUNCIONES;
+
+FUNCIONES* CrearNodoF(char *tipo, char *identificador){
+    FUNCIONES* nodo = NULL;
+    nodo = (FUNCIONES *) malloc(sizeof (FUNCIONES));
+        if (nodo != NULL){
+        strcpy(nodo->tipoDato, tipo);
+        strcpy(nodo->ID, identificador);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador){ 
+    FUNCIONES *nuevo;
+    nuevo = CrearNodoF(tipo, identificador);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void MostrarListaF (FILE* archivo, FUNCIONES *cabeza){ 
+    FUNCIONES *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "Se declaro un identificador de tipo %s y nombre %s\n",auxi->tipoDato,auxi->ID);
+        auxi = auxi->sig;
+    }
+}
+
+
+
+                                    /* ERRORES SINTACTICOS */
 typedef struct error {
     int linea;
     struct error *sig;
@@ -169,7 +241,7 @@ int InsertarE(ERRORES **cabeza, int numeroLinea){
 void MostrarListaE (FILE* archivo, ERRORES *cabeza){ 
     ERRORES *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "Se encontro un error en la linea numero %i\n", auxi->linea);
+        fprintf(archivo, "Se encontro un error sintactico en la linea numero %i\n", auxi->linea);
         auxi = auxi->sig;
     }
 }

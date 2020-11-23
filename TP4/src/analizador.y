@@ -5,6 +5,7 @@
 #include <math.h>
 #include <ctype.h>
 #include <listas.h>
+#include <funciones.h>
 
 int yylex();
     
@@ -20,6 +21,7 @@ int linea = 1;
 int contadorDeclaraciones = 0;
 int contadorSentencias = 0;
 DECLARACION *listaDeclaraciones = NULL;
+ERRORES *listaErroresSintacticos = NULL;
 
 
 %}
@@ -249,14 +251,21 @@ int main(){
         yydebug = 1;
 #endif  */   
 
-    FILE * archivoSalida = fopen("Informe.txt","w");//a veces lo lee a esto y a veces no xd
-
-    fprintf(archivoSalida, "holaaa :)");
-    MostrarListaD(archivoSalida, listaDeclaraciones); 
 
     yyin = fopen("ingreso.c", "r"); 
     yyparse();
     
+    FILE * archivoSalida = fopen("Informe.txt","w");//a veces lo lee a esto y a veces no xd
+
+    fprintf(archivoSalida, "holaaa :)");
+
+    MostrarTitulo(archivoSalida, "Lista de variables declaradas");
+    MostrarListaD(archivoSalida, listaDeclaraciones); 
+    MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
+    MostrarTitulo(archivoSalida, "Errores Lexicos");
+    MostrarTitulo(archivoSalida, "Errores Sintacticos");
+    MostrarListaE(archivoSalida, listaErroresSintacticos);
+    MostrarTitulo(archivoSalida, "Errores Semanticos");
     
     fclose(yyin);
 
