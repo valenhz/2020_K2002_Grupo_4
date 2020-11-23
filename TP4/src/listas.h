@@ -76,3 +76,27 @@ void MostrarLista (FILE* archivo, ASIGNACION *cabeza){
         auxi = auxi->sig;
     }
 }
+
+int validacionTipo (char *identificador, ASIGNACION *cabezaA, DECLARACION *cabezaD){
+    DECLARACION *auxD = cabezaD;
+    ASIGNACION *auxA = cabezaA;
+    char *tipo;
+    char *value;
+    while(auxD->ID != identificador && auxD != NULL){
+        auxD = auxD->sig;
+    }
+    if(auxD->ID == identificador){
+        strcpy(tipo, auxD->tipoDato);
+        while (auxA->ID != identificador && auxA != NULL){
+            auxA->sig;
+        }
+        if(auxA->ID == identificador){
+            strcpy(value, auxA ->valor);
+        }
+    }
+    return validarTipo(tipo, value);
+}
+
+int validarTipo(char *tipo, char *valor){
+   return 0; 
+}
