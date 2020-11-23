@@ -927,7 +927,7 @@ YY_RULE_SETUP
 case 37:
 YY_RULE_SETUP
 #line 119 "../src/analizador.l"
-{printf("\nCaracter no reconocido: %c", yytext[0]);} 
+{} 
 	YY_BREAK
 case 38:
 YY_RULE_SETUP

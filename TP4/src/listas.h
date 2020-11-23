@@ -137,11 +137,6 @@ int validacionTipo (char *identificador, ASIGNACION *cabezaA, DECLARACION *cabez
     return validarTipo(tipo, value);
 }
 
-int esCaracter(char *valor){
-
-    return 1;
-}
-
                                     /* DECLARACIONES DE FUNCIONES */
 
 typedef struct par {
@@ -173,8 +168,8 @@ int InsertarP(PARAMETRO **cabeza, char *tipo, char *identificador){
     }
 }
 
-void MostrarListaP (FILE* archivo, FUNCIONES *cabeza){ 
-    FUNCIONES *auxi = cabeza;
+void MostrarListaP (FILE* archivo, PARAMETRO *cabeza){ 
+    PARAMETRO *auxi = cabeza;
     while(auxi != NULL){
         fprintf(archivo, "-%s %s\n",auxi->tipoDato,auxi->ID);
         auxi = auxi->sig;
@@ -184,7 +179,7 @@ void MostrarListaP (FILE* archivo, FUNCIONES *cabeza){
 typedef struct func {
     char *tipoDato;
     char *ID;
-    PARAMETRO *listaParametro = NULL;
+    PARAMETRO *listaParametro; //me tira error idk = NULL;
     struct func *sig;
 } FUNCIONES;
 
@@ -258,9 +253,9 @@ void MostrarListaE (FILE* archivo, ERRORES *cabeza){
 }
 
                                 /* ERRORES LEXICOS */
-typedef struct error {
+typedef struct errorLex {
     char *cadena;
-    struct error *sig;
+    struct errorLex *sig;
 } ERRORESLEX;
 
 ERRORESLEX* CrearNodoLEX(char *string){
