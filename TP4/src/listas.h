@@ -326,7 +326,13 @@ int validacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza){ //validacion 
     if(aux2->ID == ID2){
         strcpy(tipo2, aux2 ->tipoDato);
     }
-    return strcmp(tipo1, tipo2); // 0 si son iguales 
+    if (tipo1 == tipo2){
+        if (tipo1 == "int" || tipo1 == "float"){
+            return 0;
+        }
+        return 1;
+    }
+    return 1;
 }
 
 //acv
