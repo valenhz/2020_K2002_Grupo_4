@@ -5,7 +5,6 @@
 #include <math.h>
 #include <ctype.h>
 #include <listas.h>
-#include <funciones.h>
 
 int yylex();
     

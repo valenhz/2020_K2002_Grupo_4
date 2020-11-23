@@ -3,6 +3,9 @@
 #include <string.h>
 #include <math.h>
 
+void MostrarTitulo (FILE* archivo, char *titulo){
+    fprintf(archivo, "\n*%s*\n\n", titulo);
+}
 typedef struct dec {
     char *tipoDato;
     char *ID;
@@ -287,5 +290,26 @@ void MostrarListaLEX (FILE* archivo, ERRORESLEX *cabeza){
     while(auxi != NULL){
         fprintf(archivo, "Se encontro la cadena no reconocida: %s\n", auxi->cadena);
         auxi = auxi->sig;
+    }
+}
+
+
+                        /* VALIDACIONES SEMANTICAS */
+
+void doblesDeclaraciones (FILE* archivo, DECLARACION *aux){
+    char *identificador = aux->ID;
+    while (aux != NULL){
+        aux = aux->sig;
+        if (aux->ID == identificador){
+            fprintf(archivo, "Se encontro una doble declaracion de la variable %s", aux->ID);
+        }   
+    }
+}
+
+void validacionSemantica2D (FILE* archivo, DECLARACION *cabeza){
+    DECLARACION *aux = cabeza;
+    while(aux != NULL){
+        doblesDeclaraciones(archivo, aux);
+        aux = aux->sig;
     }
 }
