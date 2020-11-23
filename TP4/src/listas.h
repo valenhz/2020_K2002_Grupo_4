@@ -133,3 +133,38 @@ int esCaracter(char *valor){
 
     return 1;
 }
+
+typedef struct error {
+    int linea;
+    struct error *sig;
+} ERRORES;
+
+ERRORES* CrearNodoE(int numeroLinea){
+    ERRORES* nodo = NULL;
+    nodo = (ERRORES *) malloc(sizeof (ERRORES));
+        if (nodo != NULL){
+        nodo->linea = numeroLinea;
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int InsertarE(ERRORES **cabeza, int numeroLinea){ 
+    ERRORES *nuevo;
+    nuevo = CrearNodoE(numeroLinea);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void MostrarListaE (FILE* archivo, ERRORES *cabeza){ 
+    ERRORES *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "Se encontro un error en la linea numero %i\n", auxi->linea);
+        auxi = auxi->sig;
+    }
+}
