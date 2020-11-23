@@ -255,22 +255,24 @@ void MostrarListaE (FILE* archivo, ERRORES *cabeza){
                                 /* ERRORES LEXICOS */
 typedef struct errorLex {
     char *cadena;
+    int linea;
     struct errorLex *sig;
 } ERRORESLEX;
 
-ERRORESLEX* CrearNodoLEX(char *string){
+ERRORESLEX* CrearNodoLEX(char *string, int num){
     ERRORESLEX* nodo = NULL;
     nodo = (ERRORESLEX *) malloc(sizeof (ERRORESLEX));
         if (nodo != NULL){
         strcpy(nodo->cadena, string);
+        nodo->linea = num;
         nodo->sig = NULL;
     }
     return nodo;
 }
 
-int InsertarLEX(ERRORESLEX **cabeza, char *string){ 
+int InsertarLEX(ERRORESLEX **cabeza, char *string, int num){ 
     ERRORESLEX *nuevo;
-    nuevo = CrearNodoLEX(string);
+    nuevo = CrearNodoLEX(string, num);
     if (nuevo != NULL){
         nuevo->sig = *cabeza;
         *cabeza = nuevo;
@@ -283,7 +285,7 @@ int InsertarLEX(ERRORESLEX **cabeza, char *string){
 void MostrarListaLEX (FILE* archivo, ERRORESLEX *cabeza){ 
     ERRORESLEX *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "Se encontro la cadena no reconocida: %s\n", auxi->cadena);
+        fprintf(archivo, "Se encontro la cadena no reconocida: %s en la linea: %i\n", auxi->cadena, auxi->linea);
         auxi = auxi->sig;
     }
 }
