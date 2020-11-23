@@ -116,7 +116,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 \'.\' {yylval.cadena = strdup(yytext); return CONSTANTE_CARACTER;}
 
-. {yylval.cadena = strdup(yytext); return ERRORLEX;} 
+.* {yylval.cadena = strdup(yytext); return ERRORLEX;} 
 
 %%
 
