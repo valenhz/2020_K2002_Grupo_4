@@ -1578,7 +1578,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 77 "../src/analizador.y"
-    {InsertarE(linea); linea++;;}
+    {InsertarE(&listaErroresSintacticos,linea); linea++;;}
     break;
 
   case 52:
@@ -1972,7 +1972,6 @@ int main(){
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
     MostrarListaF(archivoSalida, listaFunciones);
     MostrarTitulo(archivoSalida, "Errores Lexicos");
-    MostrarListaLEX(archivoSalida, listaErroresLexicos);
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");

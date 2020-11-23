@@ -74,7 +74,7 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
-        | error '\n'            {InsertarE(linea); linea++;}     
+        | error '\n'            {InsertarE(&listaErroresSintacticos,linea); linea++;}     
 ;
 
 
@@ -265,7 +265,6 @@ int main(){
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
     MostrarListaF(archivoSalida, listaFunciones);
     MostrarTitulo(archivoSalida, "Errores Lexicos");
-    MostrarListaLEX(archivoSalida, listaErroresLexicos);
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
