@@ -313,3 +313,5 @@ void validacionSemantica2D (FILE* archivo, DECLARACION *cabeza){
         aux = aux->sig;
     }
 }
+
+//acv
