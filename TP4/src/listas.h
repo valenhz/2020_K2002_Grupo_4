@@ -253,3 +253,39 @@ void MostrarListaE (FILE* archivo, ERRORES *cabeza){
         auxi = auxi->sig;
     }
 }
+
+                                /* ERRORES LEXICOS */
+typedef struct error {
+    char *cadena;
+    struct error *sig;
+} ERRORESLEX;
+
+ERRORESLEX* CrearNodoLEX(char *string){
+    ERRORESLEX* nodo = NULL;
+    nodo = (ERRORESLEX *) malloc(sizeof (ERRORESLEX));
+        if (nodo != NULL){
+        strcpy(nodo->cadena, string);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int InsertarLEX(ERRORESLEX **cabeza, char *string){ 
+    ERRORESLEX *nuevo;
+    nuevo = CrearNodoLEX(string);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
+
+void MostrarListaLEX (FILE* archivo, ERRORESLEX *cabeza){ 
+    ERRORESLEX *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "Se encontro la cadena no reconocida: %s\n", auxi->cadena);
+        auxi = auxi->sig;
+    }
+}

@@ -116,7 +116,7 @@ DIGITO_HEXA [0-9a-fA-F]
 
 \'.\' {yylval.cadena = strdup(yytext); return CONSTANTE_CARACTER;}
 
-[.]* {printf("\nCaracter no reconocido: %c", yytext[0]);} 
+[.]* {yylval.cadena = strdup(yytext); return ERRORLEXICO;} 
 
 %%
 

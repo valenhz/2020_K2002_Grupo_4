@@ -22,6 +22,7 @@ int contadorDeclaraciones = 0;
 int contadorSentencias = 0;
 DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
+ERRORES *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
 
 
@@ -62,6 +63,7 @@ FUNCIONES *listaFunciones = NULL;
 %token <cadena> CONTINUE 
 %token <cadena> BREAK 
 %token <cadena> RETURN  
+%token <cadena> ERRORLEXICO
 
 %type <cadena> error
 %type <cadena> variableSimple
@@ -243,6 +245,8 @@ opcionExpresion:    /* vacio */
                     | expresion
 ;
 
+errorLexico: ERRORLEXICO   {InsertarLEX(&listaErroresLexicos, $<cadena>1);}
+;
 
 %%
 
@@ -265,6 +269,7 @@ int main(){
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
     MostrarListaF(archivoSalida, listaFunciones);
     MostrarTitulo(archivoSalida, "Errores Lexicos");
+    MostrarListaLEX(archivoSalida, listaErroresLexicos);
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
