@@ -62,7 +62,6 @@ FUNCIONES *listaFunciones = NULL;
 %token <cadena> CONTINUE 
 %token <cadena> BREAK 
 %token <cadena> RETURN  
-%token <cadena> ERRORLEXICO
 
 %type <cadena> error
 %type <cadena> variableSimple
@@ -244,8 +243,6 @@ opcionExpresion:    /* vacio */
                     | expresion
 ;
 
-errorLexico: ERRORLEXICO   {InsertarLEX(&listaErroresLexicos, $<cadena>1);} //esto esta mal porque nunca entra por aca, habria q buscar otra forma
-;
 
 %%
 
