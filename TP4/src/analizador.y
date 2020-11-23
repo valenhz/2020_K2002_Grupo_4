@@ -75,12 +75,8 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
-        | errorLexico '\n'      {linea++;}
+        | ERRORLEX '\n'         {InsertarLEX(&listaErroresLexicos, $<cadena>$, linea); linea++;}
         | error '\n'            {InsertarE(&listaErroresSintacticos,linea); linea++;}     
-;
-
-errorLexico: ERRORLEX                   {InsertarLEX(&listaErroresLexicos, $<cadena>1, linea);}
-             | errorLexico ERRORLEX     {InsertarLEX(&listaErroresLexicos, $<cadena>2, linea);}
 ;
 
 /* EXPRESIONES */
