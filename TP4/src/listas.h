@@ -309,4 +309,24 @@ void validacionSemantica2D (FILE* archivo, DECLARACION *cabeza){
     }
 }
 
+int validacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza){ //validacion para una suma en particular, no todas las sumas
+    DECLARACION *aux1 = cabeza;
+    DECLARACION *aux2 = cabeza;
+    char *tipo1;
+    char *tipo2;
+    while(aux1->ID != ID1 && aux1 != NULL){
+        aux1 = aux1->sig;
+    }
+    if(aux1->ID == ID1){
+        strcpy(tipo1, aux1->tipoDato);
+    }
+    while (aux2->ID != ID2 && aux2 != NULL){
+            aux2->sig;
+    }
+    if(aux2->ID == ID2){
+        strcpy(tipo2, aux2 ->tipoDato);
+    }
+    return strcmp(tipo1, tipo2); // 0 si son iguales 
+}
+
 //acv
