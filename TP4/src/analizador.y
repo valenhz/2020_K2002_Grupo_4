@@ -23,7 +23,7 @@ DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
-
+char *aux; 
 
 %}
 
@@ -66,6 +66,7 @@ FUNCIONES *listaFunciones = NULL;
 
 %type <cadena> error
 %type <cadena> variableSimple
+%type <cadena> listaVariablesSimples
 
 %%
 
@@ -75,9 +76,12 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
-        | ERRORLEX '\n'         {InsertarLEX(&listaErroresLexicos, $<cadena>$, linea); linea++;}
-        | error '\n'            {InsertarE(&listaErroresSintacticos,linea); linea++;}     
+        | errorLexico '\n'      {InsertarLEX(&listaErroresLexicos, linea); linea++;}
+        | error '\n'            {InsertarE(&listaErroresSintacticos, linea); linea++;}      
 ;
+
+errorLexico: ERRORLEX 
+             | errorLexico ERRORLEX 
 
 /* EXPRESIONES */
 
@@ -165,11 +169,15 @@ declaracion:  declaracionVariablesSimples
               | definicionFunciones
 ;
 
-declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' {InsertarD(&listaDeclaraciones, $<cadena>1, $<cadena>2)}
+declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' {
+                                                printf("se declara la variable %s de tipo %s", $<cadena>2, $<cadena>1);
+                                                InsertarD(&listaDeclaraciones, $<cadena>1, $<cadena>2); 
+                                                /* strcpy(aux, $<cadena>1);  */
+                                                }
 ;
 
-listaVariablesSimples:  variableSimple  {printf("\nSe declara la variable %s", $<cadena>1);}
-                        | listaVariablesSimples ',' variableSimple {printf(", la variable %s", $<cadena>3);}
+listaVariablesSimples:  variableSimple  {strcpy($<cadena>$, $<cadena>1);}
+                        | listaVariablesSimples ',' variableSimple
 ;
 
 variableSimple:  IDENTIFICADOR opcionInicializacion  {strcpy($<cadena>$, $<cadena>1);}
@@ -179,7 +187,7 @@ opcionInicializacion:   /* vacio */
                         | OPERADOR_ASIGNACION expCondicional
 ;
 
-declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' ';' {printf("\nSe declara la funcion %s de tipo %s", $<cadena>2, $<cadena>1); }
+declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' ';' {printf("\nSe declara la funcion %s de tipo %s", $<cadena>2, $<cadena>1);}
 ;
 
 opcionArgumentosConTipo:        /* vacio */ 
@@ -206,21 +214,21 @@ sentencia: sentenciaExpresion
           | sentenciaDeSalto 
 ;
 
-sentenciaCompuesta:  '{' opcionListaDeclaraciones opcionListaSentencias '}'  {printf("\nSe encontro una sentencia compuesta con %i declaraciones y %i sentencias.", contadorDeclaraciones, contadorSentencias); contadorDeclaraciones = 0; contadorSentencias = 0;}
+sentenciaCompuesta:  '{' opcionListaDeclaraciones opcionListaSentencias '}'  
 ;
 
 opcionListaDeclaraciones:       /* vacio */
-                                | declaracion                           {contadorDeclaraciones++;}
-                                | opcionListaDeclaraciones declaracion  {contadorDeclaraciones++;}
+                                | declaracion                           
+                                | opcionListaDeclaraciones declaracion 
 ;
 
-listaSentencias:        sentencia                       {contadorSentencias++;}
-                        | listaSentencias sentencia     {contadorSentencias++;}
+listaSentencias:        sentencia                      
+                        | listaSentencias sentencia    
 ;
 
 opcionListaSentencias:  /* vacio*/
-                        | sentencia                     {contadorSentencias++;}
-                        | listaSentencias sentencia     {contadorSentencias++;}
+                        | sentencia                    
+                        | listaSentencias sentencia  
 ;
 
 sentenciaExpresion:     ';'                     {printf("\nSe encontro una sentencia vacia.");}
@@ -249,15 +257,14 @@ opcionExpresion:    /* vacio */
 
 int main(){
 
- /* #ifdef BISON_DEBUG
+ #ifdef BISON_DEBUG
         yydebug = 1;
-#endif  */   
-
+#endif    
 
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
-    FILE * archivoSalida = fopen("Informe.txt","w");//a veces lo lee a esto y a veces no xd
+    FILE * archivoSalida = fopen("Salida.txt","w");//a veces lo lee a esto y a veces no xd
 
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 

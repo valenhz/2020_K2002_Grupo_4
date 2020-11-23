@@ -38,7 +38,7 @@ int InsertarD(DECLARACION **cabeza, char *tipo, char *identificador){
 void MostrarListaD (FILE* archivo, DECLARACION *cabeza){ 
     DECLARACION *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "Se declaro un identificador de tipo %s y nombre %s\n",auxi->tipoDato,auxi->ID);
+        fprintf(archivo, "Se declaro una variable de tipo %s y nombre %s\n",auxi->tipoDato,auxi->ID);
         auxi = auxi->sig;
     }
 }
@@ -254,25 +254,23 @@ void MostrarListaE (FILE* archivo, ERRORES *cabeza){
 
                                 /* ERRORES LEXICOS */
 typedef struct errorLex {
-    char *cadena;
     int linea;
     struct errorLex *sig;
 } ERRORESLEX;
 
-ERRORESLEX* CrearNodoLEX(char *string, int num){
+ERRORESLEX* CrearNodoLEX(int num){
     ERRORESLEX* nodo = NULL;
     nodo = (ERRORESLEX *) malloc(sizeof (ERRORESLEX));
         if (nodo != NULL){
-        strcpy(nodo->cadena, string);
         nodo->linea = num;
         nodo->sig = NULL;
     }
     return nodo;
 }
 
-int InsertarLEX(ERRORESLEX **cabeza, char *string, int num){ 
+int InsertarLEX(ERRORESLEX **cabeza, int num){ 
     ERRORESLEX *nuevo;
-    nuevo = CrearNodoLEX(string, num);
+    nuevo = CrearNodoLEX(num);
     if (nuevo != NULL){
         nuevo->sig = *cabeza;
         *cabeza = nuevo;
@@ -285,7 +283,7 @@ int InsertarLEX(ERRORESLEX **cabeza, char *string, int num){
 void MostrarListaLEX (FILE* archivo, ERRORESLEX *cabeza){ 
     ERRORESLEX *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "Se encontro la cadena no reconocida: %s en la linea: %i\n", auxi->cadena, auxi->linea);
+        fprintf(archivo, "Se encontro una cadena no reconocida en la linea numero %i\n", auxi->linea);
         auxi = auxi->sig;
     }
 }
