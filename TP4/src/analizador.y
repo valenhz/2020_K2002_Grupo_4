@@ -22,6 +22,7 @@ int contadorDeclaraciones = 0;
 int contadorSentencias = 0;
 DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
+FUNCIONES *listaFunciones = NULL;
 
 
 %}
@@ -262,6 +263,7 @@ int main(){
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
+    MostrarListaF(archivoSalida, listaFunciones);
     MostrarTitulo(archivoSalida, "Errores Lexicos");
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
