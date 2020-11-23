@@ -21,7 +21,7 @@ int contadorDeclaraciones = 0;
 int contadorSentencias = 0;
 DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
-ERRORES *listaErroresLexicos = NULL;
+ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
 
 
@@ -62,6 +62,7 @@ FUNCIONES *listaFunciones = NULL;
 %token <cadena> CONTINUE 
 %token <cadena> BREAK 
 %token <cadena> RETURN  
+%token <cadena> ERRORLEX  
 
 %type <cadena> error
 %type <cadena> variableSimple
@@ -74,10 +75,13 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
-        | ERRORLEX '\n'         {InsertarLEX(&listaErroresLexicos, $<cadena>$, linea); linea++;}
+        | errorLexico '\n'      {linea++;}
         | error '\n'            {InsertarE(&listaErroresSintacticos,linea); linea++;}     
 ;
 
+errorLexico: ERRORLEX                   {InsertarLEX(&listaErroresLexicos, $<cadena>1, linea);}
+             | errorLexico ERRORLEX     {InsertarLEX(&listaErroresLexicos, $<cadena>2, linea);}
+;
 
 /* EXPRESIONES */
 
@@ -264,6 +268,7 @@ int main(){
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
     MostrarListaF(archivoSalida, listaFunciones);
     MostrarTitulo(archivoSalida, "Errores Lexicos");
+    MostrarListaLEX(archivoSalida, listaErroresLexicos);
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
