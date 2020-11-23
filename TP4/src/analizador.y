@@ -245,7 +245,7 @@ opcionExpresion:    /* vacio */
                     | expresion
 ;
 
-errorLexico: ERRORLEXICO   {InsertarLEX(&listaErroresLexicos, $<cadena>1);}
+errorLexico: ERRORLEXICO   {InsertarLEX(&listaErroresLexicos, $<cadena>1);} //esto esta mal porque nunca entra por aca, habria q buscar otra forma
 ;
 
 %%
