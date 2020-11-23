@@ -98,5 +98,38 @@ int validacionTipo (char *identificador, ASIGNACION *cabezaA, DECLARACION *cabez
 }
 
 int validarTipo(char *tipo, char *valor){
-   return 0; 
+    if(tipo == "int" || tipo == "double"){
+        return esEntero(valor);
+    }
+    if(tipo == "float"){
+        return esEntero(valor) || esReal(valor);
+    }
+    if(tipo == "char"){
+        return esCaracter(valor) || esLiteralCadena(valor);
+    }
+    if(tipo == "void"){
+
+    }
+    if(tipo == "struct"){
+
+    }
+}
+
+int esEntero(char *valor){
+
+    return 1;
+}
+
+int esReal(char *valor){
+
+    return 1;
+}
+int esLiteralCadena(char *valor){
+    
+    return 1;
+}
+
+int esCaracter(char *valor){
+
+    return 1;
 }
