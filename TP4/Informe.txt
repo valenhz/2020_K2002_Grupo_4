@@ -1,0 +1,17 @@
+
+*Lista de variables declaradas*
+
+
+*Lista de funciones declaradas*
+
+
+*Errores Lexicos*
+
+Se encontro la cadena no reconocida: $ en la linea: 2
+
+*Errores Sintacticos*
+
+Se encontro un error sintactico en la linea numero 1
+
+*Errores Semanticos*
+
