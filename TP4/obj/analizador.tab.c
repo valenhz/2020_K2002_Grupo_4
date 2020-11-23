@@ -1582,7 +1582,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 164 "../src/analizador.y"
-    {Insertar(&listaDeclaraciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(2) - (3)].cadena));}
+    {InsertarD(&listaDeclaraciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(2) - (3)].cadena));}
     break;
 
   case 53:
@@ -1956,10 +1956,10 @@ int main(){
         yydebug = 1;
 #endif  */   
 
-    FILE * archivoSalida = fopen("Informe.txt","w");
+    FILE * archivoSalida = fopen("Informe.txt","w");//a veces lo lee a esto y a veces no xd
 
     fprintf(archivoSalida, "holaaa :)");
-    MostrarLista(archivoSalida, listaDeclaraciones); //a veces lo lee a esto y a veces no xd
+    MostrarListaD(archivoSalida, listaDeclaraciones); 
 
     yyin = fopen("ingreso.c", "r"); 
     yyparse();
