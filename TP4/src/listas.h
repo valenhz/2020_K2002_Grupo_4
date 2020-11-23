@@ -170,6 +170,14 @@ int InsertarP(PARAMETRO **cabeza, char *tipo, char *identificador){
     }
 }
 
+void MostrarListaP (FILE* archivo, FUNCIONES *cabeza){ 
+    FUNCIONES *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "-%s %s\n",auxi->tipoDato,auxi->ID);
+        auxi = auxi->sig;
+    }
+}
+
 typedef struct func {
     char *tipoDato;
     char *ID;
@@ -203,11 +211,11 @@ int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador){
 void MostrarListaF (FILE* archivo, FUNCIONES *cabeza){ 
     FUNCIONES *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "Se declaro un identificador de tipo %s y nombre %s\n",auxi->tipoDato,auxi->ID);
+        fprintf(archivo, "Se declaro la funcion %s de tipo %s y con los siguientes parametros:\n",auxi->tipoDato,auxi->ID);
+        MostrarListaP(archivo, auxi->listaParametro);
         auxi = auxi->sig;
     }
 }
-
 
 
                                     /* ERRORES SINTACTICOS */
