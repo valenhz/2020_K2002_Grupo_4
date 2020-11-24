@@ -23,7 +23,6 @@ DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
-char *aux; 
 
 %}
 
@@ -170,9 +169,8 @@ declaracion:  declaracionVariablesSimples
 ;
 
 declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' {
-                                                printf("se declara la variable %s de tipo %s", $<cadena>2, $<cadena>1);
-                                                InsertarD(&listaDeclaraciones, $<cadena>1, $<cadena>2); 
-                                                /* strcpy(aux, $<cadena>1);  */
+                                                printf("se declara la variable %s de tipo %s\n", $<cadena>2, $<cadena>1);
+                                                InsertarD(&listaDeclaraciones, $<cadena>1, $<cadena>2);
                                                 }
 ;
 
@@ -264,9 +262,13 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
-    FILE * archivoSalida = fopen("Salida.txt","w");//a veces lo lee a esto y a veces no xd
+    printf("la concha de mi madre");
+    FILE * archivoSalida = fopen("juan.txt","w");//a veces lo lee a esto y a veces no xd
+
+    printf("salio de insertarD perfectamente %i", archivoSalida);
 
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
+    printf("la concha de mi madre2");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
     MostrarListaF(archivoSalida, listaFunciones);

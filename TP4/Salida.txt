@@ -1,0 +1,19 @@
+
+*Lista de variables declaradas*
+
+
+*Lista de funciones declaradas*
+
+
+*Errores Lexicos*
+
+
+*Errores Sintacticos*
+
+Se encontro un error sintactico en la linea numero 3
+Se encontro un error sintactico en la linea numero 1
+Se encontro un error sintactico en la linea numero 7
+Se encontro un error sintactico en la linea numero 5
+
+*Errores Semanticos*
+
