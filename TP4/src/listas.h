@@ -16,8 +16,8 @@ DECLARACION* CrearNodoD(char *tipo, char *identificador){
     DECLARACION* nodo = NULL;
     nodo = (DECLARACION *) malloc(sizeof (DECLARACION));
         if (nodo != NULL){
-        strcpy(nodo->tipoDato, tipo);
-        strcpy(nodo->ID, identificador);
+        nodo->tipoDato = strdup(tipo);
+        nodo->ID = strdup(identificador);
         nodo->sig = NULL;
     }
     return nodo;

@@ -102,7 +102,7 @@ FUNCIONES *listaFunciones = NULL;
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 
 /* Enabling verbose error messages.  */
@@ -1931,9 +1931,7 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
-    InsertarLEX(&listaErroresLexicos, 5);
-
-    FILE * archivoSalida = fopen("juan.txt","w");
+    FILE * archivoSalida = fopen("salida.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
@@ -1944,6 +1942,7 @@ int main(){
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
+    //validacionSemantica2D(archivoSalida, listaDeclaraciones);
     
     fclose(yyin);
 

@@ -112,7 +112,7 @@ expRelacional:  expAditiva
 ;
 
 expAditiva: expMultiplicativa
-            | expAditiva operAditivo expMultiplicativa
+            | expAditiva operAditivo expMultiplicativa 
 ;
 
 operAditivo:    '+'
@@ -262,9 +262,7 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
-    InsertarLEX(&listaErroresLexicos, 5);
-
-    FILE * archivoSalida = fopen("juan.txt","w");
+    FILE * archivoSalida = fopen("salida.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
@@ -275,6 +273,7 @@ int main(){
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
+    //validacionSemantica2D(archivoSalida, listaDeclaraciones);
     
     fclose(yyin);
 
