@@ -234,6 +234,7 @@ ERRORES* CrearNodoE(int numeroLinea){
 
 int InsertarE(ERRORES **cabeza, int numeroLinea){ 
     ERRORES *nuevo;
+    printf("se guarda el num %i", numeroLinea);
     nuevo = CrearNodoE(numeroLinea);
     if (nuevo != NULL){
         nuevo->sig = *cabeza;
@@ -261,6 +262,7 @@ typedef struct errorLex {
 
 ERRORESLEX* CrearNodoLEX(int num){
     ERRORESLEX* nodo = NULL;
+    printf("se guarda el num %i", num);
     nodo = (ERRORESLEX *) malloc(sizeof (ERRORESLEX));
         if (nodo != NULL){
         nodo->linea = num;

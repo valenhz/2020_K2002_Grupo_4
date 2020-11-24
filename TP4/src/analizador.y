@@ -4,7 +4,7 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
-#include <listas.h>
+#include "listas.h"
 
 int yylex();
     
