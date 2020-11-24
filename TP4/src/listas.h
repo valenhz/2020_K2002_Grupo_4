@@ -53,8 +53,8 @@ ASIGNACION* CrearNodoA(char *value, char *identificador){
     ASIGNACION* nodo = NULL;
     nodo = (ASIGNACION *) malloc(sizeof (ASIGNACION));
         if (nodo != NULL){
-        strcpy(nodo->valor, value);
-        strcpy(nodo->ID, identificador);
+        nodo->valor = strdup(value);
+        nodo->ID = strdup(identificador);
         nodo->sig = NULL;
     }
     return nodo;
@@ -126,12 +126,12 @@ int validacionTipo (char *identificador, ASIGNACION *cabezaA, DECLARACION *cabez
         auxD = auxD->sig;
     }
     if(auxD->ID == identificador){
-        strcpy(tipo, auxD->tipoDato);
+        tipo = strdup(auxD->tipoDato);
         while (auxA->ID != identificador && auxA != NULL){
             auxA->sig;
         }
         if(auxA->ID == identificador){
-            strcpy(value, auxA ->valor);
+            value = strdup(auxA ->valor);
         }
     }
     return validarTipo(tipo, value);
@@ -149,8 +149,8 @@ PARAMETRO* CrearNodoP(char *tipo, char *identificador){
     PARAMETRO* nodo = NULL;
     nodo = (PARAMETRO *) malloc(sizeof (PARAMETRO));
         if (nodo != NULL){
-        strcpy(nodo->tipoDato, tipo);
-        strcpy(nodo->ID, identificador);
+        nodo->tipoDato = strdup(tipo);
+        nodo->ID = strdup(identificador);
         nodo->sig = NULL;
     }
     return nodo;
@@ -187,8 +187,8 @@ FUNCIONES* CrearNodoF(char *tipo, char *identificador){
     FUNCIONES* nodo = NULL;
     nodo = (FUNCIONES *) malloc(sizeof (FUNCIONES));
         if (nodo != NULL){
-        strcpy(nodo->tipoDato, tipo);
-        strcpy(nodo->ID, identificador);
+        nodo->tipoDato = strdup(tipo);
+        nodo->ID = strdup(identificador);
         nodo->sig = NULL;
     }
     return nodo;
@@ -321,13 +321,13 @@ int validacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza){ //validacion 
         aux1 = aux1->sig;
     }
     if(aux1->ID == ID1){
-        strcpy(tipo1, aux1->tipoDato);
+        tipo1 = strdup(aux1->tipoDato);
     }
     while (aux2->ID != ID2 && aux2 != NULL){
             aux2->sig;
     }
     if(aux2->ID == ID2){
-        strcpy(tipo2, aux2 ->tipoDato);
+        tipo2 = strdup(aux2 ->tipoDato);
     }
     if (tipo1 == tipo2){
         if (tipo1 == "int" || tipo1 == "float"){
