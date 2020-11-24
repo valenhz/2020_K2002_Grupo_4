@@ -1931,13 +1931,9 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
-    printf("la concha de mi madre");
-    FILE * archivoSalida = fopen("juan.txt","w");//a veces lo lee a esto y a veces no xd
-
-    printf("salio de insertarD perfectamente %i", archivoSalida);
-
+    FILE * archivoSalida = fopen("juan.txt","w");
+    printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
-    printf("la concha de mi madre2");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
     MostrarListaF(archivoSalida, listaFunciones);
