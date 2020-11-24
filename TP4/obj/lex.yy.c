@@ -264,13 +264,9 @@ static void yy_flex_free YY_PROTO(( void * ));
 
 #define yywrap() 1
 #define YY_SKIP_YYWRAP
-
-#define FLEX_DEBUG
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
 typedef int yy_state_type;
-
-#define FLEX_DEBUG
 extern char *yytext;
 #define yytext_ptr yytext
 
@@ -496,17 +492,6 @@ static yyconst short int yy_chk[367] =
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
-extern int yy_flex_debug;
-int yy_flex_debug = 1;
-
-static yyconst short int yy_rule_linenum[38] =
-    {   0,
-       47,   49,   51,   53,   55,   57,   59,   61,   63,   65,
-       67,   69,   71,   73,   75,   77,   79,   81,   83,   85,
-       87,   89,   91,   93,   95,   97,   99,  101,  103,  105,
-      107,  109,  111,  113,  115,  117,  119
-    } ;
-
 /* The intent behind this definition is that it'll catch
  * any uses of REJECT which flex missed.
  */
@@ -522,7 +507,7 @@ char *yytext;
     #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
-#line 526 "lex.yy.c"
+#line 511 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -676,7 +661,7 @@ YY_DECL
 #line 45 "../src/analizador.l"
 
 
-#line 680 "lex.yy.c"
+#line 665 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -749,21 +734,6 @@ yy_find_action:
 
 do_action:	/* This label is used only to access EOF actions. */
 
-		if ( yy_flex_debug )
-			{
-			if ( yy_act == 0 )
-				fprintf( stderr, "--scanner backing up\n" );
-			else if ( yy_act < 38 )
-				fprintf( stderr, "--accepting rule at line %d (\"%s\")\n",
-				         yy_rule_linenum[yy_act], yytext );
-			else if ( yy_act == 38 )
-				fprintf( stderr, "--accepting default rule (\"%s\")\n",
-				         yytext );
-			else if ( yy_act == 39 )
-				fprintf( stderr, "--(end of buffer or a NUL)\n" );
-			else
-				fprintf( stderr, "--EOF (start condition %d)\n", YY_START );
-			}
 
 		switch ( yy_act )
 	{ /* beginning of action switch */
@@ -964,7 +934,7 @@ YY_RULE_SETUP
 #line 121 "../src/analizador.l"
 ECHO;
 	YY_BREAK
-#line 968 "lex.yy.c"
+#line 938 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

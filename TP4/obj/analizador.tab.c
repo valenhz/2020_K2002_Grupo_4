@@ -102,7 +102,7 @@ FUNCIONES *listaFunciones = NULL;
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 
 /* Enabling verbose error messages.  */
@@ -1593,7 +1593,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 78 "../src/analizador.y"
-    {InsertarLEX(&listaErroresLexicos, linea); linea++;;}
+    {InsertarLEX(&listaErroresLexicos, linea); linea++; printf("se encontro error lex");;}
     break;
 
   case 7:
@@ -1931,6 +1931,8 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
+    InsertarLEX(&listaErroresLexicos, 5);
+
     FILE * archivoSalida = fopen("juan.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");

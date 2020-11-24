@@ -75,7 +75,7 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
-        | errorLexico '\n'      {InsertarLEX(&listaErroresLexicos, linea); linea++;}
+        | errorLexico '\n'      {InsertarLEX(&listaErroresLexicos, linea); linea++; printf("se encontro error lex");}
         | error '\n'            {InsertarE(&listaErroresSintacticos, linea); linea++;}      
 ;
 
@@ -262,6 +262,8 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
+    InsertarLEX(&listaErroresLexicos, 5);
+
     FILE * archivoSalida = fopen("juan.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");

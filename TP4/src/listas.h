@@ -246,6 +246,7 @@ int InsertarE(ERRORES **cabeza, int numeroLinea){
 
 void MostrarListaE (FILE* archivo, ERRORES *cabeza){ 
     ERRORES *auxi = cabeza;
+    //fprintf(archivo, "llega aca");
     while(auxi != NULL){
         fprintf(archivo, "Se encontro un error sintactico en la linea numero %i\n", auxi->linea);
         auxi = auxi->sig;
