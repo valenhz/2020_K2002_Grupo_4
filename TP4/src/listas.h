@@ -234,7 +234,6 @@ ERRORES* CrearNodoE(int numeroLinea){
 
 int InsertarE(ERRORES **cabeza, int numeroLinea){ 
     ERRORES *nuevo;
-    printf("se guarda el num %i", numeroLinea);
     nuevo = CrearNodoE(numeroLinea);
     if (nuevo != NULL){
         nuevo->sig = *cabeza;
@@ -247,7 +246,6 @@ int InsertarE(ERRORES **cabeza, int numeroLinea){
 
 void MostrarListaE (FILE* archivo, ERRORES *cabeza){ 
     ERRORES *auxi = cabeza;
-    //fprintf(archivo, "llega aca");
     while(auxi != NULL){
         fprintf(archivo, "Se encontro un error sintactico en la linea numero %i\n", auxi->linea);
         auxi = auxi->sig;
@@ -262,7 +260,6 @@ typedef struct errorLex {
 
 ERRORESLEX* CrearNodoLEX(int num){
     ERRORESLEX* nodo = NULL;
-    printf("se guarda el num %i", num);
     nodo = (ERRORESLEX *) malloc(sizeof (ERRORESLEX));
         if (nodo != NULL){
         nodo->linea = num;
@@ -295,21 +292,41 @@ void MostrarListaLEX (FILE* archivo, ERRORESLEX *cabeza){
                         /* VALIDACIONES SEMANTICAS */
 
 void doblesDeclaraciones (FILE* archivo, DECLARACION *aux){
-    char *identificador = aux->ID;
+    char *identificador = strdup(aux->ID);
     while (aux != NULL){
         aux = aux->sig;
-        if (aux->ID == identificador){
+        if (strcmp(identificador, aux->ID) == 0){
             fprintf(archivo, "Se encontro una doble declaracion de la variable %s", aux->ID);
         }   
     }
 }
 
-void validacionSemantica2D (FILE* archivo, DECLARACION *cabeza){
+void validacionDoblesDeclaraciones (FILE* archivo, DECLARACION *cabeza){
     DECLARACION *aux = cabeza;
     while(aux != NULL){
         doblesDeclaraciones(archivo, aux);
         aux = aux->sig;
     }
+}
+
+void val2D (FILE* archivo, DECLARACION *cabeza){ 
+    DECLARACION *auxi = cabeza;
+    DECLARACION *aux2 = cabeza;
+    char *identificador;
+    while(aux2 != NULL){
+        identificador = strdup(aux2->ID);
+        while(auxi != NULL){
+            auxi = auxi->sig;
+            //fprintf("%s \n", auxi->ID);
+            if(strcmp(identificador, aux2->ID) == 0){ //aca deberia compararlo con auxi->ID pero cuando pongo eso rompe no se xq 
+                fprintf(archivo, "Hay doble declaracion de la variable %s\n", identificador);
+                //fprintf(archivo, "comparacion %i\n", strcmp(identificador, auxi->ID));
+            }
+        }
+        aux2 = aux2->sig;
+        auxi = aux2;
+    }
+    
 }
 
 int validacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza){ //validacion para una suma en particular, no todas las sumas
@@ -338,4 +355,4 @@ int validacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza){ //validacion 
     return 1;
 }
 
-//acv
+

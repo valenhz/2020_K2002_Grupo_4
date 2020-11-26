@@ -75,7 +75,7 @@ input:  /* vacio */
 
 line:   declaracion '\n'        {linea++;}
         | sentencia '\n'        {linea++;}
-        | errorLexico '\n'      {InsertarLEX(&listaErroresLexicos, linea); linea++; printf("se encontro error lex");}
+        | errorLexico '\n'      {InsertarLEX(&listaErroresLexicos, linea); linea++;}
         | error '\n'            {InsertarE(&listaErroresSintacticos, linea); linea++;}      
 ;
 
@@ -262,7 +262,7 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
     
-    FILE * archivoSalida = fopen("salida.txt","w");
+    FILE * archivoSalida = fopen("salida4.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
@@ -273,7 +273,8 @@ int main(){
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
-    //validacionSemantica2D(archivoSalida, listaDeclaraciones);
+    val2D(archivoSalida, listaDeclaraciones);
+    printf("\nTermina de mostrar todo");
     
     fclose(yyin);
 

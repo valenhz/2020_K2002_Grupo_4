@@ -6,3 +6,4 @@ if (a=5
 $$
 $
 .
+int casa;
