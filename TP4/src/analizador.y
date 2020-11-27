@@ -23,7 +23,7 @@ DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
-VALIDACION *listaValidacionTipos;
+//VALIDACION *listaValidacionTipos;
 
 %}
 
@@ -112,15 +112,15 @@ expRelacional:  expAditiva
                 | expRelacional OPERADOR_RELACION expAditiva 
 ;
 
-expAditiva: expMultiplicativa {strcpy($<cadena>$, $<cadena>1);}
-            | expAditiva operAditivo expMultiplicativa {InsertarValidacionTipoSuma($<cadena>1, $<cadena>3, listaDeclaraciones, listaValidacionTipos);}
+expAditiva: expMultiplicativa /*{$<cadena>$ = strdup($<cadena>1);}*/
+            | expAditiva operAditivo expMultiplicativa /*{InsertarValidacionTipoSuma($<cadena>1, $<cadena>3, listaDeclaraciones, listaValidacionTipos);}*/
 ;
 
 operAditivo:    '+'
               | '-'
 ;
 
-expMultiplicativa:  expUnaria {strcpy($<cadena>$, $<cadena>1);}
+expMultiplicativa:  expUnaria /*{$<cadena>$ = strdup($<cadena>1);}*/
                     | expMultiplicativa operMultiplicativo expUnaria
 ;
 
@@ -128,7 +128,7 @@ operMultiplicativo:  '*'
                     |'/'
 ;
 
-expUnaria:      expPostfijo {strcpy($<cadena>$, $<cadena>1);}
+expUnaria:      expPostfijo /*{$<cadena>$ = strdup($<cadena>1);}*/
                 | OPERADOR_INCREMENTO expUnaria
                 | operUnario expUnaria                 
                 | SIZE_OF '(' TIPO_DATO ')'
@@ -140,7 +140,7 @@ operUnario:  '*'
             |'!'
 ;
 
-expPostfijo:    expPrimaria {strcpy($<cadena>$, $<cadena>1);}
+expPostfijo:    expPrimaria /*{$<cadena>$ = strdup($<cadena>1);}*/
                 | expPostfijo '[' expresion ']'
                 | expPostfijo '(' opcionListaArgumentos ')'
 ;
@@ -150,7 +150,7 @@ opcionListaArgumentos:  /* vacio*/
                         | opcionListaArgumentos ',' expAsignacion
 ;
 
-expPrimaria:    IDENTIFICADOR {strcpy($<cadena>$, $<cadena>1);}
+expPrimaria:    IDENTIFICADOR /*{$<cadena>$ = strdup($<cadena>1);}*/
                 | constante
                 | LITERAL_CADENA
                 | '(' expresion ')'
@@ -175,11 +175,11 @@ declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' {
                                                 }
 ;
 
-listaVariablesSimples:  variableSimple  {strcpy($<cadena>$, $<cadena>1);}
+listaVariablesSimples:  variableSimple  {$<cadena>$ = strdup($<cadena>1);}
                         | listaVariablesSimples ',' variableSimple
 ;
 
-variableSimple:  IDENTIFICADOR opcionInicializacion  {strcpy($<cadena>$, $<cadena>1);}
+variableSimple:  IDENTIFICADOR opcionInicializacion  {$<cadena>$ = strdup($<cadena>1);}
 ;
 
 opcionInicializacion:   /* vacio */
@@ -275,7 +275,7 @@ int main(){
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
     val2D(archivoSalida, listaDeclaraciones);
-    MostrarListaValidacion(archivoSalida, listaValidacionTipos);
+    //MostrarListaValidacion(archivoSalida, listaValidacionTipos);
     printf("\nTermina de mostrar todo");
     
     

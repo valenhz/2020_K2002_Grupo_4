@@ -94,7 +94,7 @@ DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
-VALIDACION *listaValidacionTipos;
+//VALIDACION *listaValidacionTipos;
 
 
 
@@ -1604,48 +1604,6 @@ yyreduce:
     {InsertarE(&listaErroresSintacticos, linea); linea++;;}
     break;
 
-  case 23:
-
-/* Line 1455 of yacc.c  */
-#line 115 "../src/analizador.y"
-    {strcpy((yyval.cadena), (yyvsp[(1) - (1)].cadena));;}
-    break;
-
-  case 24:
-
-/* Line 1455 of yacc.c  */
-#line 116 "../src/analizador.y"
-    {InsertarValidacionTipoSuma((yyvsp[(1) - (3)].cadena), (yyvsp[(3) - (3)].cadena), listaDeclaraciones, listaValidacionTipos);;}
-    break;
-
-  case 27:
-
-/* Line 1455 of yacc.c  */
-#line 123 "../src/analizador.y"
-    {strcpy((yyval.cadena), (yyvsp[(1) - (1)].cadena));;}
-    break;
-
-  case 31:
-
-/* Line 1455 of yacc.c  */
-#line 131 "../src/analizador.y"
-    {strcpy((yyval.cadena), (yyvsp[(1) - (1)].cadena));;}
-    break;
-
-  case 39:
-
-/* Line 1455 of yacc.c  */
-#line 143 "../src/analizador.y"
-    {strcpy((yyval.cadena), (yyvsp[(1) - (1)].cadena));;}
-    break;
-
-  case 45:
-
-/* Line 1455 of yacc.c  */
-#line 153 "../src/analizador.y"
-    {strcpy((yyval.cadena), (yyvsp[(1) - (1)].cadena));;}
-    break;
-
   case 55:
 
 /* Line 1455 of yacc.c  */
@@ -1660,14 +1618,14 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 178 "../src/analizador.y"
-    {strcpy((yyval.cadena), (yyvsp[(1) - (1)].cadena));;}
+    {(yyval.cadena) = strdup((yyvsp[(1) - (1)].cadena));;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
 #line 182 "../src/analizador.y"
-    {strcpy((yyval.cadena), (yyvsp[(1) - (2)].cadena));;}
+    {(yyval.cadena) = strdup((yyvsp[(1) - (2)].cadena));;}
     break;
 
   case 61:
@@ -1750,7 +1708,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1754 "analizador.tab.c"
+#line 1712 "analizador.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1986,7 +1944,7 @@ int main(){
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
     val2D(archivoSalida, listaDeclaraciones);
-    MostrarListaValidacion(archivoSalida, listaValidacionTipos);
+    //MostrarListaValidacion(archivoSalida, listaValidacionTipos);
     printf("\nTermina de mostrar todo");
     
     

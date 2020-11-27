@@ -1,0 +1,34 @@
+
+*Lista de variables declaradas*
+
+Se declaro una variable de tipo int y nombre casa
+Se declaro una variable de tipo char y nombre a
+Se declaro una variable de tipo int y nombre b
+Se declaro una variable de tipo int y nombre a
+
+*Lista de funciones declaradas*
+
+
+*Errores Lexicos*
+
+Se encontro una cadena no reconocida en la linea numero 9
+Se encontro una cadena no reconocida en la linea numero 8
+Se encontro una cadena no reconocida en la linea numero 7
+
+*Errores Sintacticos*
+
+Se encontro un error sintactico en la linea numero 6
+Se encontro un error sintactico en la linea numero 5
+
+*Errores Semanticos*
+
+Hay doble declaracion de la variable casa
+Hay doble declaracion de la variable casa
+Hay doble declaracion de la variable casa
+Hay doble declaracion de la variable casa
+Hay doble declaracion de la variable a
+Hay doble declaracion de la variable a
+Hay doble declaracion de la variable a
+Hay doble declaracion de la variable b
+Hay doble declaracion de la variable b
+Hay doble declaracion de la variable a

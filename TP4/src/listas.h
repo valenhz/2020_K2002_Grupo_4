@@ -329,70 +329,70 @@ void val2D (FILE* archivo, DECLARACION *cabeza){
     
 }
 
-typedef struct validacionTipo {
-    char *ID1;
-    char *ID2;
-    struct validacionTipo *sig;
-} VALIDACION;
+// typedef struct validacionTipo {
+//     char *ID1;
+//     char *ID2;
+//     struct validacionTipo *sig;
+// } VALIDACION;
 
-VALIDACION* CrearNodoValidacion (char *ID1, char *ID2){
-    VALIDACION* nodo = NULL;
-    nodo = (VALIDACION *) malloc(sizeof (VALIDACION));
-    if (nodo != NULL) {
-        nodo->ID1 = strdup(ID1);
-        nodo->ID2 = strdup(ID2);
-        nodo->sig = NULL;
-    }
-    return nodo;
-}
+// VALIDACION* CrearNodoValidacion (char *ID1, char *ID2){
+//     VALIDACION* nodo = NULL;
+//     nodo = (VALIDACION *) malloc(sizeof (VALIDACION));
+//     if (nodo != NULL) {
+//         nodo->ID1 = strdup(ID1);
+//         nodo->ID2 = strdup(ID2);
+//         nodo->sig = NULL;
+//     }
+//     return nodo;
+// }
 
-int InsertarValidacion(VALIDACION **cabeza, char *ID1, char *ID2) {
-    VALIDACION *nuevo;
-    nuevo = CrearNodoValidacion(ID1, ID2);
-    if (nuevo != NULL) {
-        nuevo->sig = *cabeza;
-        *cabeza = nuevo;
-        return 1;
-    } else {
-        return 0;
-    }
-}
+// int InsertarValidacion(VALIDACION **cabeza, char *ID1, char *ID2) {
+//     VALIDACION *nuevo;
+//     nuevo = CrearNodoValidacion(ID1, ID2);
+//     if (nuevo != NULL) {
+//         nuevo->sig = *cabeza;
+//         *cabeza = nuevo;
+//         return 1;
+//     } else {
+//         return 0;
+//     }
+// }
 
-int MostrarValidacionTipo(FILE* archivo, char *ID1, char *ID2) {
-    fprintf(archivo, "tipos incompatibles de %s y %s para la suma", ID1, ID2);
-}
+// int MostrarValidacionTipo(FILE* archivo, char *ID1, char *ID2) {
+//     fprintf(archivo, "tipos incompatibles de %s y %s para la suma", ID1, ID2);
+// }
 
-void MostrarListaValidacion (FILE* archivo, VALIDACION *cabeza) {
-    VALIDACION *auxi = cabeza;
-    while(auxi != NULL) {
-        MostrarValidacionTipo(archivo, auxi->ID1, auxi->ID2);
-    }
-}
+// void MostrarListaValidacion (FILE* archivo, VALIDACION *cabeza) {
+//     VALIDACION *auxi = cabeza;
+//     while(auxi != NULL) {
+//         MostrarValidacionTipo(archivo, auxi->ID1, auxi->ID2);
+//     }
+// }
 
-int InsertarValidacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza, VALIDACION *head){ //validacion para una suma en particular, no todas las sumas
-    DECLARACION *aux1 = cabeza;
-    DECLARACION *aux2 = cabeza;
-    char *tipo1;
-    char *tipo2;
-    while(aux1->ID != ID1 && aux1 != NULL){
-        aux1 = aux1->sig;
-    }
-    if(aux1->ID == ID1){
-        tipo1 = strdup(aux1->tipoDato);
-    }
-    while (aux2->ID != ID2 && aux2 != NULL){
-            aux2->sig;
-    }
-    if(aux2->ID == ID2){
-        tipo2 = strdup(aux2 ->tipoDato);
-    }
-    if (tipo1 == tipo2){
-        if (tipo1 == "int" || tipo1 == "float" || tipo1 == "char"){
-         return 0;
-        } else {
-        InsertarValidacion(&head, ID1, ID2);
-        }
-    }
-    return 1;
-}
+// int InsertarValidacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza, VALIDACION *head){ //validacion para una suma en particular, no todas las sumas
+//     DECLARACION *aux1 = cabeza;
+//     DECLARACION *aux2 = cabeza;
+//     char *tipo1;
+//     char *tipo2;
+//     while(aux1->ID != ID1 && aux1 != NULL){
+//         aux1 = aux1->sig;
+//     }
+//     if(aux1->ID == ID1){
+//         tipo1 = strdup(aux1->tipoDato);
+//     }
+//     while (aux2->ID != ID2 && aux2 != NULL){
+//             aux2->sig;
+//     }
+//     if(aux2->ID == ID2){
+//         tipo2 = strdup(aux2 ->tipoDato);
+//     }
+//     if (tipo1 == tipo2){
+//         if (tipo1 == "int" || tipo1 == "float" || tipo1 == "char"){
+//          return 0;
+//         } else {
+//         InsertarValidacion(&head, ID1, ID2);
+//         }
+//     }
+//     return 1;
+// }
 
