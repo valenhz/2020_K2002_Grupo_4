@@ -329,7 +329,47 @@ void val2D (FILE* archivo, DECLARACION *cabeza){
     
 }
 
-int validacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza){ //validacion para una suma en particular, no todas las sumas
+typedef struct validacionTipo {
+    char *ID1;
+    char *ID2;
+    struct validacionTipo *sig;
+} VALIDACION;
+
+VALIDACION* CrearNodoValidacion (char *ID1, char *ID2){
+    VALIDACION* nodo = NULL;
+    nodo = (VALIDACION *) malloc(sizeof (VALIDACION));
+    if (nodo != NULL) {
+        nodo->ID1 = strdup(ID1);
+        nodo->ID2 = strdup(ID2);
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int InsertarValidacion(VALIDACION **cabeza, char *ID1, char *ID2) {
+    VALIDACION *nuevo;
+    nuevo = CrearNodoValidacion(ID1, ID2);
+    if (nuevo != NULL) {
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int MostrarValidacionTipo(FILE* archivo, char *ID1, char *ID2) {
+    fprintf(archivo, "tipos incompatibles de %s y %s para la suma", ID1, ID2);
+}
+
+void MostrarListaValidacion (FILE* archivo, VALIDACION *cabeza) {
+    VALIDACION *auxi = cabeza;
+    while(auxi != NULL) {
+        MostrarValidacionTipo(archivo, auxi->ID1, auxi->ID2);
+    }
+}
+
+int InsertarValidacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza, VALIDACION *head){ //validacion para una suma en particular, no todas las sumas
     DECLARACION *aux1 = cabeza;
     DECLARACION *aux2 = cabeza;
     char *tipo1;
@@ -347,12 +387,12 @@ int validacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza){ //validacion 
         tipo2 = strdup(aux2 ->tipoDato);
     }
     if (tipo1 == tipo2){
-        if (tipo1 == "int" || tipo1 == "float"){
-            return 0;
+        if (tipo1 == "int" || tipo1 == "float" || tipo1 == "char"){
+         return 0;
+        } else {
+        InsertarValidacion(&head, ID1, ID2);
         }
-        return 1;
     }
     return 1;
 }
-
 

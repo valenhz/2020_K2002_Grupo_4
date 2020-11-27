@@ -23,6 +23,7 @@ DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
+VALIDACION *listaValidacionTipos;
 
 %}
 
@@ -111,15 +112,15 @@ expRelacional:  expAditiva
                 | expRelacional OPERADOR_RELACION expAditiva 
 ;
 
-expAditiva: expMultiplicativa
-            | expAditiva operAditivo expMultiplicativa 
+expAditiva: expMultiplicativa {strcpy($<cadena>$, $<cadena>1);}
+            | expAditiva operAditivo expMultiplicativa {InsertarValidacionTipoSuma($<cadena>1, $<cadena>3, listaDeclaraciones, listaValidacionTipos);}
 ;
 
 operAditivo:    '+'
               | '-'
 ;
 
-expMultiplicativa:  expUnaria
+expMultiplicativa:  expUnaria {strcpy($<cadena>$, $<cadena>1);}
                     | expMultiplicativa operMultiplicativo expUnaria
 ;
 
@@ -127,7 +128,7 @@ operMultiplicativo:  '*'
                     |'/'
 ;
 
-expUnaria:      expPostfijo
+expUnaria:      expPostfijo {strcpy($<cadena>$, $<cadena>1);}
                 | OPERADOR_INCREMENTO expUnaria
                 | operUnario expUnaria                 
                 | SIZE_OF '(' TIPO_DATO ')'
@@ -139,7 +140,7 @@ operUnario:  '*'
             |'!'
 ;
 
-expPostfijo:    expPrimaria
+expPostfijo:    expPrimaria {strcpy($<cadena>$, $<cadena>1);}
                 | expPostfijo '[' expresion ']'
                 | expPostfijo '(' opcionListaArgumentos ')'
 ;
@@ -149,7 +150,7 @@ opcionListaArgumentos:  /* vacio*/
                         | opcionListaArgumentos ',' expAsignacion
 ;
 
-expPrimaria:    IDENTIFICADOR
+expPrimaria:    IDENTIFICADOR {strcpy($<cadena>$, $<cadena>1);}
                 | constante
                 | LITERAL_CADENA
                 | '(' expresion ')'
@@ -274,7 +275,9 @@ int main(){
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
     val2D(archivoSalida, listaDeclaraciones);
+    MostrarListaValidacion(archivoSalida, listaValidacionTipos);
     printf("\nTermina de mostrar todo");
+    
     
     fclose(yyin);
 
