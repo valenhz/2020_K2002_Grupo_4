@@ -4,8 +4,10 @@ char a;
 int c;
 int 6
 if (a=5
+void juan();
 $$
 $
+if (5+5) 3+3;
 .
 int casa;
 int casa;

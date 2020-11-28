@@ -186,11 +186,11 @@ opcionInicializacion:   /* vacio */
                         | OPERADOR_ASIGNACION expCondicional
 ;
 
-declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' ';' {printf("\nSe declara la funcion %s de tipo %s", $<cadena>2, $<cadena>1);}
+declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' ';' {InsertarF(&listaFunciones, $<cadena>1, $<cadena>2);}
 ;
 
 opcionArgumentosConTipo:        /* vacio */ 
-                                | TIPO_DATO opcionReferencia IDENTIFICADOR 
+                                | TIPO_DATO opcionReferencia IDENTIFICADOR {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
                                 | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo
 ;
 
@@ -262,7 +262,7 @@ int main(){
 
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
-    
+
     FILE * archivoSalida = fopen("salida4.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");

@@ -1632,7 +1632,14 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 189 "../src/analizador.y"
-    {printf("\nSe declara la funcion %s de tipo %s", (yyvsp[(2) - (6)].cadena), (yyvsp[(1) - (6)].cadena));;}
+    {InsertarF(&listaFunciones, (yyvsp[(1) - (6)].cadena), (yyvsp[(2) - (6)].cadena));;}
+    break;
+
+  case 63:
+
+/* Line 1455 of yacc.c  */
+#line 193 "../src/analizador.y"
+    {InsertarPF(listaFunciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(3) - (3)].cadena));;}
     break;
 
   case 69:
@@ -1708,7 +1715,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1712 "analizador.tab.c"
+#line 1719 "analizador.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1931,7 +1938,7 @@ int main(){
 
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
-    
+
     FILE * archivoSalida = fopen("salida4.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");

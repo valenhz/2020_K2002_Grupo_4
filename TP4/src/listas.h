@@ -168,6 +168,7 @@ int InsertarP(PARAMETRO **cabeza, char *tipo, char *identificador){
     }
 }
 
+
 void MostrarListaP (FILE* archivo, PARAMETRO *cabeza){ 
     PARAMETRO *auxi = cabeza;
     while(auxi != NULL){
@@ -183,12 +184,14 @@ typedef struct func {
     struct func *sig;
 } FUNCIONES;
 
+
 FUNCIONES* CrearNodoF(char *tipo, char *identificador){
     FUNCIONES* nodo = NULL;
     nodo = (FUNCIONES *) malloc(sizeof (FUNCIONES));
         if (nodo != NULL){
         nodo->tipoDato = strdup(tipo);
         nodo->ID = strdup(identificador);
+        nodo->listaParametro = NULL;
         nodo->sig = NULL;
     }
     return nodo;
@@ -206,10 +209,22 @@ int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador){
     }
 }
 
+//alternativa
+void InsertarPF(FUNCIONES *cabeza, char *tipo, char *identificador){ 
+    PARAMETRO *nuevo;
+    nuevo = CrearNodoP(tipo, identificador);
+    printf("tipo: %s id: %s\n", nuevo->tipoDato, nuevo->ID);
+    if (nuevo != NULL){
+        nuevo->sig = cabeza->listaParametro;
+        cabeza->listaParametro = nuevo;
+        printf("cabeza->listaParametro->tipo = %s, cabeza->listaParametro->ID = %s\n", cabeza->listaParametro->tipoDato, cabeza->listaParametro->ID);
+    } 
+}
+
 void MostrarListaF (FILE* archivo, FUNCIONES *cabeza){ 
     FUNCIONES *auxi = cabeza;
     while(auxi != NULL){
-        fprintf(archivo, "Se declaro la funcion %s de tipo %s y con los siguientes parametros:\n",auxi->tipoDato,auxi->ID);
+        fprintf(archivo, "Se declaro la funcion %s de tipo %s y con los siguientes parametros:\n",auxi->ID,auxi->tipoDato);
         MostrarListaP(archivo, auxi->listaParametro);
         auxi = auxi->sig;
     }
@@ -320,8 +335,7 @@ void val2D (FILE* archivo, DECLARACION *cabeza){
     while(aux2 != NULL){
         identificador = strdup(aux2->ID);
         while(aux1 != NULL){
-            printf("1 = %s, 2 = %s\n", aux1->ID, aux2->ID);
-            if(strcmp(identificador, aux1->ID) == 0){ //aca deberia compararlo con auxi->ID pero cuando pongo eso rompe no se xq 
+            if(strcmp(identificador, aux1->ID) == 0){ 
                 fprintf(archivo, "Hay doble declaracion de la variable %s\n", identificador);
             }
             aux1 = aux1->sig;

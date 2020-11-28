@@ -11,12 +11,13 @@ Se declaro una variable de tipo int y nombre a
 
 *Lista de funciones declaradas*
 
+Se declaro la funcion juan de tipo void y con los siguientes parametros:
 
 *Errores Lexicos*
 
+Se encontro una cadena no reconocida en la linea numero 11
 Se encontro una cadena no reconocida en la linea numero 9
 Se encontro una cadena no reconocida en la linea numero 8
-Se encontro una cadena no reconocida en la linea numero 7
 
 *Errores Sintacticos*
 
