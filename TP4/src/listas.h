@@ -310,23 +310,29 @@ void validacionDoblesDeclaraciones (FILE* archivo, DECLARACION *cabeza){
 }
 
 void val2D (FILE* archivo, DECLARACION *cabeza){ 
-    DECLARACION *auxi = cabeza;
-    DECLARACION *aux2 = cabeza;
+    DECLARACION *aux1 = NULL;
+    aux1 = (DECLARACION *) malloc(sizeof (DECLARACION));
+    aux1 = cabeza->sig;
+    DECLARACION *aux2 = NULL;
+    aux2 = (DECLARACION *) malloc(sizeof (DECLARACION));
+    aux2 = cabeza;
     char *identificador;
     while(aux2 != NULL){
         identificador = strdup(aux2->ID);
-        while(auxi != NULL){
-            auxi = auxi->sig;
-            //fprintf("%s \n", auxi->ID);
-            if(strcmp(identificador, aux2->ID) == 0){ //aca deberia compararlo con auxi->ID pero cuando pongo eso rompe no se xq 
+        while(aux1 != NULL){
+            printf("1 = %s, 2 = %s\n", aux1->ID, aux2->ID);
+            if(strcmp(identificador, aux1->ID) == 0){ //aca deberia compararlo con auxi->ID pero cuando pongo eso rompe no se xq 
                 fprintf(archivo, "Hay doble declaracion de la variable %s\n", identificador);
-                //fprintf(archivo, "comparacion %i\n", strcmp(identificador, auxi->ID));
             }
+            aux1 = aux1->sig;
         }
         aux2 = aux2->sig;
-        auxi = aux2;
+        if(aux2->sig == NULL){
+            aux2 = aux2->sig;
+        } else {
+            aux1 = aux2->sig;
+        }
     }
-    
 }
 
 // typedef struct validacionTipo {

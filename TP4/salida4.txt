@@ -1,7 +1,10 @@
 
 *Lista de variables declaradas*
 
+Se declaro una variable de tipo char y nombre c
 Se declaro una variable de tipo int y nombre casa
+Se declaro una variable de tipo int y nombre casa
+Se declaro una variable de tipo int y nombre c
 Se declaro una variable de tipo char y nombre a
 Se declaro una variable de tipo int y nombre b
 Se declaro una variable de tipo int y nombre a
@@ -22,13 +25,6 @@ Se encontro un error sintactico en la linea numero 5
 
 *Errores Semanticos*
 
+Hay doble declaracion de la variable c
 Hay doble declaracion de la variable casa
-Hay doble declaracion de la variable casa
-Hay doble declaracion de la variable casa
-Hay doble declaracion de la variable casa
-Hay doble declaracion de la variable a
-Hay doble declaracion de la variable a
-Hay doble declaracion de la variable a
-Hay doble declaracion de la variable b
-Hay doble declaracion de la variable b
 Hay doble declaracion de la variable a
