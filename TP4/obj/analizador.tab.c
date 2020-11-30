@@ -94,7 +94,7 @@ DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
-//VALIDACION *listaValidacionTipos;
+DECLARACION *listaValidacion = NULL;
 
 
 
@@ -508,16 +508,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    73,    73,    74,    77,    78,    79,    80,    83,    84,
-      88,    91,    92,    95,    96,    99,   100,   103,   104,   107,
-     108,   111,   112,   115,   116,   119,   120,   123,   124,   127,
-     128,   131,   132,   133,   134,   137,   138,   139,   140,   143,
-     144,   145,   148,   149,   150,   153,   154,   155,   156,   159,
-     160,   161,   167,   168,   169,   172,   178,   179,   182,   185,
-     186,   189,   192,   193,   194,   197,   198,   201,   202,   205,
-     209,   210,   211,   212,   213,   216,   219,   220,   221,   224,
-     225,   228,   229,   230,   233,   234,   237,   238,   239,   242,
-     243,   244,   247,   250,   251
+       0,    75,    75,    76,    79,    80,    81,    82,    85,    86,
+      90,    93,    94,    97,    98,   101,   102,   105,   106,   109,
+     110,   113,   114,   117,   118,   121,   122,   125,   126,   129,
+     130,   133,   134,   135,   136,   139,   140,   141,   142,   145,
+     146,   147,   150,   151,   152,   155,   156,   157,   158,   161,
+     162,   163,   169,   170,   171,   174,   177,   178,   181,   184,
+     185,   188,   191,   192,   193,   196,   197,   200,   201,   204,
+     208,   209,   210,   211,   212,   215,   218,   219,   220,   223,
+     224,   227,   228,   229,   232,   233,   236,   237,   238,   241,
+     242,   243,   246,   249,   250
 };
 #endif
 
@@ -1579,143 +1579,189 @@ yyreduce:
         case 4:
 
 /* Line 1455 of yacc.c  */
-#line 77 "../src/analizador.y"
+#line 79 "../src/analizador.y"
     {linea++;;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 78 "../src/analizador.y"
+#line 80 "../src/analizador.y"
     {linea++;;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 79 "../src/analizador.y"
+#line 81 "../src/analizador.y"
     {InsertarLEX(&listaErroresLexicos, linea); linea++;;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 80 "../src/analizador.y"
+#line 82 "../src/analizador.y"
     {InsertarE(&listaErroresSintacticos, linea); linea++;;}
+    break;
+
+  case 24:
+
+/* Line 1455 of yacc.c  */
+#line 118 "../src/analizador.y"
+    {InsertarD(&listaValidacion, (yyvsp[(1) - (3)].cadena), (yyvsp[(3) - (3)].cadena));;}
+    break;
+
+  case 25:
+
+/* Line 1455 of yacc.c  */
+#line 121 "../src/analizador.y"
+    {(yyval.cadena) = strdup((yyvsp[(1) - (1)].cadena));;}
+    break;
+
+  case 26:
+
+/* Line 1455 of yacc.c  */
+#line 122 "../src/analizador.y"
+    {(yyval.cadena) = strdup((yyvsp[(1) - (1)].cadena));;}
+    break;
+
+  case 45:
+
+/* Line 1455 of yacc.c  */
+#line 155 "../src/analizador.y"
+    {(yyval.cadena) = strdup((yyvsp[(1) - (1)].cadena));;}
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 172 "../src/analizador.y"
-    {
-                                                printf("se declara la variable %s de tipo %s\n", (yyvsp[(2) - (3)].cadena), (yyvsp[(1) - (3)].cadena));
-                                                InsertarD(&listaDeclaraciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(2) - (3)].cadena));
-                                                ;}
+#line 174 "../src/analizador.y"
+    {InsertarD(&listaDeclaraciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(2) - (3)].cadena));;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 178 "../src/analizador.y"
+#line 177 "../src/analizador.y"
     {(yyval.cadena) = strdup((yyvsp[(1) - (1)].cadena));;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 182 "../src/analizador.y"
+#line 181 "../src/analizador.y"
     {(yyval.cadena) = strdup((yyvsp[(1) - (2)].cadena));;}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 189 "../src/analizador.y"
+#line 188 "../src/analizador.y"
     {InsertarF(&listaFunciones, (yyvsp[(1) - (6)].cadena), (yyvsp[(2) - (6)].cadena));;}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 193 "../src/analizador.y"
+#line 192 "../src/analizador.y"
     {InsertarPF(listaFunciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(3) - (3)].cadena));;}
+    break;
+
+  case 64:
+
+/* Line 1455 of yacc.c  */
+#line 193 "../src/analizador.y"
+    {InsertarPF(listaFunciones, (yyvsp[(1) - (5)].cadena), (yyvsp[(3) - (5)].cadena));;}
+    break;
+
+  case 65:
+
+/* Line 1455 of yacc.c  */
+#line 196 "../src/analizador.y"
+    {InsertarPF(listaFunciones, (yyvsp[(1) - (3)].cadena), (yyvsp[(3) - (3)].cadena));;}
+    break;
+
+  case 66:
+
+/* Line 1455 of yacc.c  */
+#line 197 "../src/analizador.y"
+    {InsertarPF(listaFunciones, (yyvsp[(1) - (5)].cadena), (yyvsp[(3) - (5)].cadena));;}
     break;
 
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 205 "../src/analizador.y"
+#line 204 "../src/analizador.y"
     {printf("\nSe define la funcion %s de tipo %s", (yyvsp[(2) - (6)].cadena), (yyvsp[(1) - (6)].cadena));;}
     break;
 
   case 84:
 
 /* Line 1455 of yacc.c  */
-#line 233 "../src/analizador.y"
+#line 232 "../src/analizador.y"
     {printf("\nSe encontro una sentencia vacia.");;}
     break;
 
   case 85:
 
 /* Line 1455 of yacc.c  */
-#line 234 "../src/analizador.y"
+#line 233 "../src/analizador.y"
     {printf("\nSe encontro una sentencia expresion.");;}
     break;
 
   case 86:
 
 /* Line 1455 of yacc.c  */
-#line 237 "../src/analizador.y"
+#line 236 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de seleccion (if).");;}
     break;
 
   case 87:
 
 /* Line 1455 of yacc.c  */
-#line 238 "../src/analizador.y"
+#line 237 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de seleccion (if y else).");;}
     break;
 
   case 88:
 
 /* Line 1455 of yacc.c  */
-#line 239 "../src/analizador.y"
+#line 238 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de seleccion (switch).");;}
     break;
 
   case 89:
 
 /* Line 1455 of yacc.c  */
-#line 242 "../src/analizador.y"
+#line 241 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de iteracion (while).");;}
     break;
 
   case 90:
 
 /* Line 1455 of yacc.c  */
-#line 243 "../src/analizador.y"
+#line 242 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de iteracion (do while).");;}
     break;
 
   case 91:
 
 /* Line 1455 of yacc.c  */
-#line 244 "../src/analizador.y"
+#line 243 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de iteracion (for).");;}
     break;
 
   case 92:
 
 /* Line 1455 of yacc.c  */
-#line 247 "../src/analizador.y"
+#line 246 "../src/analizador.y"
     {printf("\nSe encontro una sentencia de salto.");;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1719 "analizador.tab.c"
+#line 1765 "analizador.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1927,7 +1973,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 255 "../src/analizador.y"
+#line 254 "../src/analizador.y"
 
 
 int main(){
@@ -1950,8 +1996,8 @@ int main(){
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
-    val2D(archivoSalida, listaDeclaraciones);
-    //MostrarListaValidacion(archivoSalida, listaValidacionTipos);
+    validacionDoblesDeclaraciones(archivoSalida, listaDeclaraciones);
+    validarTipos(archivoSalida, listaValidacion, listaDeclaraciones);
     printf("\nTermina de mostrar todo");
     
     

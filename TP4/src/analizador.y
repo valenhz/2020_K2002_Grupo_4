@@ -23,7 +23,7 @@ DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
-//VALIDACION *listaValidacionTipos;
+DECLARACION *listaValidacion = NULL;
 
 %}
 
@@ -67,6 +67,8 @@ FUNCIONES *listaFunciones = NULL;
 %type <cadena> error
 %type <cadena> variableSimple
 %type <cadena> listaVariablesSimples
+%type <cadena> expPrimaria
+%type <cadena> expPostfijo
 
 %%
 
@@ -113,11 +115,11 @@ expRelacional:  expAditiva
 ;
 
 expAditiva: expMultiplicativa /*{$<cadena>$ = strdup($<cadena>1);}*/
-            | expAditiva operAditivo expMultiplicativa /*{InsertarValidacionTipoSuma($<cadena>1, $<cadena>3, listaDeclaraciones, listaValidacionTipos);}*/
+            | expAditiva operAditivo expMultiplicativa {InsertarD(&listaValidacion, $<cadena>1, $<cadena>3);}//{printf("%s %s",$<cadena>1,$<cadena>3);} //InsertarValidacion(&listaValidacionTipos, $<cadena>1, $<cadena>3);}//InsertarValidacionTipoSuma($<cadena>1, $<cadena>3, listaDeclaraciones, &listaValidacionTipos);}
 ;
 
-operAditivo:    '+'
-              | '-'
+operAditivo:    '+' {$<cadena>$ = strdup($<cadena>1);}
+              | '-' {$<cadena>$ = strdup($<cadena>1);}
 ;
 
 expMultiplicativa:  expUnaria /*{$<cadena>$ = strdup($<cadena>1);}*/
@@ -140,7 +142,7 @@ operUnario:  '*'
             |'!'
 ;
 
-expPostfijo:    expPrimaria /*{$<cadena>$ = strdup($<cadena>1);}*/
+expPostfijo:    expPrimaria /* {$<cadena>$ = strdup($<cadena>1);} */
                 | expPostfijo '[' expresion ']'
                 | expPostfijo '(' opcionListaArgumentos ')'
 ;
@@ -150,7 +152,7 @@ opcionListaArgumentos:  /* vacio*/
                         | opcionListaArgumentos ',' expAsignacion
 ;
 
-expPrimaria:    IDENTIFICADOR /*{$<cadena>$ = strdup($<cadena>1);}*/
+expPrimaria:    IDENTIFICADOR {$<cadena>$ = strdup($<cadena>1);}
                 | constante
                 | LITERAL_CADENA
                 | '(' expresion ')'
@@ -169,10 +171,7 @@ declaracion:  declaracionVariablesSimples
               | definicionFunciones
 ;
 
-declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' {
-                                                printf("se declara la variable %s de tipo %s\n", $<cadena>2, $<cadena>1);
-                                                InsertarD(&listaDeclaraciones, $<cadena>1, $<cadena>2);
-                                                }
+declaracionVariablesSimples:  TIPO_DATO listaVariablesSimples ';' {InsertarD(&listaDeclaraciones, $<cadena>1, $<cadena>2);}
 ;
 
 listaVariablesSimples:  variableSimple  {$<cadena>$ = strdup($<cadena>1);}
@@ -191,11 +190,11 @@ declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' 
 
 opcionArgumentosConTipo:        /* vacio */ 
                                 | TIPO_DATO opcionReferencia IDENTIFICADOR {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
-                                | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo
+                                | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
 ;
 
-argumentosConTipo:      TIPO_DATO opcionReferencia IDENTIFICADOR
-                        | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo 
+argumentosConTipo:      TIPO_DATO opcionReferencia IDENTIFICADOR {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
+                        | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
 ;
 
 opcionReferencia:       /* vacio */
@@ -274,8 +273,8 @@ int main(){
     MostrarTitulo(archivoSalida, "Errores Sintacticos");
     MostrarListaE(archivoSalida, listaErroresSintacticos);
     MostrarTitulo(archivoSalida, "Errores Semanticos");
-    val2D(archivoSalida, listaDeclaraciones);
-    //MostrarListaValidacion(archivoSalida, listaValidacionTipos);
+    validacionDoblesDeclaraciones(archivoSalida, listaDeclaraciones);
+    validarTipos(archivoSalida, listaValidacion, listaDeclaraciones);
     printf("\nTermina de mostrar todo");
     
     

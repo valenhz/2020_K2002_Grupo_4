@@ -209,8 +209,10 @@ int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador){
     }
 }
 
+
 //alternativa
 void InsertarPF(FUNCIONES *cabeza, char *tipo, char *identificador){ 
+    printf("aca deberia por lo menor entrar");
     PARAMETRO *nuevo;
     nuevo = CrearNodoP(tipo, identificador);
     printf("tipo: %s id: %s\n", nuevo->tipoDato, nuevo->ID);
@@ -225,11 +227,14 @@ void MostrarListaF (FILE* archivo, FUNCIONES *cabeza){
     FUNCIONES *auxi = cabeza;
     while(auxi != NULL){
         fprintf(archivo, "Se declaro la funcion %s de tipo %s y con los siguientes parametros:\n",auxi->ID,auxi->tipoDato);
-        MostrarListaP(archivo, auxi->listaParametro);
+        PARAMETRO *auxi1 = auxi->listaParametro;
+        while(auxi1 != NULL){
+            fprintf(archivo, "-%s %s\n", auxi1->tipoDato, auxi1->ID);
+            auxi1 = auxi1->sig;
+        }
         auxi = auxi->sig;
     }
 }
-
 
                                     /* ERRORES SINTACTICOS */
 typedef struct error {
@@ -306,25 +311,7 @@ void MostrarListaLEX (FILE* archivo, ERRORESLEX *cabeza){
 
                         /* VALIDACIONES SEMANTICAS */
 
-void doblesDeclaraciones (FILE* archivo, DECLARACION *aux){
-    char *identificador = strdup(aux->ID);
-    while (aux != NULL){
-        aux = aux->sig;
-        if (strcmp(identificador, aux->ID) == 0){
-            fprintf(archivo, "Se encontro una doble declaracion de la variable %s", aux->ID);
-        }   
-    }
-}
-
-void validacionDoblesDeclaraciones (FILE* archivo, DECLARACION *cabeza){
-    DECLARACION *aux = cabeza;
-    while(aux != NULL){
-        doblesDeclaraciones(archivo, aux);
-        aux = aux->sig;
-    }
-}
-
-void val2D (FILE* archivo, DECLARACION *cabeza){ 
+void validacionDoblesDeclaraciones (FILE* archivo, DECLARACION *cabeza){ 
     DECLARACION *aux1 = NULL;
     aux1 = (DECLARACION *) malloc(sizeof (DECLARACION));
     aux1 = cabeza->sig;
@@ -349,70 +336,53 @@ void val2D (FILE* archivo, DECLARACION *cabeza){
     }
 }
 
-// typedef struct validacionTipo {
-//     char *ID1;
-//     char *ID2;
-//     struct validacionTipo *sig;
-// } VALIDACION;
+void validarTipos(FILE* archivo, DECLARACION *sumas, DECLARACION *declaraciones){
+    DECLARACION *aux1 = NULL;
+    aux1 = (DECLARACION *) malloc(sizeof (DECLARACION));
+    aux1 = declaraciones;
+    DECLARACION *aux2 = NULL;
+    aux2 = (DECLARACION *) malloc(sizeof (DECLARACION));
+    aux2 = sumas;
+    printf("a\n");
+    char *valor1;
+    char *valor2;
+    char *tipo1;
+    char *tipo2;
+    while(aux2 != NULL){
+        valor1 = strdup(aux2->ID);
+        printf("b\n");
+        valor2 = strdup(aux2->tipoDato);
+        while(aux1 != NULL){
+            printf("c\n");
+            printf("valor1 = %s auxID = %s\n", valor1, aux1->ID);
+            if(strcmp(aux1->ID, valor1) == 0){
+                tipo1 = strdup(aux1->tipoDato);
+                printf("%s %s\n", tipo1, valor1);
+            }
+            aux1 = aux1->sig;
+        }
+        aux1 = declaraciones;
+        while(aux1 != NULL){
+            printf("c\n");
+            printf("valor1 = %s auxID = %s\n", valor2, aux1->ID);
+            if(strcmp(aux1->ID, valor2) == 0){
+                tipo2 = strdup(aux1->tipoDato);
+                printf("%s %s\n", tipo2, valor2);
+            }
+            aux1 = aux1->sig;
+        }
+        if(strcmp(tipo1, tipo2) == 0){
+            if(strcmp(tipo1, "int") == 0 || strcmp(tipo1, "float") == 0){
+                printf("hola");
+            } else {
+                fprintf(archivo, "Error de tipos en la suma de %s y %s\n", valor1, valor2);
+            }
+        } else {
+            fprintf(archivo, "Error de tipos en la suma de %s y %s\n", valor1, valor2);
+        }
+        aux2 = aux2->sig;
+    }
+}
 
-// VALIDACION* CrearNodoValidacion (char *ID1, char *ID2){
-//     VALIDACION* nodo = NULL;
-//     nodo = (VALIDACION *) malloc(sizeof (VALIDACION));
-//     if (nodo != NULL) {
-//         nodo->ID1 = strdup(ID1);
-//         nodo->ID2 = strdup(ID2);
-//         nodo->sig = NULL;
-//     }
-//     return nodo;
-// }
 
-// int InsertarValidacion(VALIDACION **cabeza, char *ID1, char *ID2) {
-//     VALIDACION *nuevo;
-//     nuevo = CrearNodoValidacion(ID1, ID2);
-//     if (nuevo != NULL) {
-//         nuevo->sig = *cabeza;
-//         *cabeza = nuevo;
-//         return 1;
-//     } else {
-//         return 0;
-//     }
-// }
-
-// int MostrarValidacionTipo(FILE* archivo, char *ID1, char *ID2) {
-//     fprintf(archivo, "tipos incompatibles de %s y %s para la suma", ID1, ID2);
-// }
-
-// void MostrarListaValidacion (FILE* archivo, VALIDACION *cabeza) {
-//     VALIDACION *auxi = cabeza;
-//     while(auxi != NULL) {
-//         MostrarValidacionTipo(archivo, auxi->ID1, auxi->ID2);
-//     }
-// }
-
-// int InsertarValidacionTipoSuma(char *ID1, char *ID2, DECLARACION *cabeza, VALIDACION *head){ //validacion para una suma en particular, no todas las sumas
-//     DECLARACION *aux1 = cabeza;
-//     DECLARACION *aux2 = cabeza;
-//     char *tipo1;
-//     char *tipo2;
-//     while(aux1->ID != ID1 && aux1 != NULL){
-//         aux1 = aux1->sig;
-//     }
-//     if(aux1->ID == ID1){
-//         tipo1 = strdup(aux1->tipoDato);
-//     }
-//     while (aux2->ID != ID2 && aux2 != NULL){
-//             aux2->sig;
-//     }
-//     if(aux2->ID == ID2){
-//         tipo2 = strdup(aux2 ->tipoDato);
-//     }
-//     if (tipo1 == tipo2){
-//         if (tipo1 == "int" || tipo1 == "float" || tipo1 == "char"){
-//          return 0;
-//         } else {
-//         InsertarValidacion(&head, ID1, ID2);
-//         }
-//     }
-//     return 1;
-// }
 
