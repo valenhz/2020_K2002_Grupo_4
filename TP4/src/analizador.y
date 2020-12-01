@@ -270,6 +270,16 @@ opcionExpresion:    /* vacio */
                     | expresion
 ;
 
+// invocacionDeFuncion: IDENTIFICADOR '(' listaArgumentos ')' {InsertarInvocacion(&listaInvocaciones, $<cadena>1);}
+// ;
+
+// listaArgumentos:  argumento     {InsertarTipoArgumento(&listaArgumentos, $<cadena>1);}                      
+//                  | listaArgumentos ',' argumento      {InsertarTipoArgumento(&listaArgumentos, $<cadena>3);} 
+// ;
+// argumento:        /* vacio */         
+//                 | IDENTIFICADOR       
+// ;
+
 
 %%
 

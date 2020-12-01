@@ -424,3 +424,76 @@ void validarTipos(FILE* archivo, DECLARACION *sumas, DECLARACION *declaraciones)
 }
 
 
+// typedef struct parametroInvocacion {
+//     char *ID;
+//     struct parametroInvocacion *sig;
+// } PARINVOCACION;
+// typedef struct invocacion {
+//     char *ID;
+//     PARINVOCACION *listaParInvocacion;
+//   struct invocacion *sig;
+// } INVOCACION;
+
+// INVOCACION* crearNodoInv(char *ID){
+//   INVOCACION* nodo = NULL;
+//   nodo = (INVOCACION*) malloc(sizeof (INVOCACION));
+//          if (nodo != NULL){
+//          nodo->ID = ID;
+//          nodo->listaParInvocacion = NULL;
+//          nodo->sig = NULL;
+//      }
+//     return nodo;
+// }
+
+// int InsertarInvocacion(INVOCACION **cabeza, char *ID){
+//    INVOCACION *nuevo;
+//    nuevo = crearNodoInv(ID);
+//    if(nuevo != NULL) {
+//        nuevo->sig = *cabeza;
+//        *cabeza = nuevo;
+//        return 1;
+//    } else {
+//        return 0;
+//    }
+// }
+
+// PARINVOCACION * crearNodoParInv(char *ID){
+//     PARINVOCACION* nodo = NULL;
+//   nodo = (PARINVOCACION*) malloc(sizeof (PARINVOCACION));
+//          if (nodo != NULL){
+//          nodo->ID = ID;
+//          nodo->sig = NULL;
+//      }
+//     return nodo;
+// }
+
+// int insertarParInvocacion(INVOCACION *cabeza2, PARINVOCACION **cabeza, char *ID){ 
+//     PARINVOCACION *nuevo;
+//     nuevo = crearNodoParInv(ID);
+//     if(nuevo != NULL) {
+//        nuevo->sig = cabeza2->listaParInvocacion;
+//        cabeza2->listaParInvocacion = nuevo;
+//        return 1;
+//    } else {
+//        return 0;
+//    }
+// }
+// int cantidadParametros(INVOCACION* invocacion){
+//     int a = 0;
+//     while (invocacion->listaParInvocacion != NULL){
+//         a++;
+
+//     }
+// }
+// void verificarTiposParametros(FUNCIONES *listaFunciones, DECLARACION *listaDeclaraciones, INVOCACION *listaInvocaciones) {
+//     FUNCIONES* aux1 = NULL; 
+//     aux1 = (FUNCIONES*) malloc(sizeof (FUNCIONES));
+//     INVOCACION* aux2 = NULL;
+//     aux2 = (INVOCACION*) malloc(sizeof (INVOCACION));
+//     DECLARACION* aux3 = NULL;
+//     aux3 = (DECLARACION*) malloc(sizeof (DECLARACION));
+
+// }
+
+
+

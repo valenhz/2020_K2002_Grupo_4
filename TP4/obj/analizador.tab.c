@@ -1992,7 +1992,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 274 "../src/analizador.y"
+#line 284 "../src/analizador.y"
 
 
 int main(){
