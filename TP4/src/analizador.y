@@ -19,11 +19,14 @@ void yyerror (char const *s) {}
 int linea = 1;
 int contadorDeclaraciones = 0;
 int contadorSentencias = 0;
+int contadorParametros = 0;
+int ordenFunciones = 0;
 DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
 DECLARACION *listaValidacion = NULL;
+PAR *listaParametros = NULL;
 
 %}
 
@@ -114,15 +117,15 @@ expRelacional:  expAditiva
                 | expRelacional OPERADOR_RELACION expAditiva 
 ;
 
-expAditiva: expMultiplicativa /*{$<cadena>$ = strdup($<cadena>1);}*/
-            | expAditiva operAditivo expMultiplicativa {InsertarD(&listaValidacion, $<cadena>1, $<cadena>3);}//{printf("%s %s",$<cadena>1,$<cadena>3);} //InsertarValidacion(&listaValidacionTipos, $<cadena>1, $<cadena>3);}//InsertarValidacionTipoSuma($<cadena>1, $<cadena>3, listaDeclaraciones, &listaValidacionTipos);}
+expAditiva: expMultiplicativa 
+            | expAditiva operAditivo expMultiplicativa {InsertarD(&listaValidacion, $<cadena>1, $<cadena>3);}
 ;
 
 operAditivo:    '+' {$<cadena>$ = strdup($<cadena>1);}
               | '-' {$<cadena>$ = strdup($<cadena>1);}
 ;
 
-expMultiplicativa:  expUnaria /*{$<cadena>$ = strdup($<cadena>1);}*/
+expMultiplicativa:  expUnaria 
                     | expMultiplicativa operMultiplicativo expUnaria
 ;
 
@@ -130,7 +133,7 @@ operMultiplicativo:  '*'
                     |'/'
 ;
 
-expUnaria:      expPostfijo /*{$<cadena>$ = strdup($<cadena>1);}*/
+expUnaria:      expPostfijo
                 | OPERADOR_INCREMENTO expUnaria
                 | operUnario expUnaria                 
                 | SIZE_OF '(' TIPO_DATO ')'
@@ -142,7 +145,7 @@ operUnario:  '*'
             |'!'
 ;
 
-expPostfijo:    expPrimaria /* {$<cadena>$ = strdup($<cadena>1);} */
+expPostfijo:    expPrimaria
                 | expPostfijo '[' expresion ']'
                 | expPostfijo '(' opcionListaArgumentos ')'
 ;
@@ -185,16 +188,33 @@ opcionInicializacion:   /* vacio */
                         | OPERADOR_ASIGNACION expCondicional
 ;
 
-declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' ';' {InsertarF(&listaFunciones, $<cadena>1, $<cadena>2);}
+declaracionFunciones:   TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' ';' {
+                                                        InsertarF(&listaFunciones, $<cadena>1, $<cadena>2, contadorParametros, ordenFunciones);
+                                                        contadorParametros = 0;
+                                                        ordenFunciones++;
+                                                        }
 ;
 
 opcionArgumentosConTipo:        /* vacio */ 
-                                | TIPO_DATO opcionReferencia IDENTIFICADOR {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
-                                | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
+                                | TIPO_DATO opcionReferencia IDENTIFICADOR {
+                                                                contadorParametros++;
+                                                                InsertarPAR(&listaParametros, $<cadena>1, ordenFunciones);
+                                                                }
+                                | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo {
+                                                                contadorParametros++;
+                                                                InsertarPAR(&listaParametros, $<cadena>1, ordenFunciones);
+                                                                }
 ;
 
-argumentosConTipo:      TIPO_DATO opcionReferencia IDENTIFICADOR {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
-                        | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo {InsertarPF(listaFunciones, $<cadena>1, $<cadena>3);}
+argumentosConTipo:      TIPO_DATO opcionReferencia IDENTIFICADOR {
+                                                        contadorParametros++;
+                                                        InsertarPAR(&listaParametros, $<cadena>1, ordenFunciones);
+                                                        }
+                        | TIPO_DATO opcionReferencia IDENTIFICADOR ',' argumentosConTipo {
+                                                        contadorParametros++;
+                                                        InsertarPAR(&listaParametros, $<cadena>1, ordenFunciones);
+                                                        }
+
 ;
 
 opcionReferencia:       /* vacio */
@@ -267,7 +287,7 @@ int main(){
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
     MostrarTitulo(archivoSalida, "Lista de funciones declaradas");
-    MostrarListaF(archivoSalida, listaFunciones);
+    MostrarListaF(archivoSalida, listaFunciones, listaParametros);
     MostrarTitulo(archivoSalida, "Errores Lexicos");
     MostrarListaLEX(archivoSalida, listaErroresLexicos);
     MostrarTitulo(archivoSalida, "Errores Sintacticos");

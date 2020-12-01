@@ -177,29 +177,27 @@ void MostrarListaP (FILE* archivo, PARAMETRO *cabeza){
     }
 }
 
-typedef struct func {
-    char *tipoDato;
-    char *ID;
-    PARAMETRO *listaParametro; //me tira error idk = NULL;
-    struct func *sig;
-} FUNCIONES;
 
+typedef struct para {
+    char *tipo;
+    int orden;
+    struct para *sig;
+} PAR;
 
-FUNCIONES* CrearNodoF(char *tipo, char *identificador){
-    FUNCIONES* nodo = NULL;
-    nodo = (FUNCIONES *) malloc(sizeof (FUNCIONES));
+PAR* CrearNodoPAR(char *tipoDato, int ordenFuncion){
+    PAR* nodo = NULL;
+    nodo = (PAR *) malloc(sizeof (PAR));
         if (nodo != NULL){
-        nodo->tipoDato = strdup(tipo);
-        nodo->ID = strdup(identificador);
-        nodo->listaParametro = NULL;
+        nodo->tipo = strdup(tipoDato);
+        nodo->orden = ordenFuncion;
         nodo->sig = NULL;
     }
     return nodo;
 }
 
-int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador){ 
-    FUNCIONES *nuevo;
-    nuevo = CrearNodoF(tipo, identificador);
+int InsertarPAR(PAR **cabeza, char *tipo, int orden){ 
+    PAR *nuevo;
+    nuevo = CrearNodoPAR(tipo, orden);
     if (nuevo != NULL){
         nuevo->sig = *cabeza;
         *cabeza = nuevo;
@@ -209,9 +207,58 @@ int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador){
     }
 }
 
+void MostrarParametros (FILE* archivo, PAR *cabeza, int ordenF){ 
+    PAR *aux = cabeza;
+    while (aux != NULL){
+        if(ordenF == aux->orden){
+            if(aux->sig == NULL){
+                    fprintf(archivo, "%s.\n", aux->tipo);
+            } else {
+                    fprintf(archivo, "%s, ",aux->tipo);
+            }
+        }
+        aux = aux->sig;
+    }
+}
+
+typedef struct func {
+    char *tipoDato;
+    char *ID;
+    PARAMETRO *listaParametro; //me tira error idk = NULL;
+    int cantidadParametros;
+    int orden;
+    struct func *sig;
+} FUNCIONES;
+
+
+FUNCIONES* CrearNodoF(char *tipo, char *identificador, int cantidad, int ordenF){
+    FUNCIONES* nodo = NULL;
+    nodo = (FUNCIONES *) malloc(sizeof (FUNCIONES));
+        if (nodo != NULL){
+        nodo->tipoDato = strdup(tipo);
+        nodo->ID = strdup(identificador);
+        nodo->listaParametro = NULL;
+        nodo->cantidadParametros = cantidad;
+        nodo->orden = ordenF;
+        nodo->sig = NULL;
+    }
+    return nodo;
+}
+
+int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador, int cantidad, int orden){ 
+    FUNCIONES *nuevo;
+    nuevo = CrearNodoF(tipo, identificador, cantidad, orden);
+    if (nuevo != NULL){
+        nuevo->sig = *cabeza;
+        *cabeza = nuevo;
+        return 1;
+    } else{
+        return 0;
+    }
+}
 
 //alternativa
-void InsertarPF(FUNCIONES *cabeza, char *tipo, char *identificador){ 
+ void InsertarPF(FUNCIONES *cabeza, char *tipo, char *identificador){ 
     printf("aca deberia por lo menor entrar");
     PARAMETRO *nuevo;
     nuevo = CrearNodoP(tipo, identificador);
@@ -221,16 +268,17 @@ void InsertarPF(FUNCIONES *cabeza, char *tipo, char *identificador){
         cabeza->listaParametro = nuevo;
         printf("cabeza->listaParametro->tipo = %s, cabeza->listaParametro->ID = %s\n", cabeza->listaParametro->tipoDato, cabeza->listaParametro->ID);
     } 
-}
+} 
 
-void MostrarListaF (FILE* archivo, FUNCIONES *cabeza){ 
+void MostrarListaF (FILE* archivo, FUNCIONES *cabeza, PAR *parametros){
     FUNCIONES *auxi = cabeza;
+    PAR *aux = parametros;
     while(auxi != NULL){
-        fprintf(archivo, "Se declaro la funcion %s de tipo %s y con los siguientes parametros:\n",auxi->ID,auxi->tipoDato);
-        PARAMETRO *auxi1 = auxi->listaParametro;
-        while(auxi1 != NULL){
-            fprintf(archivo, "-%s %s\n", auxi1->tipoDato, auxi1->ID);
-            auxi1 = auxi1->sig;
+        if(auxi->cantidadParametros == 0){
+            fprintf(archivo, "Se declaro la funcion %s de tipo %s\n", auxi->ID, auxi->tipoDato);
+        } else {
+            fprintf(archivo, "Se declaro la funcion %s de tipo %s y %i parametros de tipo: ",auxi->ID,auxi->tipoDato,auxi->cantidadParametros);
+            MostrarParametros(archivo, parametros, auxi->orden);
         }
         auxi = auxi->sig;
     }
@@ -336,44 +384,35 @@ void validacionDoblesDeclaraciones (FILE* archivo, DECLARACION *cabeza){
     }
 }
 
-void validarTipos(FILE* archivo, DECLARACION *sumas, DECLARACION *declaraciones){
+char *BuscarTipos(DECLARACION *declaraciones, char *identificador){
     DECLARACION *aux1 = NULL;
     aux1 = (DECLARACION *) malloc(sizeof (DECLARACION));
     aux1 = declaraciones;
+    char *tipo;
+    while(aux1 != NULL){
+        if(strcmp(aux1->ID, identificador) == 0){
+            tipo = strdup(aux1->tipoDato);
+        }
+        aux1 = aux1->sig;
+    }
+    return tipo;
+}
+
+void validarTipos(FILE* archivo, DECLARACION *sumas, DECLARACION *declaraciones){
     DECLARACION *aux2 = NULL;
     aux2 = (DECLARACION *) malloc(sizeof (DECLARACION));
     aux2 = sumas;
-    printf("a\n");
     char *valor1;
     char *valor2;
     char *tipo1;
     char *tipo2;
     while(aux2 != NULL){
         valor1 = strdup(aux2->ID);
-        printf("b\n");
         valor2 = strdup(aux2->tipoDato);
-        while(aux1 != NULL){
-            printf("c\n");
-            printf("valor1 = %s auxID = %s\n", valor1, aux1->ID);
-            if(strcmp(aux1->ID, valor1) == 0){
-                tipo1 = strdup(aux1->tipoDato);
-                printf("%s %s\n", tipo1, valor1);
-            }
-            aux1 = aux1->sig;
-        }
-        aux1 = declaraciones;
-        while(aux1 != NULL){
-            printf("c\n");
-            printf("valor1 = %s auxID = %s\n", valor2, aux1->ID);
-            if(strcmp(aux1->ID, valor2) == 0){
-                tipo2 = strdup(aux1->tipoDato);
-                printf("%s %s\n", tipo2, valor2);
-            }
-            aux1 = aux1->sig;
-        }
+        tipo1 = strdup(BuscarTipos(declaraciones, valor1));
+        tipo2 = strdup(BuscarTipos(declaraciones, valor2));
         if(strcmp(tipo1, tipo2) == 0){
             if(strcmp(tipo1, "int") == 0 || strcmp(tipo1, "float") == 0){
-                printf("hola");
             } else {
                 fprintf(archivo, "Error de tipos en la suma de %s y %s\n", valor1, valor2);
             }
@@ -383,6 +422,5 @@ void validarTipos(FILE* archivo, DECLARACION *sumas, DECLARACION *declaraciones)
         aux2 = aux2->sig;
     }
 }
-
 
 

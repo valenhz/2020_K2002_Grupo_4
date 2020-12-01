@@ -2,16 +2,15 @@ int carlos;
 char claudia;
 carlos - claudia;
 int b;
-char b;
 char a;
 int c;
 int 6
 if (a=5
-void juan();
+void funcionLoca(int a, int b, char c);
 $$
 $
 .
-a + b;
 b+c;
+a+c;
 int casa;
-int casa;
+char casa;
