@@ -138,47 +138,8 @@ int validacionTipo (char *identificador, ASIGNACION *cabezaA, DECLARACION *cabez
 }
 
                                     /* DECLARACIONES DE FUNCIONES */
-
-typedef struct par {
-    char *tipoDato;
-    char *ID;
-    struct par *sig;
-} PARAMETRO;
-
-PARAMETRO* CrearNodoP(char *tipo, char *identificador){
-    PARAMETRO* nodo = NULL;
-    nodo = (PARAMETRO *) malloc(sizeof (PARAMETRO));
-        if (nodo != NULL){
-        nodo->tipoDato = strdup(tipo);
-        nodo->ID = strdup(identificador);
-        nodo->sig = NULL;
-    }
-    return nodo;
-}
-
-int InsertarP(PARAMETRO **cabeza, char *tipo, char *identificador){ 
-    PARAMETRO *nuevo;
-    nuevo = CrearNodoP(tipo, identificador);
-    if (nuevo != NULL){
-        nuevo->sig = *cabeza;
-        *cabeza = nuevo;
-        return 1;
-    } else{
-        return 0;
-    }
-}
-
-
-void MostrarListaP (FILE* archivo, PARAMETRO *cabeza){ 
-    PARAMETRO *auxi = cabeza;
-    while(auxi != NULL){
-        fprintf(archivo, "-%s %s\n",auxi->tipoDato,auxi->ID);
-        auxi = auxi->sig;
-    }
-}
-
-
-typedef struct para {
+                                    
+    typedef struct para {
     char *tipo;
     int orden;
     struct para *sig;
@@ -224,7 +185,7 @@ void MostrarParametros (FILE* archivo, PAR *cabeza, int ordenF){
 typedef struct func {
     char *tipoDato;
     char *ID;
-    PARAMETRO *listaParametro; //me tira error idk = NULL;
+    //PARAMETRO *listaParametro; //me tira error idk = NULL;
     int cantidadParametros;
     int orden;
     struct func *sig;
@@ -237,7 +198,7 @@ FUNCIONES* CrearNodoF(char *tipo, char *identificador, int cantidad, int ordenF)
         if (nodo != NULL){
         nodo->tipoDato = strdup(tipo);
         nodo->ID = strdup(identificador);
-        nodo->listaParametro = NULL;
+        //nodo->listaParametro = NULL;
         nodo->cantidadParametros = cantidad;
         nodo->orden = ordenF;
         nodo->sig = NULL;
@@ -258,7 +219,7 @@ int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador, int cantidad,
 }
 
 //alternativa
- void InsertarPF(FUNCIONES *cabeza, char *tipo, char *identificador){ 
+/*  void InsertarPF(FUNCIONES *cabeza, char *tipo, char *identificador){ 
     printf("aca deberia por lo menor entrar");
     PARAMETRO *nuevo;
     nuevo = CrearNodoP(tipo, identificador);
@@ -269,7 +230,7 @@ int InsertarF(FUNCIONES **cabeza, char *tipo, char *identificador, int cantidad,
         printf("cabeza->listaParametro->tipo = %s, cabeza->listaParametro->ID = %s\n", cabeza->listaParametro->tipoDato, cabeza->listaParametro->ID);
     } 
 } 
-
+ */
 void MostrarListaF (FILE* archivo, FUNCIONES *cabeza, PAR *parametros){
     FUNCIONES *auxi = cabeza;
     PAR *aux = parametros;
@@ -424,76 +385,166 @@ void validarTipos(FILE* archivo, DECLARACION *sumas, DECLARACION *declaraciones)
 }
 
 
-// typedef struct parametroInvocacion {
-//     char *ID;
-//     struct parametroInvocacion *sig;
-// } PARINVOCACION;
-// typedef struct invocacion {
-//     char *ID;
-//     PARINVOCACION *listaParInvocacion;
-//   struct invocacion *sig;
-// } INVOCACION;
+typedef struct invocacion {
+    char *ID;
+    int cantPar;
+    int pos;
+    //PARINVOCACION *listaParInvocacion;
+  struct invocacion *sig;
+} INVOCACION;
 
-// INVOCACION* crearNodoInv(char *ID){
-//   INVOCACION* nodo = NULL;
-//   nodo = (INVOCACION*) malloc(sizeof (INVOCACION));
-//          if (nodo != NULL){
-//          nodo->ID = ID;
-//          nodo->listaParInvocacion = NULL;
-//          nodo->sig = NULL;
-//      }
-//     return nodo;
-// }
+INVOCACION* crearNodoInv(char *ID, int cantidad, int posicion){
+  INVOCACION* nodo = NULL;
+  nodo = (INVOCACION*) malloc(sizeof (INVOCACION));
+        if (nodo != NULL){
+        nodo->ID = ID;
+        nodo->cantPar = cantidad;
+        nodo->pos = posicion;
+        //nodo->listaParInvocacion = NULL;
+        nodo->sig = NULL;
+      }
+     return nodo;
+}
 
-// int InsertarInvocacion(INVOCACION **cabeza, char *ID){
-//    INVOCACION *nuevo;
-//    nuevo = crearNodoInv(ID);
-//    if(nuevo != NULL) {
-//        nuevo->sig = *cabeza;
-//        *cabeza = nuevo;
-//        return 1;
-//    } else {
-//        return 0;
-//    }
-// }
+int InsertarInvocacion(INVOCACION **cabeza, char *ID, int cantidad, int posicion){
+   INVOCACION *nuevo;
+   nuevo = crearNodoInv(ID, cantidad, posicion);
+   if(nuevo != NULL) {
+       nuevo->sig = *cabeza;
+       *cabeza = nuevo;
+       return 1;
+   } else {
+       return 0;
+   }
+}
 
-// PARINVOCACION * crearNodoParInv(char *ID){
-//     PARINVOCACION* nodo = NULL;
-//   nodo = (PARINVOCACION*) malloc(sizeof (PARINVOCACION));
-//          if (nodo != NULL){
-//          nodo->ID = ID;
-//          nodo->sig = NULL;
-//      }
-//     return nodo;
-// }
-
-// int insertarParInvocacion(INVOCACION *cabeza2, PARINVOCACION **cabeza, char *ID){ 
-//     PARINVOCACION *nuevo;
-//     nuevo = crearNodoParInv(ID);
-//     if(nuevo != NULL) {
-//        nuevo->sig = cabeza2->listaParInvocacion;
-//        cabeza2->listaParInvocacion = nuevo;
-//        return 1;
-//    } else {
-//        return 0;
-//    }
-// }
-// int cantidadParametros(INVOCACION* invocacion){
-//     int a = 0;
-//     while (invocacion->listaParInvocacion != NULL){
-//         a++;
-
-//     }
-// }
-// void verificarTiposParametros(FUNCIONES *listaFunciones, DECLARACION *listaDeclaraciones, INVOCACION *listaInvocaciones) {
-//     FUNCIONES* aux1 = NULL; 
-//     aux1 = (FUNCIONES*) malloc(sizeof (FUNCIONES));
-//     INVOCACION* aux2 = NULL;
-//     aux2 = (INVOCACION*) malloc(sizeof (INVOCACION));
-//     DECLARACION* aux3 = NULL;
-//     aux3 = (DECLARACION*) malloc(sizeof (DECLARACION));
-
-// }
+void MostrarListaInvocacion (FILE* archivo, INVOCACION *cabeza){ 
+    INVOCACION *auxi = cabeza;
+    while(auxi != NULL){
+        fprintf(archivo, "Se encontro una invocacion de la funcion %s con %i parametros\n", auxi->ID, auxi->cantPar);
+        auxi = auxi->sig;
+    }
+}
 
 
+typedef struct parametroInvocacion {
+    char *ID;
+    int pos;
+    struct parametroInvocacion *sig;
+} PARINVOCACION;
+
+PARINVOCACION * crearNodoParInv(char *ID, int posicion){
+    PARINVOCACION* nodo = NULL;
+    nodo = (PARINVOCACION*) malloc(sizeof (PARINVOCACION));
+         if (nodo != NULL){
+         nodo->ID = ID;
+         nodo->pos = posicion;
+         nodo->sig = NULL;
+     }
+    return nodo;
+}
+
+
+int InsertarParInv(PARINVOCACION **cabeza, char *ID, int posicion){
+   PARINVOCACION *nuevo;
+   nuevo = crearNodoParInv(ID, posicion);
+   if(nuevo != NULL) {
+       nuevo->sig = *cabeza;
+       *cabeza = nuevo;
+       return 1;
+   } else {
+       return 0;
+   }
+}
+
+void verificarTiposParametros(FILE *archivo, FUNCIONES *listaFunciones, DECLARACION *listaDeclaraciones, INVOCACION *listaInvocaciones, PARINVOCACION *listaParametrosInv, PAR *listaParametros) {
+    FUNCIONES* aux1 = NULL; 
+    aux1 = (FUNCIONES*) malloc(sizeof (FUNCIONES));
+    aux1 = listaFunciones;
+    INVOCACION* aux2 = NULL;
+    aux2 = (INVOCACION*) malloc(sizeof (INVOCACION));
+    aux2 = listaInvocaciones;
+    PAR* aux3 = NULL;
+    aux3 = (PAR*) malloc(sizeof (PAR));
+    aux3 = listaParametros;
+    PARINVOCACION* aux4 = NULL;
+    aux4 = (PARINVOCACION*) malloc(sizeof (PARINVOCACION));
+    aux4 = listaParametrosInv;
+ /*    DECLARACION* aux5 = NULL;
+    aux5 = (DECLARACION*) malloc(sizeof (DECLARACION)); 
+    aux5 = listaDeclaraciones; */
+    char *funcionInv;
+    int parInv;
+    int ordenInv;
+    char *funcionDec;
+    int parDec;
+    int ordenDec;
+    funcionDec = strdup("&");
+    
+    while(aux2 != NULL){
+        funcionInv = strdup(aux2->ID);
+        parInv = aux2->cantPar;
+        ordenInv = aux2->pos;
+
+        while (aux1 != NULL){
+            if(strcmp(aux1->ID, aux2->ID) == 0){
+                funcionDec = strdup(aux1->ID);
+                parDec = aux1->cantidadParametros;
+                ordenDec = aux1->orden;
+            }
+            aux1 = aux1->sig;
+        }
+        
+        if(strcmp(funcionInv, funcionDec) == 0){
+            if(parDec == parInv){
+                int estado = 0;
+                char *tipoParDec;
+                char *tipoParInv;
+                while(aux4 != NULL && aux4->pos != ordenInv){ aux4 = aux4->sig; }
+                while(aux3 != NULL && aux3->orden != ordenDec){ aux3 = aux3->sig; }
+                printf("%i\n", parDec);
+                for(int i = 0; i<parDec; i++){
+                printf("%i\n", parDec);
+                    if(aux3->orden == ordenDec && aux4->pos == ordenInv){
+                        tipoParDec = strdup(aux3->tipo);
+                        printf("%s\n", tipoParDec);
+                        tipoParInv = strdup(BuscarTipos(listaDeclaraciones, aux4->ID));
+                        printf("%s\n", tipoParInv);
+                        if(strcmp(tipoParDec, tipoParInv) != 0){
+                            estado = 1;
+                        }
+
+                    }
+                    aux3 = aux3->sig; 
+                }
+                if(estado == 1){
+                    fprintf(archivo, "Los tipos de los parametros de la funcion invocada \"%s\" no coinciden\n", funcionDec);
+                }
+                
+            } else {
+                fprintf(archivo, "La invocacion de la funcion \"%s\" no tiene la cantidad de parametros correspondiente\n", funcionInv);
+            }
+        } else {
+            fprintf(archivo, "La funcion invocada \"%s\" no fue declarada", funcionInv);
+        }
+        aux2 = aux2->sig;
+        aux1 = listaFunciones;
+        aux3 = listaParametros;
+        aux4 = listaParametrosInv;
+    }
+}
+
+/* void MostrarParametros (FILE* archivo, PAR *cabeza, int ordenF){ 
+    PAR *aux = cabeza;
+    while (aux != NULL){
+        if(ordenF == aux->orden){
+            if(aux->sig == NULL){
+                    fprintf(archivo, "%s.\n", aux->tipo);
+            } else {
+                    fprintf(archivo, "%s, ",aux->tipo);
+            }
+        }
+        aux = aux->sig;
+    }
+} */
 

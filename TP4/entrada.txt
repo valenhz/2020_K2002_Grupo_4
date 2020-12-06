@@ -1,4 +1,5 @@
 int carlos;
+ident(a, b);
 char claudia;
 carlos - claudia;
 int b;
@@ -12,5 +13,6 @@ $
 .
 b+c;
 a+c;
+funcionLoca(b, b, b);
 int casa;
 char casa;

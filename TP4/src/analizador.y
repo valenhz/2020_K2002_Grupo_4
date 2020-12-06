@@ -21,12 +21,15 @@ int contadorDeclaraciones = 0;
 int contadorSentencias = 0;
 int contadorParametros = 0;
 int ordenFunciones = 0;
+int ordenInvocaciones = 0;
 DECLARACION *listaDeclaraciones = NULL;
 ERRORES *listaErroresSintacticos = NULL;
 ERRORESLEX *listaErroresLexicos = NULL;
 FUNCIONES *listaFunciones = NULL;
 DECLARACION *listaValidacion = NULL;
 PAR *listaParametros = NULL;
+INVOCACION *listaInvocaciones = NULL;
+PARINVOCACION *listaParametrosInv = NULL;
 
 %}
 
@@ -221,7 +224,7 @@ opcionReferencia:       /* vacio */
                         | '&'
 ;
 
-definicionFunciones:    TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' sentencia {printf("\nSe define la funcion %s de tipo %s", $<cadena>2, $<cadena>1);}
+definicionFunciones:    TIPO_DATO IDENTIFICADOR '(' opcionArgumentosConTipo ')' sentencia 
 
 /* SENTENCIAS */
 
@@ -230,6 +233,7 @@ sentencia: sentenciaExpresion
           | sentenciaDeSeleccion 
           | sentenciaDeIteracion 
           | sentenciaDeSalto 
+          | invocacionDeFuncion
 ;
 
 sentenciaCompuesta:  '{' opcionListaDeclaraciones opcionListaSentencias '}'  
@@ -249,36 +253,46 @@ opcionListaSentencias:  /* vacio*/
                         | listaSentencias sentencia  
 ;
 
-sentenciaExpresion:     ';'                     {printf("\nSe encontro una sentencia vacia.");}
-                        | expresion ';'         {printf("\nSe encontro una sentencia expresion.");}
+sentenciaExpresion:     ';'                     
+                        | expresion ';'         
 ;
 
-sentenciaDeSeleccion:     IF '(' expresion ')' sentencia                  {printf("\nSe encontro una sentencia de seleccion (if).");}
-                        | IF '(' expresion ')' sentencia ELSE sentencia {printf("\nSe encontro una sentencia de seleccion (if y else).");}
-                        | SWITCH '(' expresion ')' sentencia            {printf("\nSe encontro una sentencia de seleccion (switch).");}
+sentenciaDeSeleccion:     IF '(' expresion ')' sentencia                  
+                        | IF '(' expresion ')' sentencia ELSE sentencia 
+                        | SWITCH '(' expresion ')' sentencia            
 ;
 
-sentenciaDeIteracion:     WHILE '(' expresion ')' sentencia                                               {printf("\nSe encontro una sentencia de iteracion (while).");}
-                        | DO sentencia WHILE '(' expresion ')' ';'                                      {printf("\nSe encontro una sentencia de iteracion (do while).");}
-                        | FOR '(' opcionExpresion ';' opcionExpresion ';' opcionExpresion ')' sentencia {printf("\nSe encontro una sentencia de iteracion (for).");}
+sentenciaDeIteracion:     WHILE '(' expresion ')' sentencia                                               
+                        | DO sentencia WHILE '(' expresion ')' ';'                                      
+                        | FOR '(' opcionExpresion ';' opcionExpresion ';' opcionExpresion ')' sentencia 
 ;
 
-sentenciaDeSalto: RETURN opcionExpresion ';'      {printf("\nSe encontro una sentencia de salto.");}
+sentenciaDeSalto: RETURN opcionExpresion ';'     
 ;
 
 opcionExpresion:    /* vacio */
                     | expresion
 ;
 
-// invocacionDeFuncion: IDENTIFICADOR '(' listaArgumentos ')' {InsertarInvocacion(&listaInvocaciones, $<cadena>1);}
-// ;
+invocacionDeFuncion: IDENTIFICADOR '(' listaArgumentos ')' {
+        InsertarInvocacion(&listaInvocaciones, $<cadena>1, contadorParametros, ordenInvocaciones);
+        contadorParametros = 0;
+        ordenInvocaciones ++;
+        }
+;
 
-// listaArgumentos:  argumento     {InsertarTipoArgumento(&listaArgumentos, $<cadena>1);}                      
-//                  | listaArgumentos ',' argumento      {InsertarTipoArgumento(&listaArgumentos, $<cadena>3);} 
-// ;
-// argumento:        /* vacio */         
-//                 | IDENTIFICADOR       
-// ;
+listaArgumentos:  argumento                            {
+                                        contadorParametros++;
+                                        InsertarParInv(&listaParametrosInv, $<cadena>1, ordenInvocaciones);
+                                        }                      
+                  | listaArgumentos ',' argumento      {
+                                        contadorParametros++;
+                                        InsertarParInv(&listaParametrosInv, $<cadena>3, ordenInvocaciones);
+                                        } 
+;
+argumento:        /* vacio */         
+                 | IDENTIFICADOR       
+;
 
 
 %%
@@ -292,7 +306,7 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
 
-    FILE * archivoSalida = fopen("salida4.txt","w");
+    FILE * archivoSalida = fopen("salida.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
     MostrarListaD(archivoSalida, listaDeclaraciones); 
@@ -305,6 +319,8 @@ int main(){
     MostrarTitulo(archivoSalida, "Errores Semanticos");
     validacionDoblesDeclaraciones(archivoSalida, listaDeclaraciones);
     validarTipos(archivoSalida, listaValidacion, listaDeclaraciones);
+    MostrarListaInvocacion(archivoSalida, listaInvocaciones);
+    verificarTiposParametros(archivoSalida, listaFunciones, listaDeclaraciones, listaInvocaciones, listaParametrosInv, listaParametros);
     printf("\nTermina de mostrar todo");
     
     

@@ -21,6 +21,7 @@ Se encontro una cadena no reconocida en la linea numero 11
 
 *Errores Sintacticos*
 
+Se encontro un error sintactico en la linea numero 16
 Se encontro un error sintactico en la linea numero 9
 Se encontro un error sintactico en la linea numero 8
 Se encontro un error sintactico en la linea numero 2
@@ -30,4 +31,7 @@ Se encontro un error sintactico en la linea numero 2
 Hay doble declaracion de la variable casa
 Error de tipos en la suma de c y a
 Error de tipos en la suma de claudia y carlos
+Se encontro una invocacion de la funcion funcionLoca con 3 parametros
 Se encontro una invocacion de la funcion ident con 2 parametros
+Los tipos de los parametros de la funcion invocada "funcionLoca" no coinciden
+La funcion invocada "ident" no fue declarada
