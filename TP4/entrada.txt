@@ -3,16 +3,23 @@ ident(a, b);
 char claudia;
 carlos - claudia;
 int b;
+int casa;
+char casa;
 char a;
 int c;
+int e;
+char h;
+char g;
 int 6
 if (a=5
-void funcionLoca(int a, int b, char c);
+void funcionLoca(int z, int k, char j);
+int funcionQueOnda(char q, char d);
+char funcionLoca359(char l, int m);
 $$
 $
 .
 b+c;
 a+c;
-funcionLoca(b, b, b);
-int casa;
-char casa;
+funcionLoca(b, a, h);
+funcionQueOnda(g, h);
+funcionLoca359(h);

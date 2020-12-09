@@ -158,7 +158,7 @@ Gramática
    95 invocacionDeFuncion: IDENTIFICADOR '(' listaArgumentos ')'
 
    96 listaArgumentos: argumento
-   97                | listaArgumentos ',' argumento
+   97                | argumento ',' listaArgumentos
 
    98 argumento: /* vacío */
    99          | IDENTIFICADOR
@@ -1591,15 +1591,16 @@ estado 91
 estado 92
 
    95 invocacionDeFuncion: IDENTIFICADOR '(' listaArgumentos . ')'
-   97 listaArgumentos: listaArgumentos . ',' argumento
 
     ')'  desplazar e ir al estado 123
-    ','  desplazar e ir al estado 124
 
 
 estado 93
 
    96 listaArgumentos: argumento .
+   97                | argumento . ',' listaArgumentos
+
+    ','  desplazar e ir al estado 124
 
     $default  reduce usando la regla 96 (listaArgumentos)
 
@@ -1915,13 +1916,14 @@ estado 123
 
 estado 124
 
-   97 listaArgumentos: listaArgumentos ',' . argumento
+   97 listaArgumentos: argumento ',' . listaArgumentos
 
     IDENTIFICADOR  desplazar e ir al estado 91
 
     $default  reduce usando la regla 98 (argumento)
 
-    argumento  ir al estado 142
+    listaArgumentos  ir al estado 142
+    argumento        ir al estado 93
 
 
 estado 125
@@ -2285,7 +2287,7 @@ estado 141
 
 estado 142
 
-   97 listaArgumentos: listaArgumentos ',' argumento .
+   97 listaArgumentos: argumento ',' listaArgumentos .
 
     $default  reduce usando la regla 97 (listaArgumentos)
 

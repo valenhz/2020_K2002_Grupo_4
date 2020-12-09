@@ -180,6 +180,7 @@ void MostrarParametros (FILE* archivo, PAR *cabeza, int ordenF){
         }
         aux = aux->sig;
     }
+    fprintf(archivo, "\n");
 }
 
 typedef struct func {
@@ -457,6 +458,25 @@ int InsertarParInv(PARINVOCACION **cabeza, char *ID, int posicion){
    }
 }
 
+
+void InvertirLista(PARINVOCACION **headNode) {
+  PARINVOCACION *iterator = NULL;
+  iterator = (PARINVOCACION*) malloc(sizeof (PARINVOCACION));
+  iterator = *headNode;
+  PARINVOCACION *previousNode = NULL;
+  PARINVOCACION *nextNode = NULL;
+
+  while (iterator != NULL) {
+    nextNode = iterator->sig;
+    iterator->sig = previousNode;
+    previousNode = iterator;
+    iterator = nextNode;
+  }
+
+  *headNode = previousNode;
+
+}
+
 void verificarTiposParametros(FILE *archivo, FUNCIONES *listaFunciones, DECLARACION *listaDeclaraciones, INVOCACION *listaInvocaciones, PARINVOCACION *listaParametrosInv, PAR *listaParametros) {
     FUNCIONES* aux1 = NULL; 
     aux1 = (FUNCIONES*) malloc(sizeof (FUNCIONES));
@@ -495,6 +515,7 @@ void verificarTiposParametros(FILE *archivo, FUNCIONES *listaFunciones, DECLARAC
             aux1 = aux1->sig;
         }
         
+       
         if(strcmp(funcionInv, funcionDec) == 0){
             if(parDec == parInv){
                 int estado = 0;
@@ -502,20 +523,22 @@ void verificarTiposParametros(FILE *archivo, FUNCIONES *listaFunciones, DECLARAC
                 char *tipoParInv;
                 while(aux4 != NULL && aux4->pos != ordenInv){ aux4 = aux4->sig; }
                 while(aux3 != NULL && aux3->orden != ordenDec){ aux3 = aux3->sig; }
-                printf("%i\n", parDec);
                 for(int i = 0; i<parDec; i++){
-                printf("%i\n", parDec);
                     if(aux3->orden == ordenDec && aux4->pos == ordenInv){
                         tipoParDec = strdup(aux3->tipo);
-                        printf("%s\n", tipoParDec);
+                        
                         tipoParInv = strdup(BuscarTipos(listaDeclaraciones, aux4->ID));
-                        printf("%s\n", tipoParInv);
+                        
+                       
                         if(strcmp(tipoParDec, tipoParInv) != 0){
                             estado = 1;
+                            
                         }
 
                     }
                     aux3 = aux3->sig; 
+                    aux4 = aux4->sig; 
+                    
                 }
                 if(estado == 1){
                     fprintf(archivo, "Los tipos de los parametros de la funcion invocada \"%s\" no coinciden\n", funcionDec);
@@ -525,7 +548,7 @@ void verificarTiposParametros(FILE *archivo, FUNCIONES *listaFunciones, DECLARAC
                 fprintf(archivo, "La invocacion de la funcion \"%s\" no tiene la cantidad de parametros correspondiente\n", funcionInv);
             }
         } else {
-            fprintf(archivo, "La funcion invocada \"%s\" no fue declarada", funcionInv);
+            fprintf(archivo, "La funcion invocada \"%s\" no fue declarada\n", funcionInv);
         }
         aux2 = aux2->sig;
         aux1 = listaFunciones;
@@ -534,17 +557,20 @@ void verificarTiposParametros(FILE *archivo, FUNCIONES *listaFunciones, DECLARAC
     }
 }
 
-/* void MostrarParametros (FILE* archivo, PAR *cabeza, int ordenF){ 
-    PAR *aux = cabeza;
+void MostrarParametrosInv (FILE* archivo, PARINVOCACION *cabeza){ 
+    PARINVOCACION *aux = cabeza;
     while (aux != NULL){
-        if(ordenF == aux->orden){
-            if(aux->sig == NULL){
-                    fprintf(archivo, "%s.\n", aux->tipo);
-            } else {
-                    fprintf(archivo, "%s, ",aux->tipo);
-            }
-        }
+        fprintf(archivo, "parametro %s, orden %i\n", aux->ID, aux->pos);
         aux = aux->sig;
     }
-} */
+} 
+
+void MostrarParametrosDec (FILE* archivo, PAR *cabeza){ 
+    PAR *aux = cabeza;
+    while (aux != NULL){
+        fprintf(archivo, "parametro %s, orden %i\n", aux->tipo, aux->orden);
+        aux = aux->sig;
+    }
+} 
+
 

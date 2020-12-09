@@ -285,13 +285,13 @@ listaArgumentos:  argumento                            {
                                         contadorParametros++;
                                         InsertarParInv(&listaParametrosInv, $<cadena>1, ordenInvocaciones);
                                         }                      
-                  | listaArgumentos ',' argumento      {
+                  | argumento ',' listaArgumentos    {
                                         contadorParametros++;
                                         InsertarParInv(&listaParametrosInv, $<cadena>3, ordenInvocaciones);
                                         } 
 ;
 argumento:        /* vacio */         
-                 | IDENTIFICADOR       
+                 | IDENTIFICADOR  {$<cadena>$ = strdup($<cadena>1);}     
 ;
 
 
@@ -306,6 +306,7 @@ int main(){
     yyin = fopen("entrada.txt", "r"); 
     yyparse();
 
+    InvertirLista(&listaParametrosInv);
     FILE * archivoSalida = fopen("salida.txt","w");
     printf("crea el archivo de salida");
     MostrarTitulo(archivoSalida, "Lista de variables declaradas");
@@ -322,7 +323,6 @@ int main(){
     MostrarListaInvocacion(archivoSalida, listaInvocaciones);
     verificarTiposParametros(archivoSalida, listaFunciones, listaDeclaraciones, listaInvocaciones, listaParametrosInv, listaParametros);
     printf("\nTermina de mostrar todo");
-    
     
     fclose(yyin);
 
